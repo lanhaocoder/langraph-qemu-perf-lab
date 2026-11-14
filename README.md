@@ -31,7 +31,8 @@ iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
   guest-init.sh              Guest /init：挂 tracefs → 采集 → 压测 → 回传
   qemu.log                   Guest 串口输出
   samples/                   iperf3 双向结果 json、采集脚本日志
-  logs/                      大日志的精简样本与统计摘要
+  logs/                      统计摘要、日志头部样本
+    full/                    完整原始日志（gzip 压缩，577 MB → 21.5 MB）+ 还原脚本
 ```
 
 ## 关键实测数据
@@ -94,7 +95,7 @@ cd iperf-perf && ./run.sh
 1. **TCG 下采到的时序、带宽、调度延迟都没有真实性能意义。** 指令是软件模拟的，时间戳、调度时序、锁竞争行为都被模拟器扭曲。这些数据只能验证「链路能跑通、代码路径和符号热点能被采到」，**不能**用来分析真实延迟、锁竞争或性能回归。真实结论必须在真机或 KVM 加速的 WSL2 上采。
 2. **硬件 PMU 不可用。** TCG 不虚拟 PMU，perf 只能用软件事件和 tracepoint，`cycles` / `instructions` / `cache-misses` 全部 `ENOENT`。本仓库的 perf 数据用的是 `cpu-clock` 软件事件。
 3. **`get_ftrace.sh` 未做任何修改。** Guest 内放了一个 `bin/perf` wrapper，把脚本默认的 `cycles` 换成 `-e cpu-clock`、`-g --call-graph=dwarf` 换成 `fp`，脚本本身保持原样。
-4. **日志只入库精简样本。** `ftrace.log` 253 MB、`perf.log` 98 MB，超过 GitHub 100 MB 单文件上限，也不适合放仓库。入库的是头部样本 + 统计摘要（`iperf-perf/logs/`），完整日志由 `./run.sh` 一键重建。
+4. **完整日志已压缩入库。** `ftrace.log` 253 MB、`perf.log` 98 MB 原本超 GitHub 100 MB 单文件上限，但日志重复度极高，`gzip -9` 后两轮共 577 MB 压到 **21.5 MB（3.7%）**，全部无损存入 `iperf-perf/logs/full/`，`./unpack.sh` 一键还原。`logs/` 下的头部样本和统计摘要仍然保留，方便不解压直接看。未入库的只剩内核、initramfs 等可由脚本重建的二进制。
 
 ## 相关
 

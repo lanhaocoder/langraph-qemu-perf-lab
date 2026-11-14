@@ -38,6 +38,7 @@ Guest 内执行 `get_ftrace.sh -t 35 -p 1`（`-p 1` 打开 perf 分支），同�
 | `logs/ftrace.log.head.txt` | `ftrace.log` 前 200 行样本 |
 | `logs/perf-hotspots.txt` | 内核符号热点 top30 + 进程维度统计 |
 | `logs/ftrace-stats.txt` | 事件类型分布统计 |
+| `logs/full/` | **完整原始日志**：两轮采集的 `*.log.gz`（577 MB → 21.5 MB）、`MANIFEST.txt`、`unpack.sh`、`README.md` |
 
 ## 两处处理说明
 

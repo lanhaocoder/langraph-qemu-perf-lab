@@ -1,12 +1,13 @@
-# 大体积二进制与原始日志：可由脚本重建，不入库
-# （ftrace.log 253 MB / perf.log 98 MB 已超 GitHub 100 MB 单文件上限）
+# 未入库：Guest 内核、initramfs、未压缩的原始日志、打包产物
+# 已入库：iperf-perf/logs/full/**/*.log.gz（gzip -9 压缩，完整无损）
+# 注意：run1/ guest/ 等忽略规则限定仓库根层，避免误伤 logs/full/run1/ 下的压缩日志
 
 # Guest 内核与根文件系统
 vmlinuz
 initramfs*.cpio.gz
 *.cpio.gz
 
-# 原始采集日志
+# 未压缩的采集日志与中间产物
 perf.log
 ftrace.log
 perf.data
@@ -17,12 +18,15 @@ result.tar
 # 打包产物
 *.zip
 
-# 实验过程文件
+# 实验过程文件（仅仓库根层）
 run.log
-run1/
-guest/
+/run1/
+/guest/
 qemu.log.tmp
 host_server.log
+
+# unpack.sh 的解压产物（577 MB，不入库）
+/iperf-perf/logs/full/raw/
 
 # 依赖与编辑器
 node_modules/

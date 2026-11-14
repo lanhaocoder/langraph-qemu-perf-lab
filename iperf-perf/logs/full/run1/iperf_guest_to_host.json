@@ -1,0 +1,11 @@
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.16",
+		"system_info":	"Linux (none) 6.8.0-31-generic #31-Ubuntu SMP PREEMPT_DYNAMIC Sat Apr 20 00:40:06 UTC 2024 x86_64"
+	},
+	"intervals":	[],
+	"end":	{
+	},
+	"error":	"control socket has closed unexpectedly"
+}

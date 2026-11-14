@@ -61,7 +61,7 @@ logs/                   大日志精简样本（perf.log / ftrace.log 前若干�
 qemu.log                Guest 串口输出
 ```
 
-> 完整原始日志（`perf.log` 98 MB、`ftrace.log` 253 MB）与 initramfs（25 MB）体积过大，未入库，执行 `./run.sh` 可一键重建。
+> 完整原始日志已用 `gzip -9` 无损压缩入库：`../iperf-perf/logs/full/`（两轮共 577 MB → 21.5 MB），`./unpack.sh` 可还原；initramfs（25 MB）等二进制仍未入库，由脚本重建。
 
 ```bash
 ./run.sh                                      # 重跑（约 2~3 分钟）
