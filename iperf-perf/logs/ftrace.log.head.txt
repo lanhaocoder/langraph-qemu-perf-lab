@@ -1,0 +1,200 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 701520/701520   #P:4
+#
+#                                          _-----=> irqs-off/BH-disabled
+#                                         / _----=> need-resched
+#                                        | / _---=> hardirq/softirq
+#                                        || / _--=> preempt-depth
+#                                        ||| / _-=> migrate-disable
+#                                        |||| /     delay
+#           TASK-PID       TGID    CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |           |       |   |||||     |         |
+          iperf3-115     (    115) [002] d..2.     6.257190: sched_stat_runtime: comm=iperf3 pid=115 runtime=1520 [ns]
+          iperf3-115     (    115) [002] d..2.     6.257506: <stack trace>
+ => update_curr+0x1e3/0x210 <ffffffff97564bf3>
+ => pick_next_task_fair+0xbc/0x620 <ffffffff975721ec>
+ => pick_next_task+0x5f/0xce0 <ffffffff975541bf>
+ => __schedule+0x121/0x6b0 <ffffffff986338c1>
+ => schedule+0x33/0x110 <ffffffff98633e93>
+ => try_to_generate_entropy+0x19d/0x2a0 <ffffffff97f33a7d>
+ => urandom_read_iter+0x37/0xb0 <ffffffff97f33f57>
+ => vfs_read+0x258/0x390 <ffffffff978e0698>
+ => ksys_read+0x73/0x100 <ffffffff978e15b3>
+ => __x64_sys_read+0x19/0x30 <ffffffff978e1669>
+ => x64_sys_call+0x1ada/0x25c0 <ffffffff97405b0a>
+ => do_syscall_64+0x7f/0x180 <ffffffff9861b78f>
+ => entry_SYSCALL_64_after_hwframe+0x73/0x7b <ffffffff9880012b>
+          iperf3-115     (    115) [002] d..2.     6.257506: <user stack trace>
+ => /lib/libc.so.6[+0xf3a91] <0000779eda702a91>
+ => /lib/libc.so.6[+0x5e49b] <0000779eda66d49b>
+ => /opt/lib/libiperf.so.0[+0x14e38] <0000779eda817e38>
+ => /opt/lib/libiperf.so.0[+0xe2c5] <0000779eda8112c5>
+ => /opt/lib/libiperf.so.0[+0x17ce9] <0000779eda81ace9>
+ => /bin/iperf3[+0x5f6] <0000576a55bdb5f6>
+ => /bin/iperf3[+0x386] <0000576a55bdb386>
+ => /lib/libc.so.6[+0x21ca] <0000779eda6111ca>
+        perf.bin-122     (    122) [003] d.h1.     6.257567: sched_stat_runtime: comm=perf.bin pid=122 runtime=988230 [ns]
+              sh-116     (    116) [001] d.h1.     6.257763: sched_stat_runtime: comm=sh pid=116 runtime=1074830 [ns]
+          <idle>-0       (-------) [000] d.h1.     6.258534: softirq_raise: vec=1 [action=TIMER]
+        perf.bin-122     (    122) [003] d.h1.     6.258550: <stack trace>
+ => update_curr+0x1e3/0x210 <ffffffff97564bf3>
+ => task_tick_fair+0x5b/0x4f0 <ffffffff9756c12b>
+ => scheduler_tick+0xd1/0x390 <ffffffff9755de31>
+ => update_process_times+0x89/0xb0 <ffffffff97602c29>
+ => tick_sched_handle+0x28/0x70 <ffffffff9761b5e8>
+ => tick_nohz_highres_handler+0x78/0xa0 <ffffffff9761bb08>
+ => __hrtimer_run_queues+0x112/0x2a0 <ffffffff97603b92>
+ => hrtimer_interrupt+0xf6/0x250 <ffffffff97604b16>
+ => __sysvec_apic_timer_interrupt+0x51/0x150 <ffffffff974a80e1>
+ => sysvec_apic_timer_interrupt+0x8d/0xd0 <ffffffff9862287d>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+ => format_decode+0x60/0x5d0 <ffffffff9859a1c0>
+ => vsnprintf+0x6e/0x570 <ffffffff9859ebce>
+ => seq_printf+0xa6/0xc0 <ffffffff9791c576>
+ => s_show+0x9d/0xe0 <ffffffff97627fdd>
+ => seq_read_iter+0x2ca/0x4b0 <ffffffff9791cc0a>
+ => seq_read+0x11e/0x160 <ffffffff9791cf1e>
+ => proc_reg_read+0x6c/0xb0 <ffffffff979a189c>
+ => vfs_read+0xb0/0x390 <ffffffff978e04f0>
+ => ksys_read+0x73/0x100 <ffffffff978e15b3>
+ => __x64_sys_read+0x19/0x30 <ffffffff978e1669>
+ => x64_sys_call+0x1ada/0x25c0 <ffffffff97405b0a>
+ => do_syscall_64+0x7f/0x180 <ffffffff9861b78f>
+ => entry_SYSCALL_64_after_hwframe+0x73/0x7b <ffffffff9880012b>
+        perf.bin-122     (    122) [003] d.h1.     6.258550: <user stack trace>
+ => /lib/libc.so.6[+0xf3a91] <00007f03ab8b2a91>
+ => /opt/perf.bin[+0x20e94a] <000060ff0a49c94a>
+ => /opt/perf.bin[+0x20eb79] <000060ff0a49cb79>
+ => /opt/perf.bin[+0x1d9716] <000060ff0a467716>
+ => /opt/perf.bin[+0x123436] <000060ff0a3b1436>
+ => /opt/perf.bin[+0x12daf7] <000060ff0a3bbaf7>
+ => /opt/perf.bin[+0x17d64] <000060ff0a2a5d64>
+ => /opt/perf.bin[+0x1bcb5] <000060ff0a2a9cb5>
+              sh-116     (    116) [001] d.h1.     6.258582: <stack trace>
+ => update_curr+0x1e3/0x210 <ffffffff97564bf3>
+ => task_tick_fair+0x5b/0x4f0 <ffffffff9756c12b>
+ => scheduler_tick+0xd1/0x390 <ffffffff9755de31>
+ => update_process_times+0x89/0xb0 <ffffffff97602c29>
+ => tick_sched_handle+0x28/0x70 <ffffffff9761b5e8>
+ => tick_nohz_highres_handler+0x78/0xa0 <ffffffff9761bb08>
+ => __hrtimer_run_queues+0x112/0x2a0 <ffffffff97603b92>
+ => hrtimer_interrupt+0xf6/0x250 <ffffffff97604b16>
+ => __sysvec_apic_timer_interrupt+0x51/0x150 <ffffffff974a80e1>
+ => sysvec_apic_timer_interrupt+0x3b/0xd0 <ffffffff9862282b>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+              sh-116     (    116) [001] d.h1.     6.258582: <user stack trace>
+ => /bin/busybox[+0xb2500] <00000000004b3500>
+ => /bin/busybox[+0x150364] <0000000000551364>
+ => /bin/busybox[+0x14e976] <000000000054f976>
+ => /bin/busybox[+0x14fcd7] <0000000000550cd7>
+ => /bin/busybox[+0x14a7c6] <000000000054b7c6>
+ => /bin/busybox[+0x14a7c6] <000000000054b7c6>
+ => /bin/busybox[+0x14a74f] <000000000054b74f>
+ => /bin/busybox[+0x14a74f] <000000000054b74f>
+              sh-116     (    116) [001] d.h..     6.258582: softirq_raise: vec=1 [action=TIMER]
+              sh-116     (    116) [001] d.h..     6.258582: <stack trace>
+ => __raise_softirq_irqoff+0x6e/0x80 <ffffffff9750945e>
+ => raise_softirq+0x24/0x70 <ffffffff97509764>
+ => update_process_times+0x6f/0xb0 <ffffffff97602c0f>
+ => tick_sched_handle+0x28/0x70 <ffffffff9761b5e8>
+ => tick_nohz_highres_handler+0x78/0xa0 <ffffffff9761bb08>
+ => __hrtimer_run_queues+0x112/0x2a0 <ffffffff97603b92>
+ => hrtimer_interrupt+0xf6/0x250 <ffffffff97604b16>
+ => __sysvec_apic_timer_interrupt+0x51/0x150 <ffffffff974a80e1>
+ => sysvec_apic_timer_interrupt+0x3b/0xd0 <ffffffff9862282b>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+              sh-116     (    116) [001] d.h..     6.258582: <user stack trace>
+ => /bin/busybox[+0xb2500] <00000000004b3500>
+ => /bin/busybox[+0x150364] <0000000000551364>
+ => /bin/busybox[+0x14e976] <000000000054f976>
+ => /bin/busybox[+0x14fcd7] <0000000000550cd7>
+ => /bin/busybox[+0x14a7c6] <000000000054b7c6>
+ => /bin/busybox[+0x14a7c6] <000000000054b7c6>
+ => /bin/busybox[+0x14a74f] <000000000054b74f>
+ => /bin/busybox[+0x14a74f] <000000000054b74f>
+          <idle>-0       (-------) [000] d.h1.     6.258752: <stack trace>
+ => __raise_softirq_irqoff+0x6e/0x80 <ffffffff9750945e>
+ => raise_softirq+0x24/0x70 <ffffffff97509764>
+ => update_process_times+0x6f/0xb0 <ffffffff97602c0f>
+ => tick_sched_handle+0x28/0x70 <ffffffff9761b5e8>
+ => tick_nohz_highres_handler+0x78/0xa0 <ffffffff9761bb08>
+ => __hrtimer_run_queues+0x112/0x2a0 <ffffffff97603b92>
+ => hrtimer_interrupt+0xf6/0x250 <ffffffff97604b16>
+ => __sysvec_apic_timer_interrupt+0x51/0x150 <ffffffff974a80e1>
+ => sysvec_apic_timer_interrupt+0x8d/0xd0 <ffffffff9862287d>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+ => pv_native_safe_halt+0xb/0x10 <ffffffff98622e5b>
+ => amd_e400_idle+0x39/0x50 <ffffffff974667a9>
+ => arch_cpu_idle+0x9/0x10 <ffffffff98625739>
+ => default_idle_call+0x2c/0xf0 <ffffffff98625a0c>
+ => cpuidle_idle_call+0x153/0x190 <ffffffff9757b6f3>
+ => do_idle+0x87/0xf0 <ffffffff9757b7c7>
+ => cpu_startup_entry+0x2a/0x30 <ffffffff9757ba5a>
+ => rest_init+0xde/0x100 <ffffffff986268be>
+ => arch_call_rest_init+0xe/0x30 <ffffffff99cb055e>
+ => start_kernel+0x354/0x450 <ffffffff99cb0944>
+ => x86_64_start_reservations+0x18/0x30 <ffffffff99cc48f8>
+ => x86_64_start_kernel+0xbf/0x110 <ffffffff99cc4a3f>
+ => secondary_startup_64_no_verify+0x184/0x18b <ffffffff97400279>
+          <idle>-0       (-------) [000] d.h1.     6.258757: <user stack trace>
+          <idle>-0       (-------) [000] ..s1.     6.259015: softirq_entry: vec=1 [action=TIMER]
+          <idle>-0       (-------) [000] ..s1.     6.259029: <stack trace>
+ => __do_softirq+0x27c/0x363 <ffffffff9863dd6c>
+ => __irq_exit_rcu+0xd7/0x100 <ffffffff97509037>
+ => irq_exit_rcu+0xe/0x20 <ffffffff9750939e>
+ => sysvec_apic_timer_interrupt+0x92/0xd0 <ffffffff98622882>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+ => pv_native_safe_halt+0xb/0x10 <ffffffff98622e5b>
+ => amd_e400_idle+0x39/0x50 <ffffffff974667a9>
+ => arch_cpu_idle+0x9/0x10 <ffffffff98625739>
+ => default_idle_call+0x2c/0xf0 <ffffffff98625a0c>
+ => cpuidle_idle_call+0x153/0x190 <ffffffff9757b6f3>
+ => do_idle+0x87/0xf0 <ffffffff9757b7c7>
+ => cpu_startup_entry+0x2a/0x30 <ffffffff9757ba5a>
+ => rest_init+0xde/0x100 <ffffffff986268be>
+ => arch_call_rest_init+0xe/0x30 <ffffffff99cb055e>
+ => start_kernel+0x354/0x450 <ffffffff99cb0944>
+ => x86_64_start_reservations+0x18/0x30 <ffffffff99cc48f8>
+ => x86_64_start_kernel+0xbf/0x110 <ffffffff99cc4a3f>
+ => secondary_startup_64_no_verify+0x184/0x18b <ffffffff97400279>
+          <idle>-0       (-------) [000] ..s1.     6.259031: <user stack trace>
+          <idle>-0       (-------) [000] ..s1.     6.259038: softirq_exit: vec=1 [action=TIMER]
+          <idle>-0       (-------) [000] ..s1.     6.259047: <stack trace>
+ => __do_softirq+0x22f/0x363 <ffffffff9863dd1f>
+ => __irq_exit_rcu+0xd7/0x100 <ffffffff97509037>
+ => irq_exit_rcu+0xe/0x20 <ffffffff9750939e>
+ => sysvec_apic_timer_interrupt+0x92/0xd0 <ffffffff98622882>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+ => pv_native_safe_halt+0xb/0x10 <ffffffff98622e5b>
+ => amd_e400_idle+0x39/0x50 <ffffffff974667a9>
+ => arch_cpu_idle+0x9/0x10 <ffffffff98625739>
+ => default_idle_call+0x2c/0xf0 <ffffffff98625a0c>
+ => cpuidle_idle_call+0x153/0x190 <ffffffff9757b6f3>
+ => do_idle+0x87/0xf0 <ffffffff9757b7c7>
+ => cpu_startup_entry+0x2a/0x30 <ffffffff9757ba5a>
+ => rest_init+0xde/0x100 <ffffffff986268be>
+ => arch_call_rest_init+0xe/0x30 <ffffffff99cb055e>
+ => start_kernel+0x354/0x450 <ffffffff99cb0944>
+ => x86_64_start_reservations+0x18/0x30 <ffffffff99cc48f8>
+ => x86_64_start_kernel+0xbf/0x110 <ffffffff99cc4a3f>
+ => secondary_startup_64_no_verify+0x184/0x18b <ffffffff97400279>
+          <idle>-0       (-------) [000] ..s1.     6.259048: <user stack trace>
+          iperf3-115     (    115) [002] d.h2.     6.259063: sched_stat_runtime: comm=iperf3 pid=115 runtime=2021765 [ns]
+          iperf3-115     (    115) [002] d.h2.     6.259074: <stack trace>
+ => update_curr+0x1e3/0x210 <ffffffff97564bf3>
+ => task_tick_fair+0x5b/0x4f0 <ffffffff9756c12b>
+ => scheduler_tick+0xd1/0x390 <ffffffff9755de31>
+ => update_process_times+0x89/0xb0 <ffffffff97602c29>
+ => tick_sched_handle+0x28/0x70 <ffffffff9761b5e8>
+ => tick_nohz_highres_handler+0x78/0xa0 <ffffffff9761bb08>
+ => __hrtimer_run_queues+0x112/0x2a0 <ffffffff97603b92>
+ => hrtimer_interrupt+0xf6/0x250 <ffffffff97604b16>
+ => __sysvec_apic_timer_interrupt+0x51/0x150 <ffffffff974a80e1>
+ => sysvec_apic_timer_interrupt+0x8d/0xd0 <ffffffff9862287d>
+ => asm_sysvec_apic_timer_interrupt+0x1b/0x20 <ffffffff98800f0b>
+ => __schedule+0x58a/0x6b0 <ffffffff98633d2a>
+ => schedule+0x33/0x110 <ffffffff98633e93>
+ => try_to_generate_entropy+0x19d/0x2a0 <ffffffff97f33a7d>
+ => urandom_read_iter+0x37/0xb0 <ffffffff97f33f57>
+ => vfs_read+0x258/0x390 <ffffffff978e0698>

@@ -1,0 +1,47 @@
+# perf.log 内核符号热点（按出现次数）
+# 来源: guest/perf.log (108,944 个 cpu-clock 采样, 1,821,644 行)
+# 统计命令: grep -oE ' (tcp_|ip_|e1000_|netif_)[a-z_]*\+0x' perf.log | sort | uniq -c | sort -rn | head -30
+
+次数       符号
+21656    __napi_poll
+21537    e1000_clean
+21119    e1000_clean_rx_irq
+19304    napi_gro_receive
+18672    netif_receive_skb_list_internal
+18403    ip_list_rcv
+18203    ip_sublist_rcv
+17908    ip_sublist_rcv_finish
+17815    ip_local_deliver
+17628    ip_local_deliver_finish
+17398    ip_protocol_deliver_rcu
+14665    tcp_rcv_established
+8828     tcp_write_xmit
+8544     __tcp_push_pending_frames
+5112     tcp_sendmsg
+4077     tcp_sendmsg_locked
+3507     tcp_mstamp_refresh
+2721     __tcp_transmit_skb
+2189     ip_queue_xmit
+2127     __ip_queue_xmit
+1996     ip_local_out
+1884     ip_output
+1859     tcp_ack
+1778     ip_finish_output
+1737     __ip_finish_output
+1232     e1000_copybreak
+1161     tcp_event_new_data_sent
+1123     tcp_check_space
+1043     __napi_alloc_skb
+1025     skb_do_copy_data_nocache
+
+# 进程维度（采到最多样本的进程）
+73188    swapper
+23046    ksoftirqd/0
+6314     iperf3
+6247     cp
+48       kworker/0:2-eve
+17       rcu_preempt
+11       kworker/2:1-mm_
+9        sleep
+9        perf.bin
+9        kworker/1:1-mld

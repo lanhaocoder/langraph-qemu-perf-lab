@@ -1,4 +1,102 @@
 # langraph-qemu-perf-lab
-# langraph-qemu-perf-lab
-# langraph-qemu-perf-lab
-# langraph-qemu-perf-lab
+
+在**云沙箱**（无 KVM、容器封锁 `perf_event_open` 和 tracefs）里，用 QEMU TCG 起最小 Guest 跑通 [LanGraph](https://github.com/lanhaocoder/LanGraph) 的 ftrace/perf 分析链路，并在 Guest 内做 20 并行流双向 TCP 压测、用 `get_ftrace.sh -p 1` 同时抓 perf 与 ftrace 日志的实验记录。
+
+全部结论均由实测得出，不是推演。
+
+## 三个实验，三个结论
+
+| # | 实验 | 结论 |
+|---|---|---|
+| 1 | 云沙箱宿主机能否用 perf / ftrace | **不能。** `perf_event_open` 直接 `EPERM`，连 `task-clock` 软件事件都被拒；tracefs/debugfs 挂载 `permission denied`，`/sys/kernel/tracing` 是空目录。但**离线解析完全可用**（`libtraceevent`/`libtracefs`/`libtracecmd` 是纯用户态库） |
+| 2 | 起 QEMU Guest 能否绕开 | **能。** Guest 有独立内核、自带 tracefs，ftrace 采集、perf 软件事件、`langraph` 执行全部跑通 |
+| 3 | Guest 内 20 线程双向 iperf + perf 采集 | **跑通。** 抓到 108,944 个 `cpu-clock` 采样、701,520 条 sched/irq 事件；双向吞吐 735/730 Mbps 基本对称 |
+
+详细记录见 [`docs/01-云空间环境评估.md`](docs/01-云空间环境评估.md) 和 [`docs/02-iperf-perf实验报告.md`](docs/02-iperf-perf实验报告.md)。
+
+## 目录结构
+
+```
+docs/                        实验文档与结论
+  01-云空间环境评估.md        宿主机能力实测 + QEMU 方案
+  02-iperf-perf实验报告.md    20 线程双向 iperf + perf 采集报告
+qemu-guest/                  最小 Guest 构建与启动（实验 2）
+  boot.sh                    一条命令启动 Guest
+  build-guest.sh             修改代码后重建 initramfs
+  guest-init.sh              Guest 的 /init
+  perftest.c                 Guest 内 perf_event_open 能力探测
+  串口日志.txt                完整启动与执行日志
+iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
+  run.sh                     宿主机编排：iperf server + 反向流量 + 日志回传
+  guest-init.sh              Guest /init：挂 tracefs → 采集 → 压测 → 回传
+  qemu.log                   Guest 串口输出
+  samples/                   iperf3 双向结果 json、采集脚本日志
+  logs/                      大日志的精简样本与统计摘要
+```
+
+## 关键实测数据
+
+### iperf3 3.16，20 并行流 `--bidir`
+
+| 方向 | 流数 | 发送 | 接收 |
+|---|---|---|---|
+| 宿主机 → Guest | 40（20×2） | 502.66 MB / **335.07 Mbps** | 5.01 MB / 3.34 Mbps |
+| Guest → 宿主机 | 40（20×2） | 1104.81 MB / **734.88 Mbps** | 1098.38 MB / **729.95 Mbps** |
+
+第二组收发基本对称，双向坐实；第一组接收侧偏低是 TCG 下 Guest 发包能力受限。
+
+### perf 内核栈热点（108,944 采样）
+
+```
+21656  __napi_poll                       21537  e1000_clean
+21119  e1000_clean_rx_irq                19304  napi_gro_receive
+18672  netif_receive_skb_list_internal   18403  ip_list_rcv
+17815  ip_local_deliver                  14665  tcp_rcv_established
+ 8828  tcp_write_xmit                     8544  __tcp_push_pending_frames
+```
+
+收包路径（NAPI → IP → TCP）占主导，符合双向 TCP 压测预期。完整 top30 见 [`iperf-perf/logs/perf-hotspots.txt`](iperf-perf/logs/perf-hotspots.txt)。
+
+### ftrace 事件分布（4,665,579 行）
+
+```
+59672 sched_stat_runtime    25822 sched_switch
+13033 sched_waking          13033 sched_wakeup
+ 1136 sched_migrate_task     270 irq_handler_entry/exit
+```
+
+## 环境
+
+| 项目 | 值 |
+|---|---|
+| QEMU | 8.2.2，`-accel tcg`（无 `/dev/kvm`，CPU 不暴露 vmx/svm） |
+| Guest 内核 | Ubuntu `6.8.0-31-generic` |
+| Guest 规格 | 实验 2：2 vCPU/1 GB；实验 3：4 vCPU/2 GB |
+| 根文件系统 | busybox 静态 initramfs（实验 3 装入 e1000.ko、perf、iperf3 后 25 MB） |
+| 网络 | `-netdev user`（slirp）+ `e1000` 网卡 + hostfwd |
+
+## 复现
+
+需要宿主有 `qemu-system-x86`、`busybox-static`、`iperf3`、`trace-cmd` 及 `libtrace{event,fs,cmd}-dev`。
+
+```bash
+# 实验 2：起 Guest 跑 langraph 与采集脚本
+cd qemu-guest && ./boot.sh > run.log 2>&1
+
+# 实验 3：双向 20 流 iperf + perf 采集（约 2~3 分钟）
+cd iperf-perf && ./run.sh
+```
+
+在 WSL2（KVM 可用）上把 `boot.sh` / `run.sh` 里的 `-accel tcg` 换成 `-enable-kvm` 即可获得硬件加速。
+
+## 必须知道的限制
+
+1. **TCG 下采到的时序、带宽、调度延迟都没有真实性能意义。** 指令是软件模拟的，时间戳、调度时序、锁竞争行为都被模拟器扭曲。这些数据只能验证「链路能跑通、代码路径和符号热点能被采到」，**不能**用来分析真实延迟、锁竞争或性能回归。真实结论必须在真机或 KVM 加速的 WSL2 上采。
+2. **硬件 PMU 不可用。** TCG 不虚拟 PMU，perf 只能用软件事件和 tracepoint，`cycles` / `instructions` / `cache-misses` 全部 `ENOENT`。本仓库的 perf 数据用的是 `cpu-clock` 软件事件。
+3. **`get_ftrace.sh` 未做任何修改。** Guest 内放了一个 `bin/perf` wrapper，把脚本默认的 `cycles` 换成 `-e cpu-clock`、`-g --call-graph=dwarf` 换成 `fp`，脚本本身保持原样。
+4. **日志只入库精简样本。** `ftrace.log` 253 MB、`perf.log` 98 MB，超过 GitHub 100 MB 单文件上限，也不适合放仓库。入库的是头部样本 + 统计摘要（`iperf-perf/logs/`），完整日志由 `./run.sh` 一键重建。
+
+## 相关
+
+- [LanGraph](https://github.com/lanhaocoder/LanGraph) —— 基于 trace-cmd 的 ftrace 调度延迟可视化分析工具，本仓库是它的环境验证配套
+- 云沙箱的离线分析路径：`trace.dat` 架构无关，x86_64 上可直接解析 arm64 目标板采集的数据

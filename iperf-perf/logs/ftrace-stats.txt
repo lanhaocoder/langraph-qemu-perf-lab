@@ -1,0 +1,21 @@
+# ftrace.log 事件统计
+# 来源: guest/ftrace.log (4,665,579 行, 253 MB)
+
+## 顶层事件类型分布
+  59672 sched_stat_runtime
+  25822 sched_switch
+  13033 sched_waking
+  13033 sched_wakeup
+   1136 sched_migrate_task
+    270 irq_handler_exit
+    270 irq_handler_entry
+    153 sched_wake_idle_without_ipi
+     83 sched_wakeup_new
+     83 sched_process_fork
+     81 sched_process_free
+     81 sched_process_exit
+      3 sched_process_wait
+      2 sched_process_exec
+
+## 总事件数
+4665579 行
