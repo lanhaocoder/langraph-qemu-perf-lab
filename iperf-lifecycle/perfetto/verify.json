@@ -1,0 +1,132 @@
+[
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-zoom.pftrace",
+    "size": 21919,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 134,
+      "flow": 18,
+      "track": 27,
+      "args": 484
+    },
+    "lifecycle": {
+      "sched_process_fork": 8
+    },
+    "wake2run_us": {
+      "args_entries": 2,
+      "mean": 182.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-zoom.json",
+    "size": 38177,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 104,
+      "flow": 11,
+      "track": 33,
+      "args": 291
+    },
+    "lifecycle": {
+      "sched_process_fork": 8
+    },
+    "wake2run_us": {
+      "args_entries": 1,
+      "mean": 182.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-lifecycle.pftrace",
+    "size": 22898714,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 203682,
+      "flow": 43954,
+      "track": 107,
+      "args": 133810
+    },
+    "lifecycle": {
+      "sched_process_free": 60,
+      "sched_process_fork": 59,
+      "sched_process_exit": 59,
+      "sched_process_wait": 38,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 19077,
+      "mean": 477.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-lifecycle.json",
+    "size": 32813293,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 132943,
+      "flow": 43951,
+      "track": 162,
+      "args": 111789
+    },
+    "lifecycle": {
+      "sched_process_free": 60,
+      "sched_process_fork": 59,
+      "sched_process_exit": 59,
+      "sched_process_wait": 38,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 13121,
+      "mean": 358.7
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-focus.pftrace",
+    "size": 22622583,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 201305,
+      "flow": 43421,
+      "track": 84,
+      "args": 131772
+    },
+    "lifecycle": {
+      "sched_process_free": 43,
+      "sched_process_fork": 43,
+      "sched_process_exit": 43,
+      "sched_process_wait": 32,
+      "sched_process_exec": 2
+    },
+    "wake2run_us": {
+      "args_entries": 18855,
+      "mean": 480.7
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-focus.json",
+    "size": 32415754,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 131379,
+      "flow": 43417,
+      "track": 122,
+      "args": 110300
+    },
+    "lifecycle": {
+      "sched_process_free": 43,
+      "sched_process_fork": 43,
+      "sched_process_exit": 43,
+      "sched_process_wait": 32,
+      "sched_process_exec": 2
+    },
+    "wake2run_us": {
+      "args_entries": 13003,
+      "mean": 360.5
+    }
+  }
+]
