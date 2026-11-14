@@ -4,13 +4,14 @@
 
 全部结论均由实测得出，不是推演。
 
-## 三个实验，三个结论
+## 四个实验，四个结论
 
 | # | 实验 | 结论 |
 |---|---|---|
 | 1 | 云沙箱宿主机能否用 perf / ftrace | **不能。** `perf_event_open` 直接 `EPERM`，连 `task-clock` 软件事件都被拒；tracefs/debugfs 挂载 `permission denied`，`/sys/kernel/tracing` 是空目录。但**离线解析完全可用**（`libtraceevent`/`libtracefs`/`libtracecmd` 是纯用户态库） |
 | 2 | 起 QEMU Guest 能否绕开 | **能。** Guest 有独立内核、自带 tracefs，ftrace 采集、perf 软件事件、`langraph` 执行全部跑通 |
 | 3 | Guest 内 20 线程双向 iperf + perf 采集 | **跑通。** 抓到 108,944 个 `cpu-clock` 采样、701,520 条 sched/irq 事件；双向吞吐 735/730 Mbps 基本对称 |
+| 4 | 完整 iperf 进程生命周期采集 | **7/7 判据全部 PASS，42/42 个 pid 生命周期闭合**（40 工作线程 + 2 主进程）。所有 `fork→exec→wakeup_new→switch→exit→free` 全落在 `get_ftrace.sh` 窗口内，perf 与 ftrace 同时抓。详见 [`iperf-lifecycle/`](iperf-lifecycle/README.md) |
 
 详细记录见 [`docs/01-云空间环境评估.md`](docs/01-云空间环境评估.md) 和 [`docs/02-iperf-perf实验报告.md`](docs/02-iperf-perf实验报告.md)。
 
@@ -35,6 +36,15 @@ iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
   logs/                      统计摘要、日志头部样本
     full/                    完整原始日志（gzip 压缩，577 MB → 21.5 MB）+ 还原脚本
   langraph-native/           get_ftrace.sh 原生 `langraph/` 产物归档（9.23 MB）+ 复现脚本
+iperf-lifecycle/             完整 iperf 进程生命周期采集（实验 4）
+  run.sh / guest-init.sh      Host 编排 + Guest /init（READY 信号同步、自然退出）
+  analyze_lifecycle.py       7 项判据闭合校验（42 个 pid）
+  draw_lifecycle_gantt.py    真实数据甘特图
+  生命周期校验报告.md         逐项判据与实测数字
+  lifecycle-gantt.png        ★ 42 个 pid 的 fork→free 横道图
+  iperf-lifecycle.tar.gz     ★ `langraph/` 原生产物压缩归档（perf + ftrace，12.0 MB）
+  round1/ round2/            前两轮迭代留档
+  MANIFEST.txt               全量 sha256 清单（sha256sum -c 可校验）
 ```
 
 ## 关键实测数据
@@ -68,6 +78,20 @@ iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
  1136 sched_migrate_task     270 irq_handler_entry/exit
 ```
 
+### 完整 iperf 生命周期（实验 4，重抓 180,083 条事件）
+
+| 判据 | 实测 |
+|---|---|
+| 生命周期闭合 | **42/42**（工作线程 40/40、主进程 2/2），`unclosed_pids=[]` |
+| 采集窗口 | `11.068 ~ 37.075 s`，跨度 **26.007 s** |
+| ftrace 先于 iperf | 最早创建 `13.194 s`，**先行余量 2.126 s** |
+| iperf 早于采集结束 | 最晚 `free=28.673 s`，**尾部余量 8.402 s** |
+| iperf 全程 | `17.530 s`（< 60 s），且早于 `get_ftrace.sh` 结束 |
+| perf 与 ftrace 同时 | `perf.log` 1,145,692 行 / 63.89 MB；`perf.data` 12.90 MB |
+| 双向吞吐 | Host→Guest 520.92 Mbps；Guest→Host 429.41 / 424.84 Mbps，无 error |
+
+关键时序：Guest 内**先**起 `get_ftrace.sh -t 26 -p 1 -m 131072 -o langraph`（perf+ftrace 同时、ring buffer 128 MB/CPU 防止开头 fork 事件被覆盖），再起两端 one-off 收包 server（`-1`）、两端各 20 线程发包 client（`-P 20 -t 10`），全部 `wait` 自然退出后才结束采集。完整时间轴见 `iperf-lifecycle/langraph/timeline.txt`（在压缩包内）。
+
 ## 环境
 
 | 项目 | 值 |
@@ -88,6 +112,13 @@ cd qemu-guest && ./boot.sh > run.log 2>&1
 
 # 实验 3：双向 20 流 iperf + perf 采集（约 2~3 分钟）
 cd iperf-perf && ./run.sh
+
+# 实验 4：完整 iperf 生命周期重抓（约 5 分钟）
+cd iperf-lifecycle && ./run.sh
+
+# 或只复核归档结论，不重跑 QEMU
+cd iperf-lifecycle && tar xzf iperf-lifecycle.tar.gz && \
+  python3.11 analyze_lifecycle.py langraph -o lifecycle_report.json --md 生命周期校验报告.md
 ```
 
 在 WSL2（KVM 可用）上把 `boot.sh` / `run.sh` 里的 `-accel tcg` 换成 `-enable-kvm` 即可获得硬件加速。
@@ -100,6 +131,7 @@ cd iperf-perf && ./run.sh
 4. **完整日志已压缩入库。** `ftrace.log` 253 MB、`perf.log` 98 MB 原本超 GitHub 100 MB 单文件上限，但日志重复度极高，`gzip -9` 后两轮共 577 MB 压到 **21.5 MB（3.7%）**，全部无损存入 `iperf-perf/logs/full/`，`./unpack.sh` 一键还原。`logs/` 下的头部样本和统计摘要仍然保留，方便不解压直接看。未入库的只剩内核、initramfs 等可由脚本重建的二进制。
 5. **运行时符号表单独保存了，且与新归档严格对应。** `qemu-guest/kallsyms/` 存了 Guest 的 `/proc/kallsyms`（203,527 行，含 688 个 e1000 模块符号）与 `System.map`，`nokaslr` 抓、地址固定。`run1/` / `run2/` 那两轮是默认 KASLR 采的，基址带随机偏移，**不能**给旧数据做地址换算；但 `iperf-perf/langraph-native/` 这轮用 `nokaslr` 重跑，`langraph/` 里自带 `kallsyms.txt` 与完整的 `perf.data`，两者严格对应，可以放心重新符号化。`perf.log` 本身是已符号化文本，任何一轮都不受影响。详见两处 README。`iperf-perf/guest-init.sh` 已加自动导出，以后每轮采集会随日志一起回传。
 6. **`get_ftrace.sh` 原生产物是 `langraph/` 目录。** 脚本默认 `output="langraph"`、`-p 1` 同时开 perf 与 ftrace、`-z 1` 自动压缩。前几轮为了单独回传日志用了 `-o /langraph_out -z 0` 改名并拆分，没留下这个标准产物；`iperf-perf/langraph-native/` 是按原生语义重跑补齐的归档（含 `perf.data` / `ftrace_symbol.log` / `kallsyms.txt`）。
+7. **实验 4 的生命周期结论只代表「采集完整性」，不代表性能。** 判定标准是 42 个 iperf3 pid 的 `fork/exec → exit → free` 是否全落在采集窗口内，判据与数字见 `iperf-lifecycle/生命周期校验报告.md`。两个易踩的坑：① `sched_process_free` 的行前缀 comm 是 `<idle>`/`ksoftirqd`，**被释放的 iperf3 只在 args 的 `comm=iperf3 pid=...` 里**，按行前缀匹配会漏；② 内核启动后 `tracing_on` 默认就是 `1`（tracer=nop、无事件），必须等 `init_ftrace` 走完完整的 **1→0→1** 转换才能起 iperf，否则 server 会早于真正开录。TCG 下的时间戳同样只用于事件先后关系，不能当真实延迟。
 
 ## 相关
 

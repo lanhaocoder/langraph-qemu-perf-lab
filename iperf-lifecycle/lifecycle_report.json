@@ -1,0 +1,384 @@
+{
+  "ftrace": {
+    "path": "langraph/ftrace.log",
+    "parsed_events": 180083,
+    "unmatched_lines": 3918115,
+    "stacktrace_lines": 3558015,
+    "window_s": [
+      11.067592,
+      37.074585
+    ],
+    "window_span_s": 26.007,
+    "event_types": 19,
+    "top_events": [
+      [
+        "sched_stat_runtime",
+        68725
+      ],
+      [
+        "sched_switch",
+        27307
+      ],
+      [
+        "softirq_raise",
+        15746
+      ],
+      [
+        "softirq_entry",
+        15208
+      ],
+      [
+        "softirq_exit",
+        15208
+      ],
+      [
+        "sched_waking",
+        15012
+      ],
+      [
+        "sched_wakeup",
+        15012
+      ],
+      [
+        "sched_migrate_task",
+        2596
+      ],
+      [
+        "tasklet_entry",
+        1977
+      ],
+      [
+        "tasklet_exit",
+        1977
+      ],
+      [
+        "sched_wake_idle_without_ipi",
+        885
+      ],
+      [
+        "irq_handler_entry",
+        74
+      ],
+      [
+        "irq_handler_exit",
+        74
+      ],
+      [
+        "sched_process_free",
+        60
+      ],
+      [
+        "sched_process_fork",
+        59
+      ],
+      [
+        "sched_wakeup_new",
+        59
+      ],
+      [
+        "sched_process_exit",
+        59
+      ],
+      [
+        "sched_process_wait",
+        38
+      ],
+      [
+        "sched_process_exec",
+        7
+      ]
+    ],
+    "prev_state_dist": [
+      [
+        "S",
+        14590
+      ],
+      [
+        "R",
+        12138
+      ],
+      [
+        "I",
+        396
+      ],
+      [
+        "R+",
+        118
+      ],
+      [
+        "X",
+        40
+      ],
+      [
+        "Z",
+        19
+      ],
+      [
+        "D",
+        6
+      ]
+    ],
+    "iperf_related_events": [
+      [
+        "sched_stat_runtime",
+        55064
+      ],
+      [
+        "sched_switch",
+        26283
+      ],
+      [
+        "sched_waking",
+        14497
+      ],
+      [
+        "sched_wakeup",
+        14460
+      ],
+      [
+        "sched_migrate_task",
+        2552
+      ],
+      [
+        "softirq_entry",
+        1696
+      ],
+      [
+        "softirq_exit",
+        1696
+      ],
+      [
+        "softirq_raise",
+        1678
+      ],
+      [
+        "sched_wake_idle_without_ipi",
+        47
+      ],
+      [
+        "sched_process_free",
+        43
+      ],
+      [
+        "sched_process_exit",
+        42
+      ],
+      [
+        "sched_process_fork",
+        40
+      ],
+      [
+        "sched_wakeup_new",
+        40
+      ],
+      [
+        "irq_handler_entry",
+        33
+      ],
+      [
+        "irq_handler_exit",
+        33
+      ],
+      [
+        "sched_process_exec",
+        2
+      ],
+      [
+        "tasklet_entry",
+        1
+      ],
+      [
+        "tasklet_exit",
+        1
+      ]
+    ]
+  },
+  "iperf_lifecycle": {
+    "work_threads": 40,
+    "main_procs": 2,
+    "total_pids": 42,
+    "fork_count": 40,
+    "exec_count": 2,
+    "wakeup_new_count": 40,
+    "exit_count": 42,
+    "free_count": 42,
+    "closed_count": 42,
+    "work_closed": 40,
+    "main_closed": 2,
+    "unclosed_pids": [],
+    "first_create_ts": 13.193995,
+    "first_fork_ts": 16.903009,
+    "last_free_ts": 28.672608,
+    "headroom_start_s": 2.126403,
+    "headroom_end_s": 8.401976999999999,
+    "main_proc_detail": [
+      {
+        "pid": 371,
+        "fork": 13.193995,
+        "fork_child_comm": "init",
+        "exec": 13.199836,
+        "exec_filename": "/bin/iperf3",
+        "exit": 27.005047,
+        "free": 27.016626,
+        "closed": true
+      },
+      {
+        "pid": 398,
+        "fork": 18.266203,
+        "fork_child_comm": "init",
+        "exec": 18.279887,
+        "exec_filename": "/bin/iperf3",
+        "exit": 28.661962,
+        "free": 28.672608,
+        "closed": true
+      }
+    ]
+  },
+  "perf": {
+    "perf_log_bytes": 63887990,
+    "perf_log_lines": 1145692,
+    "perf_data_bytes": 12902414
+  },
+  "timeline": {
+    "ok": true,
+    "FTRACE_ON": 11.13,
+    "IPERF_ALL_EXITED": 28.66,
+    "CAPTURE_EXIT": 210.35,
+    "iperf_span_s": 17.53,
+    "capture_exit_note": "CAPTURE_EXIT 含 save_ftrace/addr2line 后处理；真实采集窗口以 ftrace.log 的 tmin~tmax 为准"
+  },
+  "timeline_raw": [
+    [
+      3.38,
+      "BOOT"
+    ],
+    [
+      3.39,
+      "NET_START"
+    ],
+    [
+      5.96,
+      "NET_UP"
+    ],
+    [
+      6.79,
+      "KALLSYMS lines=203527"
+    ],
+    [
+      6.8,
+      "CAPTURE_LAUNCH t=26 p=1 m=131072"
+    ],
+    [
+      9.26,
+      "FTRACE_INIT_SEEN (tracing_on went 0)"
+    ],
+    [
+      11.13,
+      "FTRACE_ON tracing_on=1"
+    ],
+    [
+      13.13,
+      "PRE_IPERF_GUARD done"
+    ],
+    [
+      13.14,
+      "GUEST_SERVER_START pid=371"
+    ],
+    [
+      15.15,
+      "GUEST_SERVER_LISTEN"
+    ],
+    [
+      15.2,
+      "READY_SENT"
+    ],
+    [
+      18.22,
+      "GUEST_CLIENT_START pid=398"
+    ],
+    [
+      28.61,
+      "GUEST_CLIENT_EXIT rc=0 pid=398"
+    ],
+    [
+      28.61,
+      "GUEST_SERVER_EXIT rc=0 pid=371"
+    ],
+    [
+      28.66,
+      "IPERF_ALL_EXITED residual=0"
+    ],
+    [
+      210.35,
+      "CAPTURE_EXIT rc=0"
+    ],
+    [
+      233.85,
+      "PERF_LOG lines=1145692"
+    ]
+  ],
+  "sample_thread": {
+    "pid": 384,
+    "event_count": 4,
+    "chain": [
+      {
+        "ts": 16.90608,
+        "event": "sched_process_fork",
+        "desc": "fork child_comm=iperf3"
+      },
+      {
+        "ts": 16.906139,
+        "event": "sched_wakeup_new",
+        "desc": "wakeup_new"
+      },
+      {
+        "ts": 26.976948,
+        "event": "sched_process_exit",
+        "desc": "exit"
+      },
+      {
+        "ts": 26.989689,
+        "event": "sched_process_free",
+        "desc": "free"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "1. 抓到 iperf3 工作线程创建 (sched_process_fork)",
+      "pass": true,
+      "detail": "fork 工作线程 = 40（20 线程 × 双向 2 组）"
+    },
+    {
+      "name": "2. 抓到 iperf3 销毁 (exit / free)",
+      "pass": true,
+      "detail": "exit=42  free=42"
+    },
+    {
+      "name": "3. 生命周期闭合（创建→exit→free，含 2 个主进程）",
+      "pass": true,
+      "detail": "闭合 42/42；工作线程 40/40，主进程 2/2；未闭合 pid=[]"
+    },
+    {
+      "name": "4. ftrace 先于 iperf 开启（最早创建事件 > 窗口起点）",
+      "pass": true,
+      "detail": "窗口起点=11.067592s  最早创建=13.193995s  余量=2.126s"
+    },
+    {
+      "name": "5. iperf 早于采集结束（最晚 free < 窗口终点）",
+      "pass": true,
+      "detail": "最晚 free=28.672608s  窗口终点=37.074585s  余量=8.402s"
+    },
+    {
+      "name": "6. perf 与 ftrace 同时抓（perf.log / perf.data 非空）",
+      "pass": true,
+      "detail": "perf.log=1145692 行 / 63.89 MB, perf.data=12.90 MB"
+    },
+    {
+      "name": "7. Guest 时间轴自证 (FTRACE_ON < IPERF_ALL_EXITED < CAPTURE_EXIT)",
+      "pass": true,
+      "detail": "FTRACE_ON=11.130s  IPERF_ALL_EXITED=28.660s  CAPTURE_EXIT=210.350s  (iperf 全程 17.530s < 60s)"
+    }
+  ],
+  "all_pass": true
+}

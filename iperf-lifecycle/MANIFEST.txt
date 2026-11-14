@@ -1,0 +1,32 @@
+# 完整 iperf 进程生命周期采集归档 — 文件清单 (sha256)
+# 仓库: lanhaocoder/langraph-qemu-perf-lab  目录: iperf-lifecycle/
+# 来源: /workspace/iperf-lifecycle-out（QEMU Guest 内重抓，2026-11-14）
+# 说明: langraph/ 未压缩原生产物（约 305 MB）已压入 iperf-lifecycle.tar.gz；
+#       result.tar / *.zip / __pycache__ 按 .gitignore 不入库。
+# 校验: sha256sum -c MANIFEST.txt   （25 个文件，13,269,583 字节 / 12.65 MB）
+#
+8c8722397d41bd263cb64a2750f45a3b307b4e53281a816a0d912d46155e4df0  README.md
+2c0c2bc0f283c6700a86a51a010fe4a12465391afa262a10b35168fa4929eb24  analyze_lifecycle.py
+5202404c58d2c6ff989c2bedfc0932aca5f7539016b0d5b50ee9046b5739e80f  draw_lifecycle_gantt.py
+f5e90cd8f85508a1af0d0e3212dec621c735dffe9afe217a5cd1a693299f99f6  guest-init.sh
+14a96ec3173f8e2044d5758dcbd24ce1e1b9e42bd2117a258b4b979cfef04307  host_client.json
+5aed538396d90e6bed5c0c76d939d9becb999be48052a38fccb39de1d577e006  host_server.log
+998b184ef7ce7d7c89fb4c4b79b02972934902effb7b90f8ba42fea52081fb07  host_timeline.txt
+89e60d0303b17473f2ece03eedaf04200211c240143f1d2c58ad65b3b7ade538  iperf-lifecycle.tar.gz
+25fdc7542e9cafb8077c2337d4ac76e5dbc6a525b908d8068f01c998199f4194  lifecycle-gantt.png
+e38746c023194a10eec83bed9aa38467b272b0e63cec18d6565a7509457230ca  lifecycle_report.json
+d288b4d50aaf0dbdf695f0e4974c27b73fab0155457e719baf52c0b7cb5eac93  qemu.log
+dde7e97ecdae40af2a897f1d6f2f68d4699224bcd2f8df54afae80c771260622  ready.flag
+dcb67981a26dd8498e27243315540f84ba9816577040adf6916e93002af9b882  round1/host_client.json
+a094c3b86f7fcbc495eb0246b09df43d8ebe04f64c9fae1a740809f76f73c8b3  round1/host_timeline.txt
+f329ad59d75a5577b121054d15d74ea772647a7247ef014ff5ab8c2f6199fb6d  round1/lifecycle_report.json
+236dff3a0efbd22c42c77315ca894740010b2efc052d3271c1b6aef2620ac09b  round1/qemu.log
+05883c57788ac0cc250f78fd018cf85bb88f72483aa4cabeb4fac6c8f1dfa465  round1/timeline.txt
+96dcd1d076532db569dc493115b2d77b9f99bb88b5e97225dc5f20528ed63125  round1/生命周期校验报告.md
+9131fb3e2d96b3842d4715e42bfcce99955a1d967cdb61e18d6b9fbfd39f65ce  round2/gantt-trial.png
+9a5fc5a2a7adf01e49547bdaa7cb8a398fd7bf7efe29cc3448c69948f841a017  round2/gantt-trial2.png
+68e8c05b6f415a74657ef7d3b0b205fb79bf45f53b7e2237abe36a77f6e43152  round2/lifecycle_report.json
+44eaa22d2a9ac6db2f3248c7e869752195f68c76b960554dc10ee7322fe72339  round2/timeline.txt
+ab37e5a5bd33839cd9480847b420c7b3da98927c194c00901073efe02dff3f8b  round2/生命周期校验报告.md
+c3f3d5fc1f9261ab8a52111069304762b71caa31bf4cad7b011cf869b6b00405  run.sh
+70dfc38bf7e26103ade6a79d542416db7fe332588076963569c4a351ea5237aa  生命周期校验报告.md

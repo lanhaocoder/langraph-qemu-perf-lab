@@ -33,5 +33,11 @@ node_modules/
 .vscode/
 .idea/
 
-# 例外：get_ftrace.sh 原生生成的 langraph/ 产物归档（本次要入库）
+# 例外：get_ftrace.sh 原生生成的 langraph/ 产物归档（实验 3）
 !iperf-perf/langraph-native/langraph.tar.gz
+
+# 例外：完整 iperf 进程生命周期归档（实验 4）
+# 上面 *.tar.gz 与 host_server.log 是全局忽略，需按精确路径放行
+!iperf-lifecycle/iperf-lifecycle.tar.gz
+!iperf-lifecycle/host_server.log
+!iperf-lifecycle/ready.flag

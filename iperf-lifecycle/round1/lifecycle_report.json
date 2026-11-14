@@ -1,0 +1,474 @@
+{
+  "ftrace": {
+    "path": "langraph/ftrace.log",
+    "parsed_events": 195132,
+    "unmatched_lines": 4304481,
+    "window_s": [
+      10.556609,
+      36.60161
+    ],
+    "window_span_s": 26.045,
+    "event_types": 19,
+    "top_events": [
+      [
+        "sched_stat_runtime",
+        120804
+      ],
+      [
+        "softirq_raise",
+        14067
+      ],
+      [
+        "softirq_entry",
+        13575
+      ],
+      [
+        "softirq_exit",
+        13575
+      ],
+      [
+        "sched_switch",
+        13010
+      ],
+      [
+        "sched_waking",
+        7290
+      ],
+      [
+        "sched_wakeup",
+        7290
+      ],
+      [
+        "tasklet_entry",
+        2141
+      ],
+      [
+        "tasklet_exit",
+        2141
+      ],
+      [
+        "sched_migrate_task",
+        649
+      ],
+      [
+        "sched_wake_idle_without_ipi",
+        265
+      ],
+      [
+        "irq_handler_entry",
+        53
+      ],
+      [
+        "irq_handler_exit",
+        53
+      ],
+      [
+        "sched_process_fork",
+        49
+      ],
+      [
+        "sched_wakeup_new",
+        49
+      ],
+      [
+        "sched_process_exit",
+        49
+      ],
+      [
+        "sched_process_free",
+        49
+      ],
+      [
+        "sched_process_wait",
+        20
+      ],
+      [
+        "sched_process_exec",
+        3
+      ]
+    ],
+    "prev_state_dist": [
+      [
+        "S",
+        6885
+      ],
+      [
+        "R",
+        5388
+      ],
+      [
+        "I",
+        401
+      ],
+      [
+        "R+",
+        284
+      ],
+      [
+        "X",
+        41
+      ],
+      [
+        "Z",
+        8
+      ],
+      [
+        "D",
+        3
+      ]
+    ]
+  },
+  "iperf_lifecycle": {
+    "fork_count": 40,
+    "exec_count": 1,
+    "wakeup_new_count": 40,
+    "exit_count": 42,
+    "free_count": 3,
+    "closed_count": 2,
+    "fork_without_exit": [],
+    "fork_without_free": [
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380
+    ],
+    "exit_without_fork": [
+      131,
+      381
+    ],
+    "first_fork_ts": 11.818021,
+    "first_exit_ts": 21.869752,
+    "last_free_ts": 22.70704,
+    "headroom_start_s": 1.261412,
+    "headroom_end_s": 13.894570000000002,
+    "comm_dist": [
+      [
+        "iperf3",
+        118376
+      ]
+    ]
+  },
+  "perf": {
+    "perf_log_bytes": 56520615,
+    "perf_log_lines": 1030101,
+    "perf_data_bytes": 11466942
+  },
+  "timeline": null,
+  "timeline_raw": [
+    [
+      3.4,
+      "BOOT"
+    ],
+    [
+      3.41,
+      "NET_START"
+    ],
+    [
+      6.02,
+      "NET_UP"
+    ],
+    [
+      6.89,
+      "KALLSYMS lines=203527"
+    ],
+    [
+      6.89,
+      "CAPTURE_LAUNCH t=26 p=1 m=131072"
+    ],
+    [
+      6.92,
+      "FTRACE_ON tracing_on=1"
+    ],
+    [
+      6.93,
+      "GUEST_SERVER_START pid=131"
+    ],
+    [
+      8.94,
+      "GUEST_SERVER_LISTEN"
+    ],
+    [
+      9.01,
+      "READY_SENT"
+    ],
+    [
+      12.03,
+      "GUEST_CLIENT_START pid=381"
+    ],
+    [
+      22.72,
+      "GUEST_CLIENT_EXIT rc=0 pid=381"
+    ],
+    [
+      22.84,
+      "GUEST_SERVER_EXIT rc=0 pid=131"
+    ],
+    [
+      22.88,
+      "IPERF_ALL_EXITED residual=0"
+    ],
+    [
+      174.85,
+      "CAPTURE_EXIT rc=0"
+    ],
+    [
+      197.1,
+      "PERF_LOG lines=1030101"
+    ]
+  ],
+  "checks": [
+    {
+      "name": "1. 抓到 iperf3 创建 (sched_process_fork)",
+      "pass": true,
+      "detail": "fork iperf3 线程数 = 40"
+    },
+    {
+      "name": "2. 抓到 iperf3 销毁 (exit / free)",
+      "pass": true,
+      "detail": "exit=42  free=3"
+    },
+    {
+      "name": "3. 生命周期闭合 (fork ⊆ exit ⊆ free, 每个都有)",
+      "pass": false,
+      "detail": "闭合 2/40；fork 无 exit=0  fork 无 free=38；exit 无 fork=2"
+    },
+    {
+      "name": "4. ftrace 先于 iperf 开启 (最早 fork > 窗口起点)",
+      "pass": true,
+      "detail": "窗口起点=10.556609s  最早 fork=11.818021s  余量=1.261s"
+    },
+    {
+      "name": "5. iperf 早于采集结束 (最晚 free < 窗口终点)",
+      "pass": true,
+      "detail": "最晚 free=22.707040s  窗口终点=36.601610s  余量=13.895s"
+    },
+    {
+      "name": "6. perf 与 ftrace 同时抓 (perf.log/perf.data 非空)",
+      "pass": true,
+      "detail": "perf.log=1030101 行 / 56.52 MB, perf.data=11.47 MB"
+    }
+  ],
+  "all_pass": false,
+  "sample_thread": {
+    "pid": 381,
+    "event_count": 43,
+    "chain": [
+      {
+        "ts": 12.094676,
+        "event": "sched_process_exec",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.098666,
+        "event": "sched_process_free",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.425502,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.425675,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.426474,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.426538,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.428106,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.428191,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.430905,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.43096,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.431377,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.431414,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.431813,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.431839,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.432101,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.432146,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.432725,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.432794,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.434444,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.434484,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.435005,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.435112,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.435403,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.435437,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.43591,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.43596,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.436431,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.436464,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.43802,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.438061,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.438303,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.438334,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.439487,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.439546,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.439955,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.439988,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.441243,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.44128,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.442366,
+        "event": "sched_process_fork",
+        "comm": "iperf3"
+      },
+      {
+        "ts": 12.442401,
+        "event": "sched_wakeup_new",
+        "comm": "iperf3"
+      }
+    ]
+  }
+}
