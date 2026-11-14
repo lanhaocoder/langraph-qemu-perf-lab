@@ -32,3 +32,6 @@ host_server.log
 node_modules/
 .vscode/
 .idea/
+
+# 例外：get_ftrace.sh 原生生成的 langraph/ 产物归档（本次要入库）
+!iperf-perf/langraph-native/langraph.tar.gz

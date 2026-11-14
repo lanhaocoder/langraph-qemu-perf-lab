@@ -34,6 +34,7 @@ iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
   samples/                   iperf3 双向结果 json、采集脚本日志
   logs/                      统计摘要、日志头部样本
     full/                    完整原始日志（gzip 压缩，577 MB → 21.5 MB）+ 还原脚本
+  langraph-native/           get_ftrace.sh 原生 `langraph/` 产物归档（9.23 MB）+ 复现脚本
 ```
 
 ## 关键实测数据
@@ -97,7 +98,8 @@ cd iperf-perf && ./run.sh
 2. **硬件 PMU 不可用。** TCG 不虚拟 PMU，perf 只能用软件事件和 tracepoint，`cycles` / `instructions` / `cache-misses` 全部 `ENOENT`。本仓库的 perf 数据用的是 `cpu-clock` 软件事件。
 3. **`get_ftrace.sh` 未做任何修改。** Guest 内放了一个 `bin/perf` wrapper，把脚本默认的 `cycles` 换成 `-e cpu-clock`、`-g --call-graph=dwarf` 换成 `fp`，脚本本身保持原样。
 4. **完整日志已压缩入库。** `ftrace.log` 253 MB、`perf.log` 98 MB 原本超 GitHub 100 MB 单文件上限，但日志重复度极高，`gzip -9` 后两轮共 577 MB 压到 **21.5 MB（3.7%）**，全部无损存入 `iperf-perf/logs/full/`，`./unpack.sh` 一键还原。`logs/` 下的头部样本和统计摘要仍然保留，方便不解压直接看。未入库的只剩内核、initramfs 等可由脚本重建的二进制。
-5. **运行时符号表单独保存了，但与旧数据地址不对应。** `qemu-guest/kallsyms/` 存了 Guest 的 `/proc/kallsyms`（203,527 行，含 688 个 e1000 模块符号）与 `System.map`，用 `nokaslr` 抓、地址固定可复现。但 `run1/` / `run2/` 那两轮是在默认 KASLR 下采的，基址带随机偏移，因此这份表**不能**给旧 `perf.data` 做地址换算；`perf.log` 是当时已符号化的文本，不受影响。详见 `qemu-guest/kallsyms/README.md`。`iperf-perf/guest-init.sh` 已加自动导出，以后每轮采集会随日志一起回传。
+5. **运行时符号表单独保存了，且与新归档严格对应。** `qemu-guest/kallsyms/` 存了 Guest 的 `/proc/kallsyms`（203,527 行，含 688 个 e1000 模块符号）与 `System.map`，`nokaslr` 抓、地址固定。`run1/` / `run2/` 那两轮是默认 KASLR 采的，基址带随机偏移，**不能**给旧数据做地址换算；但 `iperf-perf/langraph-native/` 这轮用 `nokaslr` 重跑，`langraph/` 里自带 `kallsyms.txt` 与完整的 `perf.data`，两者严格对应，可以放心重新符号化。`perf.log` 本身是已符号化文本，任何一轮都不受影响。详见两处 README。`iperf-perf/guest-init.sh` 已加自动导出，以后每轮采集会随日志一起回传。
+6. **`get_ftrace.sh` 原生产物是 `langraph/` 目录。** 脚本默认 `output="langraph"`、`-p 1` 同时开 perf 与 ftrace、`-z 1` 自动压缩。前几轮为了单独回传日志用了 `-o /langraph_out -z 0` 改名并拆分，没留下这个标准产物；`iperf-perf/langraph-native/` 是按原生语义重跑补齐的归档（含 `perf.data` / `ftrace_symbol.log` / `kallsyms.txt`）。
 
 ## 相关
 
