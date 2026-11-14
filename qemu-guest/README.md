@@ -30,6 +30,7 @@ Guest 环境：`6.8.0-31-generic`，TCG，2 vCPU / 1 GB 内存，busybox 静态 
 | `perftest.c` | Guest 内 perf_event_open 探测程序（静态编译） |
 | `boot.sh` | 一条命令启动 |
 | `build-guest.sh` | 改完代码后重建 initramfs |
+| `kallsyms/` | Guest 运行时 `/proc/kallsyms`（含 e1000 模块符号）+ `System.map` + 抓取脚本，见其中 README |
 
 ## 用法
 

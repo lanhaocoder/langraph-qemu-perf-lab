@@ -40,6 +40,8 @@ Guest 内执行 `get_ftrace.sh -t 35 -p 1`（`-p 1` 打开 perf 分支），同�
 | `logs/ftrace-stats.txt` | 事件类型分布统计 |
 | `logs/full/` | **完整原始日志**：两轮采集的 `*.log.gz`（577 MB → 21.5 MB）、`MANIFEST.txt`、`unpack.sh`、`README.md` |
 
+> 内核符号表见 `../qemu-guest/kallsyms/`。`guest-init.sh` 现在会在 `insmod e1000` 之后导出 `kallsyms.txt` / `modules.txt` / `version.txt`，随 `result.tar` 一起回传；`run.sh` 用 `tar xf` 解包，会自动落到 `guest/` 下。注意本目录已有的两轮日志是加这一步之前采的，未附带符号表。
+
 ## 两处处理说明
 
 1. **perf 用 `cpu-clock` 软件事件。** TCG 不虚拟 PMU，`cycles` 直接 `ENOENT`。Guest 内放了一个 `bin/perf` wrapper 换成 `-e cpu-clock` + `-g --call-graph=fp`，宿主机的 `get_ftrace.sh` **未改动**。

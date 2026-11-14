@@ -20,6 +20,15 @@ ifconfig eth0 10.0.2.15 netmask 255.255.255.0 up
 route add default gw 10.0.2.2 2>/dev/null
 ifconfig eth0 | head -3 | tail -2
 
+# 导出运行时内核符号表：必须在 insmod e1000 之后，模块符号才会出现在 kallsyms 里。
+# 用于离线重新解析 perf.data / 地址换算；详见 ../qemu-guest/kallsyms/README.md
+echo 0 > /proc/sys/kernel/kptr_restrict 2>/dev/null
+mkdir -p /langraph_out
+cp /proc/kallsyms /langraph_out/kallsyms.txt
+cp /proc/modules  /langraph_out/modules.txt
+cp /proc/version  /langraph_out/version.txt
+echo "[ks] kallsyms=$(wc -l < /langraph_out/kallsyms.txt) 行, modules=$(wc -l < /langraph_out/modules.txt) 个"
+
 # Guest 侧 iperf3 server，供宿主机经 hostfwd 反向发起双向流量
 iperf3 -s -p 5201 -D 2>/dev/null || iperf3 -s -p 5201 >/dev/null 2>&1 &
 sleep 2
@@ -53,7 +62,7 @@ ls -lh /langraph_out/
 cp /capture.log /langraph_out/capture.log
 cp /perf_script.err /langraph_out/perf_script.err
 cd /langraph_out
-tar cf /tmp/result.tar perf.log ftrace.log ftrace_format.log iperf_guest_to_host.json capture.log perf_script.err 2>/dev/null
+tar cf /tmp/result.tar perf.log ftrace.log ftrace_format.log iperf_guest_to_host.json capture.log perf_script.err kallsyms.txt modules.txt version.txt 2>/dev/null
 cp /tmp/result.tar /langraph_out/result.tar
 echo "[export] tar=$(wc -c < /tmp/result.tar) bytes"
 

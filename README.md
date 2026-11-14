@@ -26,6 +26,7 @@ qemu-guest/                  最小 Guest 构建与启动（实验 2）
   guest-init.sh              Guest 的 /init
   perftest.c                 Guest 内 perf_event_open 能力探测
   串口日志.txt                完整启动与执行日志
+  kallsyms/                  Guest 运行时内核符号表（含 e1000 模块符号）+ System.map
 iperf-perf/                  双向流量 + perf/ftrace 采集（实验 3）
   run.sh                     宿主机编排：iperf server + 反向流量 + 日志回传
   guest-init.sh              Guest /init：挂 tracefs → 采集 → 压测 → 回传
@@ -96,6 +97,7 @@ cd iperf-perf && ./run.sh
 2. **硬件 PMU 不可用。** TCG 不虚拟 PMU，perf 只能用软件事件和 tracepoint，`cycles` / `instructions` / `cache-misses` 全部 `ENOENT`。本仓库的 perf 数据用的是 `cpu-clock` 软件事件。
 3. **`get_ftrace.sh` 未做任何修改。** Guest 内放了一个 `bin/perf` wrapper，把脚本默认的 `cycles` 换成 `-e cpu-clock`、`-g --call-graph=dwarf` 换成 `fp`，脚本本身保持原样。
 4. **完整日志已压缩入库。** `ftrace.log` 253 MB、`perf.log` 98 MB 原本超 GitHub 100 MB 单文件上限，但日志重复度极高，`gzip -9` 后两轮共 577 MB 压到 **21.5 MB（3.7%）**，全部无损存入 `iperf-perf/logs/full/`，`./unpack.sh` 一键还原。`logs/` 下的头部样本和统计摘要仍然保留，方便不解压直接看。未入库的只剩内核、initramfs 等可由脚本重建的二进制。
+5. **运行时符号表单独保存了，但与旧数据地址不对应。** `qemu-guest/kallsyms/` 存了 Guest 的 `/proc/kallsyms`（203,527 行，含 688 个 e1000 模块符号）与 `System.map`，用 `nokaslr` 抓、地址固定可复现。但 `run1/` / `run2/` 那两轮是在默认 KASLR 下采的，基址带随机偏移，因此这份表**不能**给旧 `perf.data` 做地址换算；`perf.log` 是当时已符号化的文本，不受影响。详见 `qemu-guest/kallsyms/README.md`。`iperf-perf/guest-init.sh` 已加自动导出，以后每轮采集会随日志一起回传。
 
 ## 相关
 
