@@ -1,0 +1,82 @@
+[
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-chain.pftrace",
+    "size": 27048,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 193,
+      "flow": 46,
+      "track": 23,
+      "args": 559
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 10,
+      "mean": 69.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-chain.json",
+    "size": 42064,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 129,
+      "flow": 42,
+      "track": 20,
+      "args": 348
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 5,
+      "mean": 69.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-full.pftrace",
+    "size": 43267957,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 367845,
+      "flow": 96064,
+      "track": 67,
+      "args": 156605
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 25,
+      "sched_process_free": 24,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 22837,
+      "mean": 414.8
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-full.json",
+    "size": 61489007,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 231425,
+      "flow": 96061,
+      "track": 87,
+      "args": 147269
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 25,
+      "sched_process_free": 24,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 20221,
+      "mean": 262.0
+    }
+  }
+]

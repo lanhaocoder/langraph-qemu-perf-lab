@@ -41,3 +41,7 @@ node_modules/
 !iperf-lifecycle/iperf-lifecycle.tar.gz
 !iperf-lifecycle/host_server.log
 !iperf-lifecycle/ready.flag
+
+# 例外：低速小包重抓、带完整硬中断因果链（实验 5）
+!iperf-hardirq/iperf-hardirq.tar.gz
+!iperf-hardirq/host_server.log

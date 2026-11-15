@@ -1,0 +1,570 @@
+{
+  "log": "langraph/ftrace.log",
+  "parsed_lines": 315293,
+  "tmin": 7.320481,
+  "tmax": 33.327563,
+  "counts": {
+    "sched_stat_runtime": 97008,
+    "sched_switch": 39696,
+    "softirq_raise": 27224,
+    "softirq_entry": 26987,
+    "softirq_exit": 26987,
+    "sched_waking": 20483,
+    "sched_wakeup": 20483,
+    "irq_handler_entry": 18531,
+    "irq_handler_exit": 18531,
+    "napi_poll": 18522,
+    "sched_migrate_task": 243,
+    "sched_wake_idle_without_ipi": 156,
+    "tasklet_entry": 150,
+    "tasklet_exit": 150,
+    "sched_process_wait": 38,
+    "sched_process_fork": 25,
+    "sched_wakeup_new": 25,
+    "sched_process_free": 24,
+    "sched_process_exit": 23,
+    "sched_process_exec": 7
+  },
+  "totals": {
+    "irq11_eth0": 18522,
+    "netrx_raise": 15184,
+    "napi_poll": 18522,
+    "wake_iperf3": 38944,
+    "switch_to_iperf3": 19598
+  },
+  "by_second": [
+    {
+      "sec": 7,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 8,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 9,
+      "irq11": 1,
+      "netrx_raise": 1,
+      "napi_poll": 1,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 1
+    },
+    {
+      "sec": 10,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 11,
+      "irq11": 7,
+      "netrx_raise": 7,
+      "napi_poll": 7,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 12,
+      "irq11": 10,
+      "netrx_raise": 5,
+      "napi_poll": 10,
+      "wake_iperf3": 2,
+      "switch_to_iperf3": 2
+    },
+    {
+      "sec": 13,
+      "irq11": 1136,
+      "netrx_raise": 858,
+      "napi_poll": 1136,
+      "wake_iperf3": 1914,
+      "switch_to_iperf3": 958
+    },
+    {
+      "sec": 14,
+      "irq11": 1520,
+      "netrx_raise": 1344,
+      "napi_poll": 1520,
+      "wake_iperf3": 2650,
+      "switch_to_iperf3": 1329
+    },
+    {
+      "sec": 15,
+      "irq11": 1480,
+      "netrx_raise": 1171,
+      "napi_poll": 1480,
+      "wake_iperf3": 3056,
+      "switch_to_iperf3": 1539
+    },
+    {
+      "sec": 16,
+      "irq11": 1403,
+      "netrx_raise": 1147,
+      "napi_poll": 1402,
+      "wake_iperf3": 3064,
+      "switch_to_iperf3": 1541
+    },
+    {
+      "sec": 17,
+      "irq11": 1470,
+      "netrx_raise": 1194,
+      "napi_poll": 1471,
+      "wake_iperf3": 3140,
+      "switch_to_iperf3": 1575
+    },
+    {
+      "sec": 18,
+      "irq11": 1475,
+      "netrx_raise": 1202,
+      "napi_poll": 1475,
+      "wake_iperf3": 3144,
+      "switch_to_iperf3": 1581
+    },
+    {
+      "sec": 19,
+      "irq11": 1530,
+      "netrx_raise": 1239,
+      "napi_poll": 1529,
+      "wake_iperf3": 3164,
+      "switch_to_iperf3": 1592
+    },
+    {
+      "sec": 20,
+      "irq11": 1500,
+      "netrx_raise": 1212,
+      "napi_poll": 1499,
+      "wake_iperf3": 3122,
+      "switch_to_iperf3": 1564
+    },
+    {
+      "sec": 21,
+      "irq11": 1461,
+      "netrx_raise": 1183,
+      "napi_poll": 1463,
+      "wake_iperf3": 3110,
+      "switch_to_iperf3": 1564
+    },
+    {
+      "sec": 22,
+      "irq11": 1528,
+      "netrx_raise": 1254,
+      "napi_poll": 1527,
+      "wake_iperf3": 3118,
+      "switch_to_iperf3": 1574
+    },
+    {
+      "sec": 23,
+      "irq11": 1531,
+      "netrx_raise": 1270,
+      "napi_poll": 1531,
+      "wake_iperf3": 3190,
+      "switch_to_iperf3": 1605
+    },
+    {
+      "sec": 24,
+      "irq11": 1512,
+      "netrx_raise": 1246,
+      "napi_poll": 1513,
+      "wake_iperf3": 3176,
+      "switch_to_iperf3": 1599
+    },
+    {
+      "sec": 25,
+      "irq11": 599,
+      "netrx_raise": 549,
+      "napi_poll": 599,
+      "wake_iperf3": 1990,
+      "switch_to_iperf3": 1021
+    },
+    {
+      "sec": 26,
+      "irq11": 352,
+      "netrx_raise": 297,
+      "napi_poll": 352,
+      "wake_iperf3": 1104,
+      "switch_to_iperf3": 553
+    },
+    {
+      "sec": 27,
+      "irq11": 1,
+      "netrx_raise": 1,
+      "napi_poll": 1,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 28,
+      "irq11": 2,
+      "netrx_raise": 1,
+      "napi_poll": 2,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 29,
+      "irq11": 1,
+      "netrx_raise": 1,
+      "napi_poll": 1,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 30,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 31,
+      "irq11": 3,
+      "netrx_raise": 2,
+      "napi_poll": 3,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 32,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    },
+    {
+      "sec": 33,
+      "irq11": 0,
+      "netrx_raise": 0,
+      "napi_poll": 0,
+      "wake_iperf3": 0,
+      "switch_to_iperf3": 0
+    }
+  ],
+  "interrupts_before": {
+    "eth0": 3
+  },
+  "interrupts_after": {
+    "eth0": 18701
+  },
+  "interrupts_delta": {
+    "eth0": 18698
+  },
+  "full_chains": [
+    {
+      "score": 4,
+      "t0": 14.633361,
+      "t1": 14.633424,
+      "span_us": 63.0,
+      "nodes": [
+        {
+          "dt_us": 0.0,
+          "ts": 14.633361,
+          "cpu": 0,
+          "comm": "iperf3",
+          "event": "irq_handler_entry",
+          "args": "irq=11 name=eth0"
+        },
+        {
+          "dt_us": 16.0,
+          "ts": 14.633377,
+          "cpu": 0,
+          "event": "softirq_raise(NET_RX)",
+          "args": "vec=3 [action=NET_RX]"
+        },
+        {
+          "dt_us": 22.0,
+          "ts": 14.633383,
+          "cpu": 1,
+          "event": "sched_waking(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 36.0,
+          "ts": 14.633397,
+          "cpu": 1,
+          "event": "sched_wakeup(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 57.0,
+          "ts": 14.633418,
+          "cpu": 1,
+          "event": "sched_switch(next=iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "prev_comm": "swapper/1",
+          "prev_state": "R",
+          "args": "prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=iperf3 next_pid=380 next_prio=120"
+        },
+        {
+          "dt_us": 63.0,
+          "ts": 14.633424,
+          "cpu": 0,
+          "event": "napi_poll",
+          "args": "napi poll on napi struct 000000004b867474 for device eth0 work 1 budget 64"
+        }
+      ]
+    },
+    {
+      "score": 4,
+      "t0": 15.5561,
+      "t1": 15.556169,
+      "span_us": 69.0,
+      "nodes": [
+        {
+          "dt_us": 0.0,
+          "ts": 15.5561,
+          "cpu": 0,
+          "comm": "<idle>",
+          "event": "irq_handler_entry",
+          "args": "irq=11 name=eth0"
+        },
+        {
+          "dt_us": 12.0,
+          "ts": 15.556112,
+          "cpu": 0,
+          "event": "softirq_raise(NET_RX)",
+          "args": "vec=3 [action=NET_RX]"
+        },
+        {
+          "dt_us": 22.0,
+          "ts": 15.556122,
+          "cpu": 1,
+          "event": "sched_waking(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 37.0,
+          "ts": 15.556137,
+          "cpu": 1,
+          "event": "sched_wakeup(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 49.0,
+          "ts": 15.556149,
+          "cpu": 0,
+          "event": "napi_poll",
+          "args": "napi poll on napi struct 000000004b867474 for device eth0 work 0 budget 64"
+        },
+        {
+          "dt_us": 69.0,
+          "ts": 15.556169,
+          "cpu": 1,
+          "event": "sched_switch(next=iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "prev_comm": "swapper/1",
+          "prev_state": "R",
+          "args": "prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=iperf3 next_pid=380 next_prio=120"
+        }
+      ]
+    },
+    {
+      "score": 4,
+      "t0": 24.037358,
+      "t1": 24.037437,
+      "span_us": 79.0,
+      "nodes": [
+        {
+          "dt_us": 0.0,
+          "ts": 24.037358,
+          "cpu": 0,
+          "comm": "iperf3",
+          "event": "irq_handler_entry",
+          "args": "irq=11 name=eth0"
+        },
+        {
+          "dt_us": 22.0,
+          "ts": 24.03738,
+          "cpu": 0,
+          "event": "softirq_raise(NET_RX)",
+          "args": "vec=3 [action=NET_RX]"
+        },
+        {
+          "dt_us": 33.0,
+          "ts": 24.037391,
+          "cpu": 1,
+          "event": "sched_waking(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 51.0,
+          "ts": 24.037409,
+          "cpu": 1,
+          "event": "sched_wakeup(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 70.0,
+          "ts": 24.037428,
+          "cpu": 0,
+          "event": "napi_poll",
+          "args": "napi poll on napi struct 000000004b867474 for device eth0 work 0 budget 64"
+        },
+        {
+          "dt_us": 79.0,
+          "ts": 24.037437,
+          "cpu": 1,
+          "event": "sched_switch(next=iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "prev_comm": "swapper/1",
+          "prev_state": "R",
+          "args": "prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=iperf3 next_pid=380 next_prio=120"
+        }
+      ]
+    },
+    {
+      "score": 4,
+      "t0": 23.58634,
+      "t1": 23.586431,
+      "span_us": 91.0,
+      "nodes": [
+        {
+          "dt_us": 0.0,
+          "ts": 23.58634,
+          "cpu": 0,
+          "comm": "iperf3",
+          "event": "irq_handler_entry",
+          "args": "irq=11 name=eth0"
+        },
+        {
+          "dt_us": 29.0,
+          "ts": 23.586369,
+          "cpu": 0,
+          "event": "softirq_raise(NET_RX)",
+          "args": "vec=3 [action=NET_RX]"
+        },
+        {
+          "dt_us": 52.0,
+          "ts": 23.586392,
+          "cpu": 1,
+          "event": "sched_waking(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 66.0,
+          "ts": 23.586406,
+          "cpu": 1,
+          "event": "sched_wakeup(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 90.0,
+          "ts": 23.58643,
+          "cpu": 1,
+          "event": "sched_switch(next=iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "prev_comm": "swapper/1",
+          "prev_state": "R",
+          "args": "prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=iperf3 next_pid=380 next_prio=120"
+        },
+        {
+          "dt_us": 91.0,
+          "ts": 23.586431,
+          "cpu": 0,
+          "event": "napi_poll",
+          "args": "napi poll on napi struct 000000004b867474 for device eth0 work 0 budget 64"
+        }
+      ]
+    },
+    {
+      "score": 4,
+      "t0": 24.362346,
+      "t1": 24.362443,
+      "span_us": 97.0,
+      "nodes": [
+        {
+          "dt_us": 0.0,
+          "ts": 24.362346,
+          "cpu": 0,
+          "comm": "iperf3",
+          "event": "irq_handler_entry",
+          "args": "irq=11 name=eth0"
+        },
+        {
+          "dt_us": 28.0,
+          "ts": 24.362374,
+          "cpu": 0,
+          "event": "softirq_raise(NET_RX)",
+          "args": "vec=3 [action=NET_RX]"
+        },
+        {
+          "dt_us": 57.0,
+          "ts": 24.362403,
+          "cpu": 1,
+          "event": "sched_waking(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 72.0,
+          "ts": 24.362418,
+          "cpu": 1,
+          "event": "sched_wakeup(iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "target_cpu": "001",
+          "args": "comm=iperf3 pid=380 prio=120 target_cpu=001"
+        },
+        {
+          "dt_us": 91.0,
+          "ts": 24.362437,
+          "cpu": 0,
+          "event": "napi_poll",
+          "args": "napi poll on napi struct 000000004b867474 for device eth0 work 0 budget 64"
+        },
+        {
+          "dt_us": 97.0,
+          "ts": 24.362443,
+          "cpu": 1,
+          "event": "sched_switch(next=iperf3)",
+          "comm": "iperf3",
+          "pid": "380",
+          "prev_comm": "swapper/1",
+          "prev_state": "R",
+          "args": "prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=iperf3 next_pid=380 next_prio=120"
+        }
+      ]
+    }
+  ],
+  "n_full_chains": 17586
+}

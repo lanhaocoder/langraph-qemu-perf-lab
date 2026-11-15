@@ -1,0 +1,97 @@
+{
+  "tool": "ftrace2perfetto.py",
+  "version": "1.0",
+  "input": "/workspace/iperf-hardirq/langraph/ftrace.log",
+  "outputs": {
+    "json": "/workspace/ftrace2perfetto/out/iperf-hardirq-full.json",
+    "pftrace": "/workspace/ftrace2perfetto/out/iperf-hardirq-full.pftrace"
+  },
+  "options": {
+    "format": "both",
+    "start": null,
+    "end": null,
+    "focus": null,
+    "cpus": null,
+    "no_irq": false,
+    "no_flow": false,
+    "no_thread_state": false,
+    "no_lifecycle": false
+  },
+  "elapsed_sec": 22.51,
+  "input_stats": {
+    "total_lines": 15942662,
+    "stack_lines": 14682756,
+    "skipped_lines": 629320,
+    "tracepoint_events": 315293,
+    "event_counts": {
+      "sched_stat_runtime": 97008,
+      "sched_switch": 39696,
+      "softirq_raise": 27224,
+      "softirq_entry": 26987,
+      "softirq_exit": 26987,
+      "sched_waking": 20483,
+      "sched_wakeup": 20483,
+      "irq_handler_entry": 18531,
+      "irq_handler_exit": 18531,
+      "napi_poll": 18522,
+      "sched_migrate_task": 243,
+      "sched_wake_idle_without_ipi": 156,
+      "tasklet_entry": 150,
+      "tasklet_exit": 150,
+      "sched_process_wait": 38,
+      "sched_process_fork": 25,
+      "sched_wakeup_new": 25,
+      "sched_process_free": 24,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "time_window_sec": [
+      7.320481,
+      33.327563
+    ],
+    "cpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "distinct_pids": 44
+  },
+  "output_stats": {
+    "events": {
+      "metadata": 106,
+      "slice": 185319,
+      "flow": 136420,
+      "instant": 46106
+    },
+    "tracks": 103,
+    "track_groups": 4,
+    "flow_total": 20483,
+    "flow_matched_to_switch": 20288,
+    "flow_match_rate": 0.9905
+  },
+  "wake2run_us": {
+    "samples": 20288,
+    "p50": 40.0,
+    "p95": 327.0,
+    "p99": 1044.0,
+    "max": 692519.0,
+    "mean": 261.192
+  },
+  "lifecycle": {
+    "tids_with_events": 32,
+    "tids_fork_to_free_closed": 23,
+    "sample_closed_tids": [
+      365,
+      366,
+      367,
+      369,
+      370,
+      371,
+      373,
+      374,
+      375,
+      376
+    ]
+  }
+}

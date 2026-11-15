@@ -61,9 +61,17 @@
 
 ### 原始数据限制（非转换问题）
 
-`irq_handler_entry` 原始日志**仅 74 条**，`softirq_raise` 15,746 条 —— QEMU/virtio 下硬中断 tracepoint
-基本没抓到，因此因果链绝大多数**从软中断（NET_RX / TASKLET / RCU）起点**，硬中断段在这份 ftrace 里
-几乎不可见。要补齐需确认 `get_ftrace.sh` 已 enable `irq/irq_handler_entry` 后重抓。
+`irq_handler_entry` 原始日志**仅 74 条**，`softirq_raise` 15,746 条，因此本目录的因果链绝大多数
+**从软中断（NET_RX / TASKLET / RCU）起点**，硬中断段几乎不可见。
+
+> **更正（实验 5 后）**：此处原写「tracepoint 没抓到、需确认 enable `irq/irq_handler_entry`
+> 后重抓」是**错的**。`irq/irq_handler_entry` 一直 enable（`entry/exit` 74/74 成对），
+> 真正原因是 **e1000 驱动的 NAPI 中断屏蔽**：`e1000_intr()` 写 IMC 关中断 →
+> `__napi_schedule()` → NET_RX 软中断里 `e1000_clean()` 批量收包；`-P 20` 持续大流量下
+> RX 队列始终不排空，不 `napi_complete()`、不写 IMS 重开中断，于是稳定打流 10 s 内
+> eth0 硬中断为 0。已用低速小包（`-P 2 -b 1M -l 256`）重抓验证：硬中断 66 → **18,522**，
+> 与 `napi_poll` 1:1，`/proc/interrupts` IRQ11 增量 +18,698。
+> 带完整硬中断链的新产物见 [`../../iperf-hardirq/perfetto/`](../../iperf-hardirq/perfetto/)。
 
 ## 校验（trace_processor_shell v59.1）
 

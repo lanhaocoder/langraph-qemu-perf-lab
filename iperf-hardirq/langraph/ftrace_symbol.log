@@ -1,0 +1,306 @@
+# user_symbol: /bin/busybox 0x10518 0x0000000000010518: ?? ??:0
+# user_symbol: /bin/busybox 0x10b32a 0x000000000010b32a: ?? ??:0
+# user_symbol: /bin/busybox 0x1100dc 0x00000000001100dc: ?? ??:0
+# user_symbol: /bin/busybox 0x110127 0x0000000000110127: ?? ??:0
+# user_symbol: /bin/busybox 0x11044e 0x000000000011044e: ?? ??:0
+# user_symbol: /bin/busybox 0x110b71 0x0000000000110b71: ?? ??:0
+# user_symbol: /bin/busybox 0x1262c 0x000000000001262c: ?? ??:0
+# user_symbol: /bin/busybox 0x12cd0 0x0000000000012cd0: ?? ??:0
+# user_symbol: /bin/busybox 0x130b9 0x00000000000130b9: ?? ??:0
+# user_symbol: /bin/busybox 0x13f05 0x0000000000013f05: ?? ??:0
+# user_symbol: /bin/busybox 0x14446f 0x000000000014446f: ?? ??:0
+# user_symbol: /bin/busybox 0x144ac6 0x0000000000144ac6: ?? ??:0
+# user_symbol: /bin/busybox 0x144d78 0x0000000000144d78: ?? ??:0
+# user_symbol: /bin/busybox 0x145d30 0x0000000000145d30: ?? ??:0
+# user_symbol: /bin/busybox 0x146d31 0x0000000000146d31: ?? ??:0
+# user_symbol: /bin/busybox 0x147c47 0x0000000000147c47: ?? ??:0
+# user_symbol: /bin/busybox 0x147d0f 0x0000000000147d0f: ?? ??:0
+# user_symbol: /bin/busybox 0x147e05 0x0000000000147e05: ?? ??:0
+# user_symbol: /bin/busybox 0x1496b6 0x00000000001496b6: ?? ??:0
+# user_symbol: /bin/busybox 0x149dfc 0x0000000000149dfc: ?? ??:0
+# user_symbol: /bin/busybox 0x14a74f 0x000000000014a74f: ?? ??:0
+# user_symbol: /bin/busybox 0x14a7c6 0x000000000014a7c6: ?? ??:0
+# user_symbol: /bin/busybox 0x14acc8 0x000000000014acc8: ?? ??:0
+# user_symbol: /bin/busybox 0x14adc9 0x000000000014adc9: ?? ??:0
+# user_symbol: /bin/busybox 0x14af1b 0x000000000014af1b: ?? ??:0
+# user_symbol: /bin/busybox 0x14af30 0x000000000014af30: ?? ??:0
+# user_symbol: /bin/busybox 0x14af42 0x000000000014af42: ?? ??:0
+# user_symbol: /bin/busybox 0x14b891 0x000000000014b891: ?? ??:0
+# user_symbol: /bin/busybox 0x14ba8c 0x000000000014ba8c: ?? ??:0
+# user_symbol: /bin/busybox 0x14c14d 0x000000000014c14d: ?? ??:0
+# user_symbol: /bin/busybox 0x14c43d 0x000000000014c43d: ?? ??:0
+# user_symbol: /bin/busybox 0x14c84d 0x000000000014c84d: ?? ??:0
+# user_symbol: /bin/busybox 0x14d1e0 0x000000000014d1e0: ?? ??:0
+# user_symbol: /bin/busybox 0x14e2e6 0x000000000014e2e6: ?? ??:0
+# user_symbol: /bin/busybox 0x14e3d9 0x000000000014e3d9: ?? ??:0
+# user_symbol: /bin/busybox 0x14e775 0x000000000014e775: ?? ??:0
+# user_symbol: /bin/busybox 0x14e976 0x000000000014e976: ?? ??:0
+# user_symbol: /bin/busybox 0x14eb52 0x000000000014eb52: ?? ??:0
+# user_symbol: /bin/busybox 0x14ebb0 0x000000000014ebb0: ?? ??:0
+# user_symbol: /bin/busybox 0x14f8b3 0x000000000014f8b3: ?? ??:0
+# user_symbol: /bin/busybox 0x14f9de 0x000000000014f9de: ?? ??:0
+# user_symbol: /bin/busybox 0x14fa2b 0x000000000014fa2b: ?? ??:0
+# user_symbol: /bin/busybox 0x14fa81 0x000000000014fa81: ?? ??:0
+# user_symbol: /bin/busybox 0x14fcd7 0x000000000014fcd7: ?? ??:0
+# user_symbol: /bin/busybox 0x14fd12 0x000000000014fd12: ?? ??:0
+# user_symbol: /bin/busybox 0x14fe8c 0x000000000014fe8c: ?? ??:0
+# user_symbol: /bin/busybox 0x14ff17 0x000000000014ff17: ?? ??:0
+# user_symbol: /bin/busybox 0x150364 0x0000000000150364: ?? ??:0
+# user_symbol: /bin/busybox 0x1521d6 0x00000000001521d6: ?? ??:0
+# user_symbol: /bin/busybox 0x17aeac 0x000000000017aeac: ?? ??:0
+# user_symbol: /bin/busybox 0x1810d2 0x00000000001810d2: ?? ??:0
+# user_symbol: /bin/busybox 0x19c14a 0x000000000019c14a: ?? ??:0
+# user_symbol: /bin/busybox 0x1a2473 0x00000000001a2473: ?? ??:0
+# user_symbol: /bin/busybox 0x1a4db0 0x00000000001a4db0: ?? ??:0
+# user_symbol: /bin/busybox 0x38 0x0000000000000038: ?? ??:0
+# user_symbol: /bin/busybox 0x4bf57 0x000000000004bf57: ?? ??:0
+# user_symbol: /bin/busybox 0x613b7 0x00000000000613b7: ?? ??:0
+# user_symbol: /bin/busybox 0x61524 0x0000000000061524: ?? ??:0
+# user_symbol: /bin/busybox 0x62565 0x0000000000062565: ?? ??:0
+# user_symbol: /bin/busybox 0x6277d 0x000000000006277d: ?? ??:0
+# user_symbol: /bin/busybox 0x62aa1 0x0000000000062aa1: ?? ??:0
+# user_symbol: /bin/busybox 0x63314 0x0000000000063314: ?? ??:0
+# user_symbol: /bin/busybox 0xadf90 0x00000000000adf90: ?? ??:0
+# user_symbol: /bin/busybox 0xb0850 0x00000000000b0850: ?? ??:0
+# user_symbol: /bin/busybox 0xb22e0 0x00000000000b22e0: ?? ??:0
+# user_symbol: /bin/busybox 0xbc09a 0x00000000000bc09a: ?? ??:0
+# user_symbol: /bin/busybox 0xbcd1f 0x00000000000bcd1f: ?? ??:0
+# user_symbol: /bin/busybox 0xe49a7 0x00000000000e49a7: ?? ??:0
+# user_symbol: /bin/busybox 0xf870 0x000000000000f870: ?? ??:0
+# user_symbol: /bin/busybox 0xf895 0x000000000000f895: ?? ??:0
+# user_symbol: /lib/libc.so.6 0x101c5d 0x0000000000101c5d: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0x101c6c 0x0000000000101c6c: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0x1020cb 0x00000000001020cb: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0x10fdcc 0x000000000010fdcc: posix_spawnattr_setsigmask at ??:?
+# user_symbol: /lib/libc.so.6 0x21ca 0x00000000000021ca: ?? ??:0
+# user_symbol: /lib/libc.so.6 0x228b 0x000000000000228b: ?? ??:0
+# user_symbol: /lib/libc.so.6 0x37a3f 0x0000000000037a3f: __duplocale at ??:?
+# user_symbol: /lib/libc.so.6 0x37c2c 0x0000000000037c2c: freelocale at ??:?
+# user_symbol: /lib/libc.so.6 0x37def 0x0000000000037def: freelocale at ??:?
+# user_symbol: /lib/libc.so.6 0x41484 0x0000000000041484: textdomain at ??:?
+# user_symbol: /lib/libc.so.6 0x41c9c 0x0000000000041c9c: textdomain at ??:?
+# user_symbol: /lib/libc.so.6 0x4384b 0x000000000004384b: __open_catalog at ??:?
+# user_symbol: /lib/libc.so.6 0x441c4 0x00000000000441c4: __isinf at ??:?
+# user_symbol: /lib/libc.so.6 0x5d3a1 0x000000000005d3a1: strtof128 at ??:?
+# user_symbol: /lib/libc.so.6 0x5d82f 0x000000000005d82f: strtof128 at ??:?
+# user_symbol: /lib/libc.so.6 0x5dee2 0x000000000005dee2: strtof128 at ??:?
+# user_symbol: /lib/libc.so.6 0x67cc6 0x0000000000067cc6: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x67ce1 0x0000000000067ce1: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x69b0f 0x0000000000069b0f: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x69e52 0x0000000000069e52: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x6a7a5 0x000000000006a7a5: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x6a884 0x000000000006a884: _IO_vfprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x6d524 0x000000000006d524: __vfscanf at ??:?
+# user_symbol: /lib/libc.so.6 0x6d5d2 0x000000000006d5d2: __vfscanf at ??:?
+# user_symbol: /lib/libc.so.6 0x70603 0x0000000000070603: __vfscanf at ??:?
+# user_symbol: /lib/libc.so.6 0x74550 0x0000000000074550: __vfscanf at ??:?
+# user_symbol: /lib/libc.so.6 0x74aa4 0x0000000000074aa4: vfwprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x751a5 0x00000000000751a5: vfwprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x75537 0x0000000000075537: vfwprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x75690 0x0000000000075690: vfwprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x79ed3 0x0000000000079ed3: vfwscanf at ??:?
+# user_symbol: /lib/libc.so.6 0x8329d 0x000000000008329d: vprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x85098 0x0000000000085098: vprintf at ??:?
+# user_symbol: /lib/libc.so.6 0x857a6 0x00000000000857a6: fdopen at ??:?
+# user_symbol: /lib/libc.so.6 0x861e6 0x00000000000861e6: fopencookie at ??:?
+# user_symbol: /lib/libc.so.6 0x92870 0x0000000000092870: _IO_file_underflow at ??:?
+# user_symbol: /lib/libc.so.6 0x976b0 0x00000000000976b0: _IO_str_seekoff at ??:?
+# user_symbol: /lib/libc.so.6 0x976d7 0x00000000000976d7: _IO_str_seekoff at ??:?
+# user_symbol: /lib/libc.so.6 0x976f7 0x00000000000976f7: _IO_str_seekoff at ??:?
+# user_symbol: /lib/libc.so.6 0x97710 0x0000000000097710: _IO_str_seekoff at ??:?
+# user_symbol: /lib/libc.so.6 0x97820 0x0000000000097820: _IO_str_seekoff at ??:?
+# user_symbol: /lib/libc.so.6 0x98f10 0x0000000000098f10: __lll_lock_wait_private at ??:?
+# user_symbol: /lib/libc.so.6 0xc55b4 0x00000000000c55b4: memcpy at ??:?
+# user_symbol: /lib/libc.so.6 0xc5937 0x00000000000c5937: memcpy at ??:?
+# user_symbol: /lib/libc.so.6 0xc5c8f 0x00000000000c5c8f: memcpy at ??:?
+# user_symbol: /lib/libc.so.6 0xc5f04 0x00000000000c5f04: memcpy at ??:?
+# user_symbol: /lib/libc.so.6 0xc61a7 0x00000000000c61a7: memcpy at ??:?
+# user_symbol: /lib/libc.so.6 0xe677b 0x00000000000e677b: strptime at ??:?
+# user_symbol: /lib/libc.so.6 0xee724 0x00000000000ee724: confstr at ??:?
+# user_symbol: /lib/libc.so.6 0xef3bb 0x00000000000ef3bb: execvpe at ??:?
+# user_symbol: /lib/libc.so.6 0xf31a5 0x00000000000f31a5: fexecve at ??:?
+# user_symbol: /lib/libc.so.6 0xf3215 0x00000000000f3215: fexecve at ??:?
+# user_symbol: /lib/libc.so.6 0xf34fd 0x00000000000f34fd: fexecve at ??:?
+# user_symbol: /lib/libc.so.6 0xf3a91 0x00000000000f3a91: fexecve at ??:?
+# user_symbol: /lib/libc.so.6 0xf3aca 0x00000000000f3aca: fexecve at ??:?
+# user_symbol: /lib/libc.so.6 0xf45ac 0x00000000000f45ac: fpathconf at ??:?
+# user_symbol: /lib/libc.so.6 0xf45dd 0x00000000000f45dd: fpathconf at ??:?
+# user_symbol: /lib/libc.so.6 0xf463b 0x00000000000f463b: fpathconf at ??:?
+# user_symbol: /lib/libc.so.6 0xf48e4 0x00000000000f48e4: getgroups at ??:?
+# user_symbol: /lib/libc.so.6 0xfce1d 0x00000000000fce1d: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0xfd320 0x00000000000fd320: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0xfd34c 0x00000000000fd34c: pwrite at ??:?
+# user_symbol: /lib/libc.so.6 0xff28d 0x00000000000ff28d: pwrite at ??:?
+# user_symbol: /opt/perf.bin 0x111258 0x0000000000111258: block_info__new at ??:?
+# user_symbol: /opt/perf.bin 0x111358 0x0000000000111358: block_info__process_sym at ??:?
+# user_symbol: /opt/perf.bin 0x121070 0x0000000000121070: evlist__parse_sample_timestamp at ??:?
+# user_symbol: /opt/perf.bin 0x123436 0x0000000000123436: evlist__uniquify_name at ??:?
+# user_symbol: /opt/perf.bin 0x128308 0x0000000000128308: evsel__open_cpu at evsel.c:?
+# user_symbol: /opt/perf.bin 0x12daf7 0x000000000012daf7: _find_next_zero_bit at ??:?
+# user_symbol: /opt/perf.bin 0x132eeb 0x0000000000132eeb: parse_events_add_cache at ??:?
+# user_symbol: /opt/perf.bin 0x133b77 0x0000000000133b77: parse_events_add_pmu at ??:?
+# user_symbol: /opt/perf.bin 0x13c083 0x000000000013c083: strfilter_node__delete at strfilter.c:?
+# user_symbol: /opt/perf.bin 0x14e8d 0x0000000000014e8d: ?? ??:0
+# user_symbol: /opt/perf.bin 0x14f62 0x0000000000014f62: ?? ??:0
+# user_symbol: /opt/perf.bin 0x15084 0x0000000000015084: ?? ??:0
+# user_symbol: /opt/perf.bin 0x15187 0x0000000000015187: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1616a 0x000000000001616a: ?? ??:0
+# user_symbol: /opt/perf.bin 0x16d590 0x000000000016d590: perf_session__warn_about_errors at session.c:?
+# user_symbol: /opt/perf.bin 0x16d71a 0x000000000016d71a: perf_session__warn_about_errors at session.c:?
+# user_symbol: /opt/perf.bin 0x16d750 0x000000000016d750: dump_event at session.c:?
+# user_symbol: /opt/perf.bin 0x16d768 0x000000000016d768: dump_event at session.c:?
+# user_symbol: /opt/perf.bin 0x16e151 0x000000000016e151: process_event_op2_stub at session.c:?
+# user_symbol: /opt/perf.bin 0x16e16f 0x000000000016e16f: process_event_op2_stub at session.c:?
+# user_symbol: /opt/perf.bin 0x16e1a8 0x000000000016e1a8: regs__printf at session.c:?
+# user_symbol: /opt/perf.bin 0x16e2a2 0x000000000016e2a2: regs__printf at session.c:?
+# user_symbol: /opt/perf.bin 0x16f40 0x0000000000016f40: ?? ??:0
+# user_symbol: /opt/perf.bin 0x171daa 0x0000000000171daa: perf_event_header__bswap at ??:?
+# user_symbol: /opt/perf.bin 0x171dd2 0x0000000000171dd2: perf_session__findnew at ??:?
+# user_symbol: /opt/perf.bin 0x172152 0x0000000000172152: perf_session__process_events at ??:?
+# user_symbol: /opt/perf.bin 0x172550 0x0000000000172550: perf_session__process_events at ??:?
+# user_symbol: /opt/perf.bin 0x17292d 0x000000000017292d: perf_session__process_events at ??:?
+# user_symbol: /opt/perf.bin 0x172bfc 0x0000000000172bfc: perf_session__process_events at ??:?
+# user_symbol: /opt/perf.bin 0x172c57 0x0000000000172c57: perf_session__process_events at ??:?
+# user_symbol: /opt/perf.bin 0x172e62 0x0000000000172e62: perf_session__fprintf_nr_events at ??:?
+# user_symbol: /opt/perf.bin 0x173181 0x0000000000173181: perf_event__process_id_index at ??:?
+# user_symbol: /opt/perf.bin 0x1733da 0x00000000001733da: perf_event__process_id_index at ??:?
+# user_symbol: /opt/perf.bin 0x1737cf 0x00000000001737cf: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x1737e7 0x00000000001737e7: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x1739b7 0x00000000001739b7: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x173bce 0x0000000000173bce: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x173c76 0x0000000000173c76: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x173cdb 0x0000000000173cdb: evlist__s390_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x17403e 0x000000000017403e: evlist__amd_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x174110 0x0000000000174110: evlist__amd_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x1741a4 0x00000000001741a4: evlist__amd_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x1744fe 0x00000000001744fe: evlist__amd_sample_raw at ??:?
+# user_symbol: /opt/perf.bin 0x1748a8 0x00000000001748a8: evlist__has_amd_ibs at ??:?
+# user_symbol: /opt/perf.bin 0x175b6f 0x0000000000175b6f: ordered_events__flush_time at ??:?
+# user_symbol: /opt/perf.bin 0x175df7 0x0000000000175df7: ordered_events__reinit at ??:?
+# user_symbol: /opt/perf.bin 0x178f35 0x0000000000178f35: thread_map__new_event at ??:?
+# user_symbol: /opt/perf.bin 0x17d64 0x0000000000017d64: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1800 0x0000000000001800: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18015 0x0000000000018015: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18073 0x0000000000018073: ?? ??:0
+# user_symbol: /opt/perf.bin 0x182a0 0x00000000000182a0: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1892b 0x000000000001892b: ?? ??:0
+# user_symbol: /opt/perf.bin 0x189ca 0x00000000000189ca: ?? ??:0
+# user_symbol: /opt/perf.bin 0x189d9 0x00000000000189d9: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18c85 0x0000000000018c85: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18ce3 0x0000000000018ce3: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18d37 0x0000000000018d37: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18dfc 0x0000000000018dfc: ?? ??:0
+# user_symbol: /opt/perf.bin 0x18ea0 0x0000000000018ea0: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1905c 0x000000000001905c: ?? ??:0
+# user_symbol: /opt/perf.bin 0x190b9 0x00000000000190b9: ?? ??:0
+# user_symbol: /opt/perf.bin 0x19f49 0x0000000000019f49: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1a444 0x000000000001a444: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1bcb5 0x000000000001bcb5: ?? ??:0
+# user_symbol: /opt/perf.bin 0x1d6500 0x00000000001d6500: intel_pt_synth_mwait_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d653d 0x00000000001d653d: intel_pt_synth_mwait_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d65c7 0x00000000001d65c7: intel_pt_synth_mwait_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d6740 0x00000000001d6740: intel_pt_synth_pwrx_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d6d66 0x00000000001d6d66: intel_pt_synth_cbr_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d6f11 0x00000000001d6f11: intel_pt_synth_iflag_chg_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d7116 0x00000000001d7116: intel_pt_synth_instruction_sample at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d9520 0x00000000001d9520: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d9552 0x00000000001d9552: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d9557 0x00000000001d9557: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d9576 0x00000000001d9576: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d958f 0x00000000001d958f: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1d9716 0x00000000001d9716: intel_pt_process_event at intel-pt.c:?
+# user_symbol: /opt/perf.bin 0x1db6e0 0x00000000001db6e0: intel_pt_process_auxtrace_info at ??:?
+# user_symbol: /opt/perf.bin 0x200d30 0x0000000000200d30: show_bootconfig_events at ??:?
+# user_symbol: /opt/perf.bin 0x200f29 0x0000000000200f29: show_bootconfig_events at ??:?
+# user_symbol: /opt/perf.bin 0x20101a 0x000000000020101a: apply_perf_probe_events at ??:?
+# user_symbol: /opt/perf.bin 0x2011b1 0x00000000002011b1: apply_perf_probe_events at ??:?
+# user_symbol: /opt/perf.bin 0x201a10 0x0000000000201a10: show_available_funcs at ??:?
+# user_symbol: /opt/perf.bin 0x201b9d 0x0000000000201b9d: copy_to_probe_trace_arg at ??:?
+# user_symbol: /opt/perf.bin 0x201c40 0x0000000000201c40: convert_to_trace_point at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x201f72 0x0000000000201f72: convert_variable_location at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x202b36 0x0000000000202b36: add_probe_trace_event at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x203c7e 0x0000000000203c7e: collect_variables_cb at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x203f01 0x0000000000203f01: probe_point_lazy_walker at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x203f11 0x0000000000203f11: probe_point_lazy_walker at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x203f1c 0x0000000000203f1c: probe_point_lazy_walker at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x205391 0x0000000000205391: debuginfo__find_probe_location at probe-finder.c:?
+# user_symbol: /opt/perf.bin 0x2061dd 0x00000000002061dd: __die_walk_instances_cb at dwarf-aux.c:?
+# user_symbol: /opt/perf.bin 0x2063e0 0x00000000002063e0: cu_walk_functions_at at ??:?
+# user_symbol: /opt/perf.bin 0x20794a 0x000000000020794a: die_find_realfunc at ??:?
+# user_symbol: /opt/perf.bin 0x20794e 0x000000000020794e: die_find_realfunc at ??:?
+# user_symbol: /opt/perf.bin 0x207ab8 0x0000000000207ab8: die_walk_instances at ??:?
+# user_symbol: /opt/perf.bin 0x207cc8 0x0000000000207cc8: die_walk_lines at ??:?
+# user_symbol: /opt/perf.bin 0x207d09 0x0000000000207d09: die_walk_lines at ??:?
+# user_symbol: /opt/perf.bin 0x20829c 0x000000000020829c: die_walk_lines at ??:?
+# user_symbol: /opt/perf.bin 0x20833d 0x000000000020833d: die_find_variable_at at ??:?
+# user_symbol: /opt/perf.bin 0x208f18 0x0000000000208f18: die_get_var_range at ??:?
+# user_symbol: /opt/perf.bin 0x209030 0x0000000000209030: die_find_variable_by_reg at ??:?
+# user_symbol: /opt/perf.bin 0x209198 0x0000000000209198: die_is_optimized_target at ??:?
+# user_symbol: /opt/perf.bin 0x209790 0x0000000000209790: __debuginfo__new at debuginfo.c:?
+# user_symbol: /opt/perf.bin 0x2099b8 0x00000000002099b8: debuginfo__delete at ??:?
+# user_symbol: /opt/perf.bin 0x20e7b0 0x000000000020e7b0: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e7ed 0x000000000020e7ed: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e8b2 0x000000000020e8b2: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e8ef 0x000000000020e8ef: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e91d 0x000000000020e91d: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e91f 0x000000000020e91f: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e93e 0x000000000020e93e: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e94a 0x000000000020e94a: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e95b 0x000000000020e95b: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e961 0x000000000020e961: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e967 0x000000000020e967: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e989 0x000000000020e989: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e98f 0x000000000020e98f: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e995 0x000000000020e995: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e9b7 0x000000000020e9b7: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e9e5 0x000000000020e9e5: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20e9f7 0x000000000020e9f7: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ea00 0x000000000020ea00: python_process_brstacksym at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20eb79 0x000000000020eb79: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20eb92 0x000000000020eb92: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20eba1 0x000000000020eba1: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ebb6 0x000000000020ebb6: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ebdc 0x000000000020ebdc: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ebeb 0x000000000020ebeb: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ebfa 0x000000000020ebfa: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ec03 0x000000000020ec03: python_export_branch_type at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ec33 0x000000000020ec33: python_export_evsel at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x20ec8c 0x000000000020ec8c: python_export_evsel at trace-event-python.c:?
+# user_symbol: /opt/perf.bin 0x22e569 0x000000000022e569: __callchain__fprintf_flat.isra.0 at hist.c:?
+# user_symbol: /opt/perf.bin 0x3b17 0x0000000000003b17: ?? ??:0
+# user_symbol: /opt/perf.bin 0x3e15 0x0000000000003e15: ?? ??:0
+# user_symbol: /opt/perf.bin 0xc2391 0x00000000000c2391: syscall_arg__scnprintf_clone_flags at ??:?
+# user_symbol: /opt/perf.bin 0xdb024 0x00000000000db024: test__pmu_events at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdb0df 0x00000000000db0df: test__pmu_events at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdba8f 0x00000000000dba8f: test__events2 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdbb42 0x00000000000dbb42: assert_hw.constprop.0 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdbb4a 0x00000000000dbb4a: assert_hw.constprop.0 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdbb77 0x00000000000dbb77: assert_hw.constprop.0 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdc5ab 0x00000000000dc5ab: test__group4 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdc8d1 0x00000000000dc8d1: test__group5 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdca05 0x00000000000dca05: test__group5 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdca45 0x00000000000dca45: test__group5 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdd6a2 0x00000000000dd6a2: test__group_gh2 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xddb4d 0x00000000000ddb4d: test__group_gh3 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xdde42 0x00000000000dde42: test__group_gh4 at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe05e0 0x00000000000e05e0: test__sym_event_slash at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe078d 0x00000000000e078d: test__term_equal_term at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe0822 0x00000000000e0822: test__term_equal_term at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe0845 0x00000000000e0845: test__term_equal_term at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe0871 0x00000000000e0871: test__checkevent_breakpoint_len_rw_modifier at parse-events.c:?
+# user_symbol: /opt/perf.bin 0xe0ffd 0x00000000000e0ffd: test_file.constprop.0 at dso-data.c:?
+# user_symbol: /opt/perf.bin 0xe18f4 0x00000000000e18f4: new_limit at dso-data.c:?
+# user_symbol: /opt/perf.bin 0xe1998 0x00000000000e1998: test__dso_data_reopen at dso-data.c:?
+# user_symbol: /opt/perf.bin 0xe2990 0x00000000000e2990: store_event at attr.c:?
+# user_symbol: /opt/perf.bin 0xe2a56 0x00000000000e2a56: store_event at attr.c:?
+# user_symbol: /opt/perf.bin 0xe3cf4 0x00000000000e3cf4: test__openat_syscall_event_on_all_cpus at openat-syscall-all-cpus.c:?
+# user_symbol: /opt/perf.bin 0xe403e 0x00000000000e403e: test__syscall_openat_tp_fields at openat-syscall-tp-fields.c:?
+# user_symbol: /opt/perf.bin 0xe4409 0x00000000000e4409: test_stat_user_read at mmap-basic.c:?
+# user_symbol: /opt/perf.bin 0xe5b86 0x00000000000e5b86: test__perf_evsel__roundtrip_name_test at evsel-roundtrip-name.c:?
+# user_symbol: /opt/perf.bin 0xe5d9c 0x00000000000e5d9c: test__perf_evsel__tp_sched_test at evsel-tp-sched.c:?
+# user_symbol: /opt/perf.bin 0xeb161 0x00000000000eb161: test5 at hists_output.c:?
+# user_symbol: /opt/perf.bin 0xeb7e5 0x00000000000eb7e5: test3 at hists_output.c:?
+# user_symbol: /opt/perf.bin 0xeba23 0x00000000000eba23: test3 at hists_output.c:?
+# user_symbol: /opt/perf.bin 0xedcfe 0x00000000000edcfe: test2 at hists_cumulate.c:?
+# user_symbol: /opt/perf.bin 0xefb51 0x00000000000efb51: sig_handler at task-exit.c:?
+# user_symbol: /opt/perf.bin 0xefc87 0x00000000000efc87: test__task_exit at task-exit.c:?

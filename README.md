@@ -92,6 +92,28 @@ iperf-lifecycle/             完整 iperf 进程生命周期采集（实验 4）
 
 关键时序：Guest 内**先**起 `get_ftrace.sh -t 26 -p 1 -m 131072 -o langraph`（perf+ftrace 同时、ring buffer 128 MB/CPU 防止开头 fork 事件被覆盖），再起两端 one-off 收包 server（`-1`）、两端各 20 线程发包 client（`-P 20 -t 10`），全部 `wait` 自然退出后才结束采集。完整时间轴见 `iperf-lifecycle/langraph/timeline.txt`（在压缩包内）。
 
+### 完整硬中断因果链（实验 5，低速小包重抓）
+
+实验 4 的稳定打流段 eth0 硬中断为 0，因果链只能从 NET_RX 软中断起。**根因不是 tracepoint
+没开**，而是 e1000 的 NAPI 中断屏蔽（详见 [`iperf-lifecycle/perfetto/README.md`](iperf-lifecycle/perfetto/README.md)）。
+本轮把流量改成 `-P 2 -b 1M -l 256`（2.0 Mbps），让每轮 poll 都能排空队列、重开中断。
+
+| 指标 | 实验 4 | 实验 5 |
+|---|---:|---:|
+| `irq_handler_entry: irq=11 eth0` | 66 | **18,522** |
+| `napi_poll` 事件 | 未抓 | **18,522**（与硬中断 1:1） |
+| `/proc/interrupts` IRQ11 增量 | — | **+18,698** |
+| 完整因果链候选 | 0 | **17,586 条** |
+
+真实链例（t0 = 14.561145 s）：硬中断 → +10 µs `softirq_raise(NET_RX)` →
++48 µs `napi_poll(work=0)` → +251 µs `sched_waking(iperf3:380)` →
++278 µs `sched_wakeup` → +391 µs `sched_switch` 上 CPU3。
+
+归档在 [`iperf-hardirq/`](iperf-hardirq/)：原始采集 `iperf-hardirq.tar.gz`（21 MB，
+含 399 MB `ftrace.log`）、复现脚本、统计脚本与结果；转换产物在
+[`iperf-hardirq/perfetto/`](iperf-hardirq/perfetto/)（3 ms 单链 + 26 s 全量，
+四份均通过官方校验、零告警）。**先看** `hardirq-result.html`（自包含结果页）。
+
 ## 环境
 
 | 项目 | 值 |
@@ -115,6 +137,12 @@ cd iperf-perf && ./run.sh
 
 # 实验 4：完整 iperf 生命周期重抓（约 5 分钟）
 cd iperf-lifecycle && ./run.sh
+
+# 实验 5：低速小包重抓，带完整硬中断因果链（约 5 分半）
+cd iperf-hardirq && ./run.sh
+# 只复核归档结论、不重跑 QEMU：
+cd iperf-hardirq && tar xzf iperf-hardirq.tar.gz && \
+  python3.11 analyze_hardirq.py langraph -o hardirq-analysis.json
 
 # 或只复核归档结论，不重跑 QEMU
 cd iperf-lifecycle && tar xzf iperf-lifecycle.tar.gz && \
