@@ -1,0 +1,85 @@
+{
+  "tool": "ftrace2perfetto.py",
+  "version": "1.0",
+  "input": "/workspace/iperf-lifecycle-out/langraph/ftrace.log",
+  "outputs": {
+    "json": "/workspace/ftrace2perfetto/out/iperf-chain.json",
+    "pftrace": "/workspace/ftrace2perfetto/out/iperf-chain.pftrace"
+  },
+  "options": {
+    "format": "both",
+    "start": 28.5698,
+    "end": 28.5722,
+    "focus": null,
+    "cpus": null,
+    "no_irq": false,
+    "no_flow": false,
+    "no_thread_state": false,
+    "no_lifecycle": false
+  },
+  "elapsed_sec": 6.15,
+  "input_stats": {
+    "total_lines": 8196420,
+    "stack_lines": 7476196,
+    "skipped_lines": 360058,
+    "tracepoint_events": 180083,
+    "event_counts": {
+      "sched_stat_runtime": 68725,
+      "sched_switch": 27307,
+      "softirq_raise": 15746,
+      "softirq_entry": 15208,
+      "softirq_exit": 15208,
+      "sched_waking": 15012,
+      "sched_wakeup": 15012,
+      "sched_migrate_task": 2596,
+      "tasklet_entry": 1977,
+      "tasklet_exit": 1977,
+      "sched_wake_idle_without_ipi": 885,
+      "irq_handler_entry": 74,
+      "irq_handler_exit": 74,
+      "sched_process_free": 60,
+      "sched_process_fork": 59,
+      "sched_wakeup_new": 59,
+      "sched_process_exit": 59,
+      "sched_process_wait": 38,
+      "sched_process_exec": 7
+    },
+    "time_window_sec": [
+      11.067592,
+      37.074585
+    ],
+    "cpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "distinct_pids": 82
+  },
+  "output_stats": {
+    "events": {
+      "metadata": 182,
+      "slice": 47,
+      "flow": 25,
+      "instant": 10
+    },
+    "tracks": 178,
+    "track_groups": 4,
+    "flow_total": 6,
+    "flow_matched_to_switch": 2,
+    "flow_match_rate": 0.3333
+  },
+  "wake2run_us": {
+    "samples": 2,
+    "p50": 109.0,
+    "p95": 109.0,
+    "p99": 109.0,
+    "max": 109.0,
+    "mean": 93.0
+  },
+  "lifecycle": {
+    "tids_with_events": 3,
+    "tids_fork_to_free_closed": 0,
+    "sample_closed_tids": []
+  }
+}
