@@ -1,14 +1,14 @@
 [
   {
     "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-chain.pftrace",
-    "size": 45903,
+    "size": 48125,
     "ok": true,
     "health": [],
     "counts": {
-      "slice": 183,
+      "slice": 193,
       "flow": 46,
       "track": 23,
-      "args": 1034
+      "args": 1072
     },
     "lifecycle": {},
     "wake2run_us": {
@@ -18,14 +18,14 @@
   },
   {
     "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-chain.json",
-    "size": 60161,
+    "size": 62951,
     "ok": true,
     "health": [],
     "counts": {
-      "slice": 119,
+      "slice": 129,
       "flow": 42,
       "track": 20,
-      "args": 635
+      "args": 670
     },
     "lifecycle": {},
     "wake2run_us": {
@@ -35,14 +35,14 @@
   },
   {
     "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-full.pftrace",
-    "size": 84278065,
+    "size": 88801943,
     "ok": true,
     "health": [],
     "counts": {
-      "slice": 347638,
+      "slice": 367845,
       "flow": 96064,
-      "track": 66,
-      "args": 248601
+      "track": 50,
+      "args": 248937
     },
     "lifecycle": {
       "sched_process_wait": 38,
@@ -58,14 +58,14 @@
   },
   {
     "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-full.json",
-    "size": 100959642,
+    "size": 106639777,
     "ok": true,
     "health": [],
     "counts": {
-      "slice": 211218,
+      "slice": 231425,
       "flow": 96061,
       "track": 87,
-      "args": 220937
+      "args": 221379
     },
     "lifecycle": {
       "sched_process_wait": 38,

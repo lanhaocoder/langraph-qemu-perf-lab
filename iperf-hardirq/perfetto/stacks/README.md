@@ -1,12 +1,26 @@
 # 带调用栈标注的 Perfetto trace（实验 6）
 
 在实验 5 的完整硬中断因果链基础上，把 `ftrace.log` 里每个 tracepoint 紧跟的
-`<stack trace>` / `<user stack trace>` 解析出来，作为 args 挂到对应 slice / instant / flow 上，
-同时**隐藏 S（可中断睡眠）状态段**。
+`<stack trace>` / `<user stack trace>` 解析出来，作为 args 挂到对应 slice / instant / flow 上；
+并把**等待/终止态（S/D 睡眠、Z 僵尸、X 退出）画成 instant 事件点**，不再铺满状态轨长条。
 
 数据源仍是 `../iperf-hardirq.tar.gz` 解出的 `langraph/ftrace.log`（低速小包双向 TCP iperf，
 26 s，4 vCPU，QEMU `-accel tcg` + `e1000`，`irq=11 eth0`）。工具见
 [`LanGraph/script/ftrace2perfetto/`](https://github.com/lanhaocoder/LanGraph/tree/main/script/ftrace2perfetto)。
+
+## 状态轨：时段 vs 事件
+
+| 状态 | 表示 | 全量数量 |
+|---|---|---:|
+| RUNNING / R 可运行 / I idle | slice 时段 | 79,665 段 |
+| S 可中断睡眠 | instant 事件点 | 20,207 |
+| Z 僵尸 | instant 事件点 | 39 |
+| X 退出中 | instant 事件点 | 31 |
+| D 不可中断睡眠 | instant 事件点 | 5 |
+
+事件点 args 带 `comm` / `tid` / `state` / `raw` 及堆栈字段；例如 `iperf3:378` 的 S 睡眠点：
+`stack_start=__traceiter_sched_switch+0x47/0x70`、`stack_end=entry_SYSCALL_64_after_hwframe`。
+`--show-sleep-state` 可把这些态改回时段 slice。
 
 ## 「起始堆栈 / 末尾堆栈」的定义
 
@@ -25,91 +39,78 @@ ftrace 每个 tracepoint 后面跟的是一个**完整内核调用栈**（栈顶
 | `sched_waking` | 20,483 | `try_to_wake_up` | `secondary_startup_64_no_verify` |
 | `irq_handler_entry` / `exit` | 18,531 | `__handle_irq_event_percpu` | `secondary_startup_64_no_verify` |
 | `napi_poll` | 18,522 | `__napi_poll` | `secondary_startup_64_no_verify` |
-| `sched_process_fork` | 25 | `kernel_clone` | `entry_SYSCALL_64_after_hwframe` |
-| `sched_process_exec` | 7 | `exec_binprm` | `entry_SYSCALL_64_after_hwframe` |
 
-规模：399 MB / 797 万行中 **315,293 个事件行，100% 带内核栈**，99.8% 带用户栈，
-共约 580 万内核栈帧 + 122 万用户栈帧。归属必须**按 CPU**：trace 文件按时间戳合并 4 个 CPU
-的 buffer，按「全局最近事件行」归属会串轨（第一版曾让 `update_curr` 混进 `irq_handler_entry`、
-14% 事件栈为空）；按 `<stack trace>` 标记行自带的 CPU 归属后，无栈事件降到 1,057 条（0.34%），
-孤立帧 0。
+规模：399 MB / 797 万行中 **315,293 个事件行，100% 带内核栈**，99.8% 还带用户栈，
+共约 580 万内核栈帧 + 122 万用户栈帧。归属必须**按 CPU**：按「全局最近事件行」归属会串轨
+（曾让 `update_curr` 混进 `irq_handler_entry`、14% 事件栈为空）；按 `<stack trace>` 标记行
+自带的 CPU 归属后，无栈事件降到 0.34%、孤立帧 0。
 
-## 文件
+## 文件（压缩与自解压）
 
-| 文件 | 说明 |
-|---|---|
-| `iperf-hardirq-stack-chain.pftrace` / `.json` | **3 ms 单条完整因果链，先看这个**（45 KB / 59 KB，原件直传） |
-| `iperf-hardirq-stack-full.pftrace.gz` / `.json.gz` | 26 s 全量，**gzip -9 压缩**：81 MB→4.4 MB，97 MB→3.6 MB |
-| `iperf-hardirq-stack-*.stats.json` | 转换器统计（含 `stacks` / `hide_sleep_state` 参数） |
-| `tracepoint-stacks.jsonl.gz` | 逐条索引，315,293 条事件的 `start/end/start_sym/end_sym/depth`，2.2 MB；`--stacks` 的输入 |
-| `tracepoint-stacks.json` | 按 tracepoint 聚合的起始/末尾帧分布 |
-| `verify-stack.json` | `trace_processor_shell v59.1` 官方校验结果 |
+**Perfetto UI（ui.perfetto.dev）和 `trace_processor_shell` 都能直接加载 `.gz`，自动解压，无需手动 gunzip。**
 
-全量文件先解压再用：
+| 文件 | 大小 | 说明 |
+|---|---:|---|
+| `iperf-hardirq-stack-chain.pftrace` / `.json` | 48 KB / 63 KB | 3 ms 单条完整因果链，原件直传 |
+| `iperf-hardirq-stack-chain.pftrace.gz` / `.json.gz` | 6 KB / 5 KB | 单链压缩版 |
+| `iperf-hardirq-stack-full.pftrace.gz` | 4.7 MB | 26 s 全量，原件 88.8 MB（压到 5.3%） |
+| `iperf-hardirq-stack-full.json.gz` | 3.9 MB | 全量 Chrome JSON，原件 106.6 MB（压到 3.7%） |
+| `iperf-hardirq-stack-*.stats.json` | 4 KB | 转换器统计（含 `wait_states_as_event` 参数） |
+| `tracepoint-stacks.jsonl.gz` | 2.2 MB | 315,293 条逐条事件索引，`--stacks` 的输入 |
+| `tracepoint-stacks.json` | 63 KB | 按 tracepoint 聚合的起始/末尾帧分布 |
+| `verify-stack.json` | 1.7 KB | `trace_processor_shell v59.1` 官方校验结果 |
 
-```bash
-gunzip -k iperf-hardirq-stack-full.pftrace.gz   # 或 .json.gz
-# 得到 .pftrace，拖进 https://ui.perfetto.dev
-```
+全量只保留 `.gz`（省 95% 体积）；要得到原件：`gunzip -k iperf-hardirq-stack-full.pftrace.gz`。
+自解压已验证：`trace_processor_shell` 直接读 `.pftrace.gz` 的状态事件分布与原件完全一致
+（S 20,207 / Z 39 / X 31 / D 5）。
 
-## 怎么看堆栈
+## 怎么看
 
-在 Perfetto UI **点选一个 slice**，详情面板的 Args 里会出现：
+打开 `iperf-hardirq-stack-chain.pftrace`（或 `.gz`），**点选 slice / instant**，详情面板 Args 里：
 
-- `stack_start` — 栈顶起始帧（如 `__handle_irq_event_percpu+0x131/0x1b0`）
-- `stack_end` — 栈底末尾帧（如 `asm_common_interrupt+0x27/0x40`）
-- `stack_depth` — 内核栈帧数
+- `stack_start` / `stack_end` / `stack_depth` — 调用栈起始帧、末尾帧、帧数
+- 事件点还有 `comm` / `tid` / `state`（S/D/Z/X）
 
-用 `trace_processor_shell` 查询时键名带前缀 `debug.`：
-
-```sql
-SELECT key, count(*) FROM args
-WHERE key IN ('debug.stack_start','debug.stack_end','debug.stack_depth')
-GROUP BY key;
-```
-
-覆盖率：全量 `.json` 347,746 行中 347,593 行带 `stack_start`（99.96%），未带的只是
-track 命名 metadata 和收尾引导 slice；pftrace 里三个键各 27,277 个去重 arg_set。
-`S 可中断睡眠` slice 精确查询为 **0 条**；`D 不可中断睡眠` 等其它状态保留。
+SQL 查询时 pftrace 的键名带前缀 `debug.`。全量 `.json.gz` 解压后 367,951 行中
+367,798 行带 `stack_start`（99.96%），未带的是 metadata 与引导 slice。
 
 ## 生成命令
 
 ```bash
-# 1) 先从 ftrace.log 生成逐条堆栈索引
-python3 tracepoint_stacks.py langraph/ftrace.log \
-  -o tracepoint-stacks.txt --json tracepoint-stacks.json \
-  --events-out tracepoint-stacks.jsonl --samples 20 --topn 10
+# 1) 从 ftrace.log 生成逐条堆栈索引
+python3 tracepoint_stacks.py langraph/ftrace.log --events-out tracepoint-stacks.jsonl \
+  --json tracepoint-stacks.json
 gzip -9 -k tracepoint-stacks.jsonl
 
-# 2) 转换时挂上堆栈（S 段默认隐藏，--show-sleep-state 可恢复）
+# 2) 转换（等待/终止态默认事件化；--show-sleep-state 改回时段）
 SRC=langraph/ftrace.log
 python3 ftrace2perfetto.py "$SRC" -o iperf-hardirq-stack-chain.json \
-  --format both --start 14.5600 --end 14.5630 \
-  --stacks tracepoint-stacks.jsonl.gz
+  --format both --start 14.5600 --end 14.5630 --stacks tracepoint-stacks.jsonl.gz
 python3 ftrace2perfetto.py "$SRC" -o iperf-hardirq-stack-full.json \
   --format both --stacks tracepoint-stacks.jsonl.gz
 python3 verify.py iperf-hardirq-stack-chain.pftrace iperf-hardirq-stack-chain.json \
                   iperf-hardirq-stack-full.pftrace iperf-hardirq-stack-full.json \
                   --json-out verify-stack.json
+
+# 3) 压缩（gzip -9，保留原件；.gz 可被 Perfetto 直接加载）
+gzip -9 -k -f iperf-hardirq-stack-{chain,full}.pftrace
+gzip -9 -k -f iperf-hardirq-stack-{chain,full}.json
 ```
 
 ## 校验（trace_processor_shell v59.1）
 
 | 文件 | slice | flow | track | args | health |
 |---|---:|---:|---:|---:|---|
-| `iperf-hardirq-stack-chain.pftrace` | 183 | 46 | 23 | 1,034 | 无告警 |
-| `iperf-hardirq-stack-chain.json` | 119 | 42 | 20 | 635 | 无告警 |
-| `iperf-hardirq-stack-full.pftrace` | 347,638 | 96,064 | 66 | 248,601 | 无告警 |
-| `iperf-hardirq-stack-full.json` | 211,218 | 96,061 | 87 | 220,937 | 无告警 |
+| `chain.pftrace` | 193 | 46 | 23 | 1,072 | 无告警 |
+| `chain.json` | 129 | 42 | 20 | 670 | 无告警 |
+| `full.pftrace` | 367,845 | 96,064 | 50 | 248,937 | 无告警 |
+| `full.json` | 231,425 | 96,061 | 87 | 221,379 | 无告警 |
 
-四份全部零 health 告警；单链 `wake2run_us` 均值 69 µs，全量 pftrace 均值 412.6 µs。
+四份全部零 health 告警。
 
 ## 已知限制
 
-- 栈里含 ftrace 采集器自身的帧：`stack_trace_save_user` / `ftrace_trace_userstack` /
-  `trace_event_buffer_commit` / `trace_event_raw_event_*`，甚至嵌套上一次 tracepoint 的采集路径。
-  栈均值 15~29 帧、最深 125 帧。
-- 用户栈 98% 未符号化（Guest 内 busybox/perf.bin 无符号表），显示成 `<0x...>`；不是空串。
-- `.pftrace` 的 flow 端点仍是 `dur=0` 的 instant，与实验 5 相同；肉眼确认箭头优先用 `.json`。
+- 栈里含 ftrace 采集器自身的帧（`stack_trace_save_user` / `trace_event_buffer_commit` 等）；
+  用户栈 98% 未符号化（Guest 无符号表），显示成 `<0x...>`。
+- `.pftrace` 的 flow 端点仍是 `dur=0` 的 instant，肉眼确认箭头优先用 `.json`。
 - TCG 是软件模拟，时间戳/延迟/带宽没有真实性能意义，只能验证链路与代码路径。
-- 本目录只归档 Perfetto 文件与数据索引，不含 HTML/PNG 展示物。

@@ -17,9 +17,9 @@
     "no_thread_state": false,
     "no_lifecycle": false,
     "stacks": "out/tracepoint-stacks.jsonl.gz",
-    "hide_sleep_state": true
+    "wait_states_as_event": true
   },
-  "elapsed_sec": 15.31,
+  "elapsed_sec": 16.86,
   "input_stats": {
     "total_lines": 15942662,
     "stack_lines": 14682756,
@@ -64,8 +64,8 @@
     "events": {
       "metadata": 106,
       "slice": 86,
-      "flow": 64,
-      "instant": 33
+      "instant": 43,
+      "flow": 64
     },
     "tracks": 102,
     "track_groups": 4,
