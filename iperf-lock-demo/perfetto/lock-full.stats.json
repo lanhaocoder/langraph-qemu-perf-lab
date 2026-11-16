@@ -1,0 +1,110 @@
+{
+  "tool": "ftrace2perfetto.py",
+  "version": "1.0",
+  "input": "/workspace/iperf-lock-demo/langraph/ftrace.log",
+  "outputs": {
+    "json": "/workspace/iperf-lock-demo/lock-full.json",
+    "pftrace": "/workspace/iperf-lock-demo/lock-full.pftrace"
+  },
+  "options": {
+    "format": "both",
+    "start": null,
+    "end": null,
+    "focus": null,
+    "cpus": null,
+    "no_irq": false,
+    "no_flow": false,
+    "no_thread_state": false,
+    "no_lifecycle": false,
+    "stacks": "/workspace/iperf-lock-demo/tracepoint-stacks.jsonl.gz",
+    "wait_states_as_event": true
+  },
+  "elapsed_sec": 60.91,
+  "input_stats": {
+    "total_lines": 40287076,
+    "stack_lines": 36711898,
+    "stack_index_entries": 899156,
+    "skipped_lines": 2418738,
+    "tracepoint_events": 578220,
+    "event_counts": {
+      "rcu_utilization": 166086,
+      "hrtimer_expire_entry": 84059,
+      "hrtimer_expire_exit": 84059,
+      "sched_stat_runtime": 64701,
+      "sched_switch": 34075,
+      "softirq_raise": 24178,
+      "softirq_entry": 23485,
+      "softirq_exit": 23485,
+      "sched_waking": 19187,
+      "sched_wakeup": 19187,
+      "irq_handler_entry": 16101,
+      "irq_handler_exit": 16101,
+      "sched_migrate_task": 728,
+      "timer_expire_entry": 697,
+      "timer_expire_exit": 697,
+      "sched_wake_idle_without_ipi": 348,
+      "tasklet_entry": 184,
+      "tasklet_exit": 184,
+      "workqueue_execute_start": 171,
+      "workqueue_execute_end": 171,
+      "workqueue_queue_work": 170,
+      "sched_process_wait": 38,
+      "sched_process_fork": 26,
+      "sched_wakeup_new": 26,
+      "sched_process_exit": 23,
+      "sched_process_free": 23,
+      "signal_generate": 19,
+      "sched_process_exec": 7,
+      "contention_begin": 2,
+      "contention_end": 2
+    },
+    "time_window_sec": [
+      6.924162,
+      30.93152
+    ],
+    "cpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "distinct_pids": 49
+  },
+  "output_stats": {
+    "events": {
+      "metadata": 123,
+      "slice": 142454,
+      "instant": 379964,
+      "flow": 112233
+    },
+    "tracks": 119,
+    "track_groups": 5,
+    "flow_total": 19187,
+    "flow_matched_to_switch": 18574,
+    "flow_match_rate": 0.9681
+  },
+  "wake2run_us": {
+    "samples": 18574,
+    "p50": 87.0,
+    "p95": 839.0,
+    "p99": 2186.0,
+    "max": 999915.0,
+    "mean": 403.092
+  },
+  "lifecycle": {
+    "tids_with_events": 34,
+    "tids_fork_to_free_closed": 23,
+    "sample_closed_tids": [
+      371,
+      372,
+      373,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382
+    ]
+  }
+}

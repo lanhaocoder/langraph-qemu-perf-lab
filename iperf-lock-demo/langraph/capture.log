@@ -1,0 +1,21 @@
+start perf capture
+start ftrace capture
+Capture for 24 seconds start.
+Enter Ctrl+C to stop capture...
+Saving results, please wait
+save ftrace start
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 11.085 MB perf.data (53170 samples) ]
+Get ftrace format start...
+/sys/kernel/debug/tracing/events/irq|lock|rcu|workqueue|timer|signal not exist
+Get ftrace user symbol start...
+Killed
+addr2line: '-a': No such file
+'trace' not valid for hardware events. Ignoring.
+'trace' not valid for software events. Ignoring.
+'trace' not valid for hardware-cache events. Ignoring.
+'trace' not valid for unknown events. Ignoring.
+'trace' not valid for unknown events. Ignoring.
+'trace' not valid for unknown events. Ignoring.
+'trace' not valid for unknown events. Ignoring.
+result is /work/langraph

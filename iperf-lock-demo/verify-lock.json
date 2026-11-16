@@ -1,0 +1,86 @@
+[
+  {
+    "file": "/workspace/iperf-lock-demo/lock-chain.pftrace",
+    "size": 50475,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 194,
+      "flow": 16,
+      "track": 24,
+      "args": 1263
+    },
+    "lifecycle": {
+      "sched_process_exit": 1
+    },
+    "wake2run_us": {
+      "args_entries": 2,
+      "mean": 67.0
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock-chain.json",
+    "size": 67220,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 167,
+      "flow": 12,
+      "track": 20,
+      "args": 1018
+    },
+    "lifecycle": {
+      "sched_process_exit": 1
+    },
+    "wake2run_us": {
+      "args_entries": 1,
+      "mean": 67.0
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock-full.pftrace",
+    "size": 156673934,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 634651,
+      "flow": 78038,
+      "track": 63,
+      "args": 281873
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 26,
+      "sched_process_free": 23,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 23525,
+      "mean": 562.6
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock-full.json",
+    "size": 190091855,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 522418,
+      "flow": 78033,
+      "track": 100,
+      "args": 238178
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 26,
+      "sched_process_free": 23,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 18541,
+      "mean": 403.7
+    }
+  }
+]

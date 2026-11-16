@@ -1,0 +1,59 @@
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 10.0.2.2, port 41778
+[  5] local 10.0.2.15 port 5201 connected to 10.0.2.2 port 41782
+[  8] local 10.0.2.15 port 5201 connected to 10.0.2.2 port 41792
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   122 KBytes  1000 Kbits/sec                  
+[  8]   0.00-1.00   sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]   0.00-1.00   sec   245 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   1.00-2.00   sec   122 KBytes   999 Kbits/sec                  
+[  8]   1.00-2.00   sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]   1.00-2.00   sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   2.00-3.00   sec   122 KBytes  1000 Kbits/sec                  
+[  8]   2.00-3.00   sec   122 KBytes   998 Kbits/sec                  
+[SUM]   2.00-3.00   sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   3.00-4.00   sec   122 KBytes  1.00 Mbits/sec                  
+[  8]   3.00-4.00   sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]   3.00-4.00   sec   245 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   4.00-5.00   sec   122 KBytes  1000 Kbits/sec                  
+[  8]   4.00-5.00   sec   122 KBytes   998 Kbits/sec                  
+[SUM]   4.00-5.00   sec   243 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   5.00-6.00   sec   122 KBytes  1.00 Mbits/sec                  
+[  8]   5.00-6.00   sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]   5.00-6.00   sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   6.00-7.00   sec   122 KBytes  1000 Kbits/sec                  
+[  8]   6.00-7.00   sec   122 KBytes   998 Kbits/sec                  
+[SUM]   6.00-7.00   sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   7.00-8.00   sec   122 KBytes  1.00 Mbits/sec                  
+[  8]   7.00-8.00   sec   121 KBytes   995 Kbits/sec                  
+[SUM]   7.00-8.00   sec   243 KBytes  1.99 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   8.00-9.00   sec   122 KBytes  1000 Kbits/sec                  
+[  8]   8.00-9.00   sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]   8.00-9.00   sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]   9.00-10.00  sec   122 KBytes   998 Kbits/sec                  
+[  8]   9.00-10.00  sec   122 KBytes   996 Kbits/sec                  
+[SUM]   9.00-10.00  sec   244 KBytes  1.99 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]  10.00-11.00  sec   122 KBytes  1.00 Mbits/sec                  
+[  8]  10.00-11.00  sec   122 KBytes  1.00 Mbits/sec                  
+[SUM]  10.00-11.00  sec   244 KBytes  2.00 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  5]  11.00-12.00  sec   122 KBytes   997 Kbits/sec                  
+[  8]  11.00-12.00  sec   122 KBytes   999 Kbits/sec                  
+[SUM]  11.00-12.00  sec   244 KBytes  1.99 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-12.00  sec  1.43 MBytes  1000 Kbits/sec                  receiver
+[  8]   0.00-12.00  sec  1.43 MBytes  1000 Kbits/sec                  receiver
+[SUM]   0.00-12.00  sec  2.86 MBytes  2.00 Mbits/sec                  receiver

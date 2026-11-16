@@ -1,0 +1,56 @@
+[host] READY 信号接收端 :9998
+[host] 采集产物接收端 :9999
+[host] 构建 initramfs
+       initramfs: 26M
+[qemu] 启动 Guest (TCG, 4 vCPU / 3G, nokaslr, e1000 + SLIRP)
+[host] 等待 Guest READY（ftrace 已开 + guest server 已起）
+[host] READY=1  msg='READY ftrace_on=1 server_pid=377 uptime=10.94'
+[host] 起 host iperf3 server :5211 -1 (one-off)
+[host] 起 host iperf3 client -P 2 -t 12 -b 1M -l 256 -> 127.0.0.1:15201
+[host] host client rc=0
+[host] 等待 langraph/ 回传
+[qemu] 已退出
+[host] host server wait rc=0
+[host] host server 残留: 0
+[host] 解包 langraph/
+    total 1.1G
+    -rw-r--r-- 1 root root  813 Nov 16 20:49 capture.log
+    -rw-r--r-- 1 root root  19K Nov 16 20:47 ftrace_format.log
+    -rw-r----- 1 root root 1.1G Nov 16 20:47 ftrace.log
+    -rw-r--r-- 1 root root   17 Nov 16 20:48 ftrace_symbol.log
+    -rw-r--r-- 1 root root    0 Nov 16 20:49 guest_client.err
+    -rw-r--r-- 1 root root  14K Nov 16 20:49 guest_client.json
+    -rw-r--r-- 1 root root 3.8K Nov 16 20:49 guest_server.log
+    -rw-r--r-- 1 root root 2.1K Nov 16 20:49 interrupts.after.txt
+    -rw-r--r-- 1 root root 2.1K Nov 16 20:49 interrupts.before.txt
+    -r--r--r-- 1 root root 8.7M Nov 16 20:49 kallsyms.txt
+    -r--r--r-- 1 root root   41 Nov 16 20:49 modules.txt
+    -rw-r--r-- 1 root root  446 Nov 16 20:49 netdev.after.txt
+    -rw-r--r-- 1 root root  446 Nov 16 20:49 netdev.before.txt
+    -rw------- 1 root root  12M Nov 16 20:46 perf.data
+    -rw-r--r-- 1 root root  55M Nov 16 20:49 perf.log
+    -rw-r--r-- 1 root root  345 Nov 16 20:49 perf_script.err
+    -rw-r--r-- 1 root root  543 Nov 16 20:49 timeline.txt
+    -r--r--r-- 1 root root  214 Nov 16 20:49 version.txt
+[host] 压缩归档 (pigz -9)
+[host] iperf-lockdemo.tar.gz: 54M
+[host] 归档内容:
+    langraph/
+    langraph/perf.data
+    langraph/ftrace.log
+    langraph/ftrace_format.log
+    langraph/ftrace_symbol.log
+    langraph/perf.log
+    langraph/kallsyms.txt
+    langraph/modules.txt
+    langraph/version.txt
+    langraph/timeline.txt
+    langraph/capture.log
+    langraph/guest_server.log
+    langraph/guest_client.json
+    langraph/guest_client.err
+    langraph/perf_script.err
+    langraph/interrupts.before.txt
+    langraph/interrupts.after.txt
+    langraph/netdev.before.txt
+    langraph/netdev.after.txt
