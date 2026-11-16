@@ -1,0 +1,2960 @@
+{
+  "source": "/workspace/iperf-hardirq/langraph/ftrace.log",
+  "totals": {
+    "event_lines": 315293,
+    "kernel_stack_blocks": 315293,
+    "user_stack_blocks": 314648,
+    "kernel_frames": 5800833,
+    "user_frames": 1225252,
+    "other_lines": 0,
+    "events_without_kstack": 1057,
+    "orphan_frames": 0,
+    "unresolved_user_syms": 1203920
+  },
+  "tracepoints": {
+    "sched_stat_runtime": {
+      "count": 97008,
+      "with_kernel_stack": 97008,
+      "with_user_stack": 95688,
+      "kernel_frames": 1455666,
+      "kernel_depth": {
+        "min": 8,
+        "max": 81,
+        "mean": 15.01
+      },
+      "first_ts": 7.323935,
+      "last_ts": 33.327563,
+      "start_frames_top": [
+        [
+          "update_curr",
+          96976
+        ],
+        [
+          "update_curr_common",
+          32
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          92552
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          3130
+        ],
+        [
+          "ret_from_fork_asm",
+          1072
+        ],
+        [
+          "secondary_startup_64_no_verify",
+          182
+        ],
+        [
+          "asm_exc_page_fault",
+          55
+        ],
+        [
+          "asm_common_interrupt",
+          17
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6a91>",
+          48487
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          18950
+        ],
+        [
+          "<0x771b6b817d07>",
+          13514
+        ],
+        [
+          "<0x7869dbae1d07>",
+          10056
+        ],
+        [
+          "/lib/libc.so.6",
+          1234
+        ],
+        [
+          "/opt/perf.bin",
+          691
+        ],
+        [
+          "<0x7869dbad6aca>",
+          626
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          523
+        ],
+        [
+          "/bin/busybox",
+          106
+        ],
+        [
+          "<0x771b6b91e6d0>",
+          99
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869db9e51ca>",
+          48494
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          19914
+        ],
+        [
+          "<0x57f157406455>",
+          13748
+        ],
+        [
+          "<0x7869dbae4c6c>",
+          10711
+        ],
+        [
+          "/opt/perf.bin",
+          1766
+        ],
+        [
+          "<0x771b6b71b28b>",
+          359
+        ],
+        [
+          "/lib/libc.so.6",
+          159
+        ],
+        [
+          "/bin/busybox",
+          106
+        ],
+        [
+          "<0x5fa742ed7455>",
+          71
+        ],
+        [
+          "<0x54b7c6>",
+          35
+        ]
+      ],
+      "sample": {
+        "ts": "7.323935",
+        "cpu": "003",
+        "comm": "perf.bin",
+        "pid": "133",
+        "flags": "d.h1.",
+        "event": "sched_stat_runtime",
+        "args": "comm=perf.bin pid=133 runtime=4445140 [ns]",
+        "kernel": [
+          "update_curr+0x1e3/0x210",
+          "task_tick_fair+0x5b/0x4f0",
+          "scheduler_tick+0xd1/0x390",
+          "update_process_times+0x89/0xb0",
+          "tick_sched_handle+0x28/0x70",
+          "tick_nohz_highres_handler+0x78/0xa0",
+          "__hrtimer_run_queues+0x112/0x2a0",
+          "hrtimer_interrupt+0xf6/0x250",
+          "__sysvec_apic_timer_interrupt+0x51/0x150",
+          "sysvec_apic_timer_interrupt+0x3b/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20"
+        ],
+        "user": [
+          "/opt/perf.bin[+0x20e8ef]",
+          "/opt/perf.bin[+0x20ebeb]",
+          "/opt/perf.bin[+0x1d9716]",
+          "/opt/perf.bin[+0x123436]",
+          "/opt/perf.bin[+0x12daf7]",
+          "/opt/perf.bin[+0x17d64]",
+          "/opt/perf.bin[+0x1bcb5]",
+          "/opt/perf.bin[+0xc2391]"
+        ]
+      }
+    },
+    "sched_switch": {
+      "count": 39696,
+      "with_kernel_stack": 39696,
+      "with_user_stack": 19701,
+      "kernel_frames": 392984,
+      "kernel_depth": {
+        "min": 6,
+        "max": 17,
+        "mean": 9.9
+      },
+      "first_ts": 7.324619,
+      "last_ts": 32.900666,
+      "start_frames_top": [
+        [
+          "__traceiter_sched_switch",
+          39696
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          19669
+        ],
+        [
+          "secondary_startup_64_no_verify",
+          19043
+        ],
+        [
+          "ret_from_fork_asm",
+          952
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          27
+        ],
+        [
+          "asm_common_interrupt",
+          2
+        ],
+        [
+          "asm_sysvec_reschedule_ipi",
+          2
+        ],
+        [
+          "asm_exc_page_fault",
+          1
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x771b6b817d07>",
+          9859
+        ],
+        [
+          "<0x7869dbae1d07>",
+          9636
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          33
+        ],
+        [
+          "<0x7869dbad6aca>",
+          23
+        ],
+        [
+          "<0x4474cd>",
+          17
+        ],
+        [
+          "/lib/libc.so.6",
+          17
+        ],
+        [
+          "<0x792f607284fd>",
+          17
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          4
+        ],
+        [
+          "<0x463aa1>",
+          3
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x57f157406455>",
+          9861
+        ],
+        [
+          "<0x7869dbae4c6c>",
+          9649
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          38
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "<0x5fa742ed7455>",
+          26
+        ],
+        [
+          "<0x4474cd>",
+          17
+        ],
+        [
+          "<0x792f60736c6c>",
+          17
+        ],
+        [
+          "/lib/libc.so.6",
+          11
+        ],
+        [
+          "/opt/perf.bin",
+          7
+        ],
+        [
+          "<0x7869db9e528b>",
+          6
+        ]
+      ],
+      "sample": {
+        "ts": "7.324619",
+        "cpu": "000",
+        "comm": "sh",
+        "pid": "125",
+        "flags": "d..2.",
+        "event": "sched_switch",
+        "args": "prev_comm=sh prev_pid=125 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120",
+        "kernel": [
+          "__traceiter_sched_switch+0x47/0x70",
+          "__schedule+0x32c/0x6b0",
+          "schedule+0x33/0x110",
+          "do_nanosleep+0x5d/0x150",
+          "hrtimer_nanosleep+0xbf/0x1a0",
+          "common_nsleep+0x43/0x60",
+          "__x64_sys_clock_nanosleep+0xf4/0x180",
+          "x64_sys_call+0x77a/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "/bin/busybox[+0xbc09a]",
+          "/bin/busybox[+0x4bf57]",
+          "/bin/busybox[+0x19c14a]",
+          "/bin/busybox[+0x1810d2]",
+          "/bin/busybox[+0x14e976]",
+          "/bin/busybox[+0x14fcd7]",
+          "/bin/busybox[+0x14a7c6]",
+          "/bin/busybox[+0x14a7c6]"
+        ]
+      }
+    },
+    "softirq_raise": {
+      "count": 27224,
+      "with_kernel_stack": 27224,
+      "with_user_stack": 10028,
+      "kernel_frames": 659226,
+      "kernel_depth": {
+        "min": 8,
+        "max": 80,
+        "mean": 24.21
+      },
+      "first_ts": 7.321005,
+      "last_ts": 33.325943,
+      "start_frames_top": [
+        [
+          "__raise_softirq_irqoff",
+          27224
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          16945
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          9449
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          429
+        ],
+        [
+          "asm_common_interrupt",
+          216
+        ],
+        [
+          "ret_from_fork_asm",
+          148
+        ],
+        [
+          "asm_exc_page_fault",
+          37
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4019
+        ],
+        [
+          "<0x771b6b817d07>",
+          2290
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1783
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          926
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          285
+        ],
+        [
+          "/lib/libc.so.6",
+          79
+        ],
+        [
+          "/opt/perf.bin",
+          40
+        ],
+        [
+          "/bin/busybox",
+          38
+        ],
+        [
+          "<0x771b6b91e6d0>",
+          19
+        ],
+        [
+          "<0x7869dbad6a91>",
+          13
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          5934
+        ],
+        [
+          "<0x57f157406455>",
+          2438
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          1039
+        ],
+        [
+          "<0x771b6b71b28b>",
+          244
+        ],
+        [
+          "/opt/perf.bin",
+          93
+        ],
+        [
+          "/bin/busybox",
+          38
+        ],
+        [
+          "<0x5fa742ed7455>",
+          28
+        ],
+        [
+          "/lib/libc.so.6",
+          26
+        ],
+        [
+          "<0x7869db9e51ca>",
+          19
+        ],
+        [
+          "<0x54b7c6>",
+          17
+        ]
+      ],
+      "sample": {
+        "ts": "7.321005",
+        "cpu": "002",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "d.h1.",
+        "event": "softirq_raise",
+        "args": "vec=1 [action=TIMER]",
+        "kernel": [
+          "__raise_softirq_irqoff+0x6e/0x80",
+          "raise_softirq+0x24/0x70",
+          "update_process_times+0x6f/0xb0",
+          "tick_sched_handle+0x28/0x70",
+          "tick_nohz_highres_handler+0x78/0xa0",
+          "__hrtimer_run_queues+0x112/0x2a0",
+          "hrtimer_interrupt+0xf6/0x250",
+          "__sysvec_apic_timer_interrupt+0x51/0x150",
+          "sysvec_apic_timer_interrupt+0x8d/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "softirq_entry": {
+      "count": 26987,
+      "with_kernel_stack": 26549,
+      "with_user_stack": 10376,
+      "kernel_frames": 468348,
+      "kernel_depth": {
+        "min": 5,
+        "max": 32,
+        "mean": 17.64
+      },
+      "first_ts": 7.323305,
+      "last_ts": 33.326234,
+      "start_frames_top": [
+        [
+          "__do_softirq",
+          26549
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          15848
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          9704
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          424
+        ],
+        [
+          "ret_from_fork_asm",
+          321
+        ],
+        [
+          "asm_common_interrupt",
+          217
+        ],
+        [
+          "asm_exc_page_fault",
+          35
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4316
+        ],
+        [
+          "<0x771b6b817d07>",
+          2287
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1845
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          924
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          287
+        ],
+        [
+          "/lib/libc.so.6",
+          75
+        ],
+        [
+          "/opt/perf.bin",
+          37
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "<0x771b6b91e6d0>",
+          18
+        ],
+        [
+          "<0x7869dbad6a91>",
+          13
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          6294
+        ],
+        [
+          "<0x57f157406455>",
+          2434
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          1040
+        ],
+        [
+          "<0x771b6b71b28b>",
+          244
+        ],
+        [
+          "/opt/perf.bin",
+          86
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "<0x5fa742ed7455>",
+          27
+        ],
+        [
+          "/lib/libc.so.6",
+          26
+        ],
+        [
+          "<0x7869db9e51ca>",
+          19
+        ],
+        [
+          "<0x7869db9e528b>",
+          16
+        ]
+      ],
+      "sample": {
+        "ts": "7.323305",
+        "cpu": "001",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "..s1.",
+        "event": "softirq_entry",
+        "args": "vec=9 [action=RCU]",
+        "kernel": [
+          "__do_softirq+0x27c/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "softirq_exit": {
+      "count": 26987,
+      "with_kernel_stack": 26579,
+      "with_user_stack": 10303,
+      "kernel_frames": 468146,
+      "kernel_depth": {
+        "min": 5,
+        "max": 32,
+        "mean": 17.61
+      },
+      "first_ts": 7.323349,
+      "last_ts": 33.326338,
+      "start_frames_top": [
+        [
+          "__do_softirq",
+          26579
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          15950
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          9635
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          424
+        ],
+        [
+          "ret_from_fork_asm",
+          318
+        ],
+        [
+          "asm_common_interrupt",
+          217
+        ],
+        [
+          "asm_exc_page_fault",
+          35
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4252
+        ],
+        [
+          "<0x771b6b817d07>",
+          2287
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1847
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          920
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          280
+        ],
+        [
+          "/lib/libc.so.6",
+          75
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "/opt/perf.bin",
+          37
+        ],
+        [
+          "<0x771b6b91e6d0>",
+          18
+        ],
+        [
+          "<0x7869dbad6a91>",
+          13
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          6232
+        ],
+        [
+          "<0x57f157406455>",
+          2434
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          1029
+        ],
+        [
+          "<0x771b6b71b28b>",
+          244
+        ],
+        [
+          "/opt/perf.bin",
+          86
+        ],
+        [
+          "/bin/busybox",
+          37
+        ],
+        [
+          "<0x5fa742ed7455>",
+          27
+        ],
+        [
+          "/lib/libc.so.6",
+          26
+        ],
+        [
+          "<0x7869db9e51ca>",
+          19
+        ],
+        [
+          "<0x7869db9e528b>",
+          16
+        ]
+      ],
+      "sample": {
+        "ts": "7.323349",
+        "cpu": "002",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "..s1.",
+        "event": "softirq_exit",
+        "args": "vec=1 [action=TIMER]",
+        "kernel": [
+          "__do_softirq+0x22f/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "sched_waking": {
+      "count": 20483,
+      "with_kernel_stack": 20483,
+      "with_user_stack": 873,
+      "kernel_frames": 579443,
+      "kernel_depth": {
+        "min": 7,
+        "max": 52,
+        "mean": 28.29
+      },
+      "first_ts": 7.324521,
+      "last_ts": 33.326053,
+      "start_frames_top": [
+        [
+          "try_to_wake_up",
+          20483
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          19543
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          745
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          72
+        ],
+        [
+          "ret_from_fork_asm",
+          67
+        ],
+        [
+          "asm_common_interrupt",
+          49
+        ],
+        [
+          "asm_exc_page_fault",
+          7
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7ffe49152bb2>",
+          313
+        ],
+        [
+          "<0x7869dbae1d07>",
+          122
+        ],
+        [
+          "<0x7869dbad6aca>",
+          119
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          106
+        ],
+        [
+          "<0x771b6b817d07>",
+          21
+        ],
+        [
+          "<0x4474cd>",
+          19
+        ],
+        [
+          "/lib/libc.so.6",
+          18
+        ],
+        [
+          "<0x464314>",
+          14
+        ],
+        [
+          "/bin/busybox",
+          13
+        ],
+        [
+          "<0x771b6b7dd950>",
+          8
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x771b6b81ac6c>",
+          444
+        ],
+        [
+          "<0x7869dbae4c6c>",
+          258
+        ],
+        [
+          "<0x57f157406455>",
+          26
+        ],
+        [
+          "<0x4474cd>",
+          19
+        ],
+        [
+          "<0x5fa742ed7455>",
+          19
+        ],
+        [
+          "/bin/busybox",
+          13
+        ],
+        [
+          "/opt/perf.bin",
+          13
+        ],
+        [
+          "<0x54a248>",
+          11
+        ],
+        [
+          "<0x7869db9e528b>",
+          9
+        ],
+        [
+          "/lib/libc.so.6",
+          7
+        ]
+      ],
+      "sample": {
+        "ts": "7.324521",
+        "cpu": "002",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "d.s3.",
+        "event": "sched_waking",
+        "args": "comm=rcu_preempt pid=17 prio=120 target_cpu=002",
+        "kernel": [
+          "try_to_wake_up+0x2c5/0x700",
+          "wake_up_process+0x15/0x30",
+          "process_timeout+0x12/0x20",
+          "call_timer_fn+0x2a/0x160",
+          "__run_timers+0x262/0x300",
+          "run_timer_softirq+0x1d/0x40",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "sched_wakeup": {
+      "count": 20483,
+      "with_kernel_stack": 20483,
+      "with_user_stack": 342,
+      "kernel_frames": 490780,
+      "kernel_depth": {
+        "min": 9,
+        "max": 54,
+        "mean": 23.96
+      },
+      "first_ts": 7.324635,
+      "last_ts": 33.32625,
+      "start_frames_top": [
+        [
+          "__traceiter_sched_wakeup",
+          20483
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          20112
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          285
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          50
+        ],
+        [
+          "ret_from_fork_asm",
+          29
+        ],
+        [
+          "asm_exc_page_fault",
+          4
+        ],
+        [
+          "asm_common_interrupt",
+          3
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbae1d07>",
+          109
+        ],
+        [
+          "<0x7869dbad6aca>",
+          84
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          44
+        ],
+        [
+          "<0x771b6b817d07>",
+          17
+        ],
+        [
+          "/lib/libc.so.6",
+          11
+        ],
+        [
+          "/bin/busybox",
+          5
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          4
+        ],
+        [
+          "<0x7869dbaa921d>",
+          4
+        ],
+        [
+          "<0x4474cd>",
+          3
+        ],
+        [
+          "<0x7869dbad174c>",
+          3
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          205
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          47
+        ],
+        [
+          "<0x57f157406455>",
+          22
+        ],
+        [
+          "<0x5fa742ed7455>",
+          14
+        ],
+        [
+          "<0x7869db9e528b>",
+          7
+        ],
+        [
+          "/opt/perf.bin",
+          6
+        ],
+        [
+          "/lib/libc.so.6",
+          6
+        ],
+        [
+          "/bin/busybox",
+          5
+        ],
+        [
+          "<0x4474cd>",
+          3
+        ],
+        [
+          "<0x7869dbbee4da>",
+          3
+        ]
+      ],
+      "sample": {
+        "ts": "7.324635",
+        "cpu": "002",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "dNs4.",
+        "event": "sched_wakeup",
+        "args": "comm=rcu_preempt pid=17 prio=120 target_cpu=002",
+        "kernel": [
+          "__traceiter_sched_wakeup+0x2e/0x50",
+          "ttwu_do_activate+0x131/0x260",
+          "try_to_wake_up+0x20e/0x700",
+          "wake_up_process+0x15/0x30",
+          "process_timeout+0x12/0x20",
+          "call_timer_fn+0x2a/0x160",
+          "__run_timers+0x262/0x300",
+          "run_timer_softirq+0x1d/0x40",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "irq_handler_entry": {
+      "count": 18531,
+      "with_kernel_stack": 18531,
+      "with_user_stack": 6700,
+      "kernel_frames": 435228,
+      "kernel_depth": {
+        "min": 6,
+        "max": 47,
+        "mean": 23.49
+      },
+      "first_ts": 7.430513,
+      "last_ts": 31.722482,
+      "start_frames_top": [
+        [
+          "__handle_irq_event_percpu",
+          18531
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          11592
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          6594
+        ],
+        [
+          "asm_common_interrupt",
+          224
+        ],
+        [
+          "ret_from_fork_asm",
+          105
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          14
+        ],
+        [
+          "asm_exc_page_fault",
+          2
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4074
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1677
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          401
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          343
+        ],
+        [
+          "<0x7869dbbdc2a6>",
+          13
+        ],
+        [
+          "<0x7869dbbec053>",
+          10
+        ],
+        [
+          "<0x7869dbad75a4>",
+          9
+        ],
+        [
+          "<0x7869dbae1bc0>",
+          8
+        ],
+        [
+          "<0x7869dbbe97bc>",
+          7
+        ],
+        [
+          "<0x7869dbbe9860>",
+          7
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          5873
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          780
+        ],
+        [
+          "<0x5fa742ed7455>",
+          10
+        ],
+        [
+          "<0x7869db9e528b>",
+          6
+        ],
+        [
+          "<0x792f60736c6c>",
+          6
+        ],
+        [
+          "<0x7869dbbee4da>",
+          6
+        ],
+        [
+          "<0x7869db9e51ca>",
+          5
+        ],
+        [
+          "/opt/perf.bin",
+          4
+        ],
+        [
+          "<0x57f157406455>",
+          4
+        ],
+        [
+          "<0x511127>",
+          2
+        ]
+      ],
+      "sample": {
+        "ts": "7.430513",
+        "cpu": "003",
+        "comm": "perf.bin",
+        "pid": "133",
+        "flags": "d.h..",
+        "event": "irq_handler_entry",
+        "args": "irq=4 name=ttyS0",
+        "kernel": [
+          "__handle_irq_event_percpu+0x131/0x1b0",
+          "handle_irq_event+0x39/0x80",
+          "handle_edge_irq+0x8c/0x250",
+          "__common_interrupt+0x51/0xf0",
+          "common_interrupt+0x44/0xb0",
+          "asm_common_interrupt+0x27/0x40"
+        ],
+        "user": [
+          "/opt/perf.bin[+0x20e8ef]",
+          "/opt/perf.bin[+0x20e94a]",
+          "/opt/perf.bin[+0x20eb79]",
+          "/opt/perf.bin[+0x1d9716]",
+          "/opt/perf.bin[+0x123436]",
+          "/opt/perf.bin[+0x12daf7]",
+          "/opt/perf.bin[+0x17d64]",
+          "/opt/perf.bin[+0x1bcb5]"
+        ]
+      }
+    },
+    "irq_handler_exit": {
+      "count": 18531,
+      "with_kernel_stack": 18531,
+      "with_user_stack": 6710,
+      "kernel_frames": 447628,
+      "kernel_depth": {
+        "min": 6,
+        "max": 77,
+        "mean": 24.16
+      },
+      "first_ts": 7.430513,
+      "last_ts": 31.72258,
+      "start_frames_top": [
+        [
+          "__handle_irq_event_percpu",
+          18531
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          11592
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          6594
+        ],
+        [
+          "asm_common_interrupt",
+          224
+        ],
+        [
+          "ret_from_fork_asm",
+          105
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          14
+        ],
+        [
+          "asm_exc_page_fault",
+          2
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4083
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1678
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          401
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          343
+        ],
+        [
+          "<0x7869dbbdc2a6>",
+          13
+        ],
+        [
+          "<0x7869dbbec053>",
+          10
+        ],
+        [
+          "<0x7869dbad75a4>",
+          9
+        ],
+        [
+          "<0x7869dbae1bc0>",
+          8
+        ],
+        [
+          "<0x7869dbbe97bc>",
+          7
+        ],
+        [
+          "<0x7869dbbe9860>",
+          7
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          5883
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          780
+        ],
+        [
+          "<0x5fa742ed7455>",
+          10
+        ],
+        [
+          "<0x7869db9e528b>",
+          6
+        ],
+        [
+          "<0x792f60736c6c>",
+          6
+        ],
+        [
+          "<0x7869dbbee4da>",
+          6
+        ],
+        [
+          "<0x7869db9e51ca>",
+          5
+        ],
+        [
+          "/opt/perf.bin",
+          4
+        ],
+        [
+          "<0x57f157406455>",
+          4
+        ],
+        [
+          "<0x511127>",
+          2
+        ]
+      ],
+      "sample": {
+        "ts": "7.430513",
+        "cpu": "003",
+        "comm": "perf.bin",
+        "pid": "133",
+        "flags": "d.h..",
+        "event": "irq_handler_exit",
+        "args": "irq=4 ret=handled",
+        "kernel": [
+          "__handle_irq_event_percpu+0xe1/0x1b0",
+          "handle_irq_event+0x39/0x80",
+          "handle_edge_irq+0x8c/0x250",
+          "__common_interrupt+0x51/0xf0",
+          "common_interrupt+0x44/0xb0",
+          "asm_common_interrupt+0x27/0x40"
+        ],
+        "user": [
+          "/opt/perf.bin[+0x20e8ef]",
+          "/opt/perf.bin[+0x20e94a]",
+          "/opt/perf.bin[+0x20eb79]",
+          "/opt/perf.bin[+0x1d9716]",
+          "/opt/perf.bin[+0x123436]",
+          "/opt/perf.bin[+0x12daf7]",
+          "/opt/perf.bin[+0x17d64]",
+          "/opt/perf.bin[+0x1bcb5]"
+        ]
+      }
+    },
+    "napi_poll": {
+      "count": 18522,
+      "with_kernel_stack": 18316,
+      "with_user_stack": 6768,
+      "kernel_frames": 382812,
+      "kernel_depth": {
+        "min": 7,
+        "max": 34,
+        "mean": 20.9
+      },
+      "first_ts": 9.210409,
+      "last_ts": 31.722646,
+      "start_frames_top": [
+        [
+          "__napi_poll",
+          18316
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          11365
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          6554
+        ],
+        [
+          "asm_common_interrupt",
+          222
+        ],
+        [
+          "ret_from_fork_asm",
+          162
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          13
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          4130
+        ],
+        [
+          "<0x7869dbae1d07>",
+          1684
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          403
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          349
+        ],
+        [
+          "<0x7869dbbdc2a6>",
+          13
+        ],
+        [
+          "<0x7869dbbec053>",
+          10
+        ],
+        [
+          "<0x7869dbad75a4>",
+          9
+        ],
+        [
+          "<0x7869dbae1bc0>",
+          8
+        ],
+        [
+          "<0x7869dbbe97bc>",
+          7
+        ],
+        [
+          "<0x7869dbbe9860>",
+          7
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          5936
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          788
+        ],
+        [
+          "<0x5fa742ed7455>",
+          10
+        ],
+        [
+          "<0x7869db9e528b>",
+          8
+        ],
+        [
+          "<0x792f60736c6c>",
+          6
+        ],
+        [
+          "<0x7869dbbee4da>",
+          6
+        ],
+        [
+          "<0x7869db9e51ca>",
+          5
+        ],
+        [
+          "<0x57f157406455>",
+          5
+        ],
+        [
+          "<0x5fa742ed7386>",
+          2
+        ],
+        [
+          "<0x7869dbbed4b4>",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "9.210409",
+        "cpu": "000",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "..s1.",
+        "event": "napi_poll",
+        "args": "napi poll on napi struct 000000004b867474 for device eth0 work 0 budget 64",
+        "kernel": [
+          "__napi_poll+0x9b/0x200",
+          "net_rx_action+0x181/0x2e0",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_call_function_single+0x92/0xd0",
+          "asm_sysvec_call_function_single+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "rest_init+0xde/0x100",
+          "arch_call_rest_init+0xe/0x30",
+          "start_kernel+0x354/0x450",
+          "x86_64_start_reservations+0x18/0x30",
+          "x86_64_start_kernel+0xbf/0x110",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "sched_migrate_task": {
+      "count": 243,
+      "with_kernel_stack": 243,
+      "with_user_stack": 101,
+      "kernel_frames": 8192,
+      "kernel_depth": {
+        "min": 8,
+        "max": 53,
+        "mean": 33.71
+      },
+      "first_ts": 7.42059,
+      "last_ts": 33.326092,
+      "start_frames_top": [
+        [
+          "set_task_cpu",
+          243
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          120
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          86
+        ],
+        [
+          "ret_from_fork_asm",
+          22
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          10
+        ],
+        [
+          "asm_common_interrupt",
+          5
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbae1d07>",
+          23
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          19
+        ],
+        [
+          "<0x7869dbad6aca>",
+          19
+        ],
+        [
+          "<0x771b6b817d07>",
+          11
+        ],
+        [
+          "/bin/busybox",
+          6
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          3
+        ],
+        [
+          "<0x792f606a5603>",
+          2
+        ],
+        [
+          "<0x463565>",
+          1
+        ],
+        [
+          "<0x7869dbc228a5>",
+          1
+        ],
+        [
+          "<0x792f606fbf3b>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          45
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          22
+        ],
+        [
+          "<0x57f157406455>",
+          11
+        ],
+        [
+          "/bin/busybox",
+          6
+        ],
+        [
+          "<0x7869db9e528b>",
+          3
+        ],
+        [
+          "<0x792f60736c6c>",
+          2
+        ],
+        [
+          "<0x7869dbbee4da>",
+          2
+        ],
+        [
+          "<0x58bc38>",
+          1
+        ],
+        [
+          "<0x7869dbc20548>",
+          1
+        ],
+        [
+          "<0x792f606fbf3b>",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.420590",
+        "cpu": "002",
+        "comm": "init",
+        "pid": "1",
+        "flags": "d.s5.",
+        "event": "sched_migrate_task",
+        "args": "comm=rcu_preempt pid=17 prio=120 orig_cpu=2 dest_cpu=0",
+        "kernel": [
+          "set_task_cpu+0x163/0x1e0",
+          "try_to_wake_up+0x168/0x700",
+          "wake_up_process+0x15/0x30",
+          "process_timeout+0x12/0x20",
+          "call_timer_fn+0x2a/0x160",
+          "__run_timers+0x262/0x300",
+          "run_timer_softirq+0x1d/0x40",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "_raw_spin_unlock+0x0/0x40",
+          "list_lru_del_obj+0x6d/0xa0",
+          "d_lru_del+0x51/0x80",
+          "to_shrink_list+0x70/0x90",
+          "select_collect+0x8d/0xa0",
+          "d_walk+0xc3/0x2a0",
+          "shrink_dcache_parent+0x4f/0x140",
+          "d_invalidate+0x67/0xf0",
+          "proc_invalidate_siblings_dcache+0x15b/0x190",
+          "proc_flush_pid+0x16/0x20",
+          "release_task+0x108/0x1d0",
+          "wait_task_zombie+0x162/0x5c0",
+          "wait_consider_task+0x28e/0x380",
+          "__do_wait+0xb0/0x2a0",
+          "do_wait+0x6c/0x110",
+          "kernel_wait4+0xbd/0x170",
+          "__do_sys_wait4+0xad/0xc0",
+          "__x64_sys_wait4+0x1c/0x30",
+          "x64_sys_call+0x141a/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "/bin/busybox[+0x613b7]",
+          "/bin/busybox[+0x146d31]",
+          "/bin/busybox[+0x14af42]",
+          "/bin/busybox[+0x14ba8c]",
+          "/bin/busybox[+0x14f8b3]",
+          "/bin/busybox[+0x14a7c6]",
+          "/bin/busybox[+0x14a74f]",
+          "/bin/busybox[+0x14a74f]"
+        ]
+      }
+    },
+    "sched_wake_idle_without_ipi": {
+      "count": 156,
+      "with_kernel_stack": 156,
+      "with_user_stack": 32,
+      "kernel_frames": 6350,
+      "kernel_depth": {
+        "min": 11,
+        "max": 55,
+        "mean": 40.71
+      },
+      "first_ts": 12.826777,
+      "last_ts": 33.326177,
+      "start_frames_top": [
+        [
+          "call_function_single_prep_ipi",
+          129
+        ],
+        [
+          "resched_curr",
+          25
+        ],
+        [
+          "wake_up_nohz_cpu",
+          2
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          123
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          29
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          3
+        ],
+        [
+          "ret_from_fork_asm",
+          1
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7ffe49152bb2>",
+          18
+        ],
+        [
+          "<0x7869dbae1d07>",
+          4
+        ],
+        [
+          "<0x7869dbad6aca>",
+          4
+        ],
+        [
+          "<0x7869dbad6a91>",
+          1
+        ],
+        [
+          "<0x771b6b80d5dd>",
+          1
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          1
+        ],
+        [
+          "<0x7ffe49152af3>",
+          1
+        ],
+        [
+          "<0x771b6b817d07>",
+          1
+        ],
+        [
+          "/bin/busybox",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x771b6b81ac6c>",
+          20
+        ],
+        [
+          "<0x7869dbae4c6c>",
+          8
+        ],
+        [
+          "<0x7869db9e51ca>",
+          1
+        ],
+        [
+          "<0x7869db9e528b>",
+          1
+        ],
+        [
+          "<0x57f157406455>",
+          1
+        ],
+        [
+          "/bin/busybox",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "12.826777",
+        "cpu": "000",
+        "comm": "iperf3",
+        "pid": "370",
+        "flags": "d..2.",
+        "event": "sched_wake_idle_without_ipi",
+        "args": "cpu=1",
+        "kernel": [
+          "wake_up_nohz_cpu+0x12f/0x1c0",
+          "enqueue_timer+0x101/0x110",
+          "add_timer_on+0xf7/0x190",
+          "try_to_generate_entropy+0x285/0x2a0",
+          "urandom_read_iter+0x37/0xb0",
+          "vfs_read+0x258/0x390",
+          "ksys_read+0x73/0x100",
+          "__x64_sys_read+0x19/0x30",
+          "x64_sys_call+0x1ada/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "<0x7869dbad6a91>",
+          "<0x7869dba4149b>",
+          "<0x7869dbbebe38>",
+          "<0x7869dbbe52c5>",
+          "<0x7869dbbeece9>",
+          "<0x5fa742ed75f6>",
+          "<0x5fa742ed7386>",
+          "<0x7869db9e51ca>"
+        ]
+      }
+    },
+    "tasklet_entry": {
+      "count": 150,
+      "with_kernel_stack": 148,
+      "with_user_stack": 86,
+      "kernel_frames": 2412,
+      "kernel_depth": {
+        "min": 7,
+        "max": 34,
+        "mean": 16.3
+      },
+      "first_ts": 14.561298,
+      "last_ts": 26.138359,
+      "start_frames_top": [
+        [
+          "tasklet_action_common.isra.0",
+          148
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          84
+        ],
+        [
+          "secondary_startup_64_no_verify",
+          34
+        ],
+        [
+          "ret_from_fork_asm",
+          28
+        ],
+        [
+          "asm_common_interrupt",
+          1
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          1
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          52
+        ],
+        [
+          "<0x7869dbae1d07>",
+          27
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          4
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          2
+        ],
+        [
+          "<0x771b6b92080d>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          79
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          5
+        ],
+        [
+          "<0x7869db9e528b>",
+          2
+        ]
+      ],
+      "sample": {
+        "ts": "14.561298",
+        "cpu": "000",
+        "comm": "iperf3",
+        "pid": "382",
+        "flags": "..s..",
+        "event": "tasklet_entry",
+        "args": "tasklet=0xffff8880bb233ea0 function=tcp_tasklet_func",
+        "kernel": [
+          "tasklet_action_common.isra.0+0x1bd/0x1e0",
+          "tasklet_action+0x22/0x30",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "common_interrupt+0x49/0xb0",
+          "asm_common_interrupt+0x27/0x40"
+        ],
+        "user": [
+          "<0x771b6b92080d>",
+          "<0x771b6b915c84>",
+          "<0x771b6b921fbd>",
+          "<0x771b6b78daa4>",
+          "<0x771b6b81ac6c>"
+        ]
+      }
+    },
+    "tasklet_exit": {
+      "count": 150,
+      "with_kernel_stack": 148,
+      "with_user_stack": 87,
+      "kernel_frames": 2394,
+      "kernel_depth": {
+        "min": 7,
+        "max": 34,
+        "mean": 16.18
+      },
+      "first_ts": 14.561655,
+      "last_ts": 26.138359,
+      "start_frames_top": [
+        [
+          "tasklet_action_common.isra.0",
+          148
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          85
+        ],
+        [
+          "secondary_startup_64_no_verify",
+          32
+        ],
+        [
+          "ret_from_fork_asm",
+          29
+        ],
+        [
+          "asm_common_interrupt",
+          1
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          1
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x7869dbad6aca>",
+          52
+        ],
+        [
+          "<0x7869dbae1d07>",
+          28
+        ],
+        [
+          "<0x7ffe49152bb2>",
+          4
+        ],
+        [
+          "<0x7869dbae6a9e>",
+          2
+        ],
+        [
+          "<0x771b6b92080d>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x7869dbae4c6c>",
+          80
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          5
+        ],
+        [
+          "<0x7869db9e528b>",
+          2
+        ]
+      ],
+      "sample": {
+        "ts": "14.561655",
+        "cpu": "000",
+        "comm": "iperf3",
+        "pid": "382",
+        "flags": ".Ns..",
+        "event": "tasklet_exit",
+        "args": "tasklet=0xffff8880bb233ea0 function=tcp_tasklet_func",
+        "kernel": [
+          "tasklet_action_common.isra.0+0x137/0x1e0",
+          "tasklet_action+0x22/0x30",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "common_interrupt+0x49/0xb0",
+          "asm_common_interrupt+0x27/0x40"
+        ],
+        "user": [
+          "<0x771b6b92080d>",
+          "<0x771b6b915c84>",
+          "<0x771b6b921fbd>",
+          "<0x771b6b78daa4>",
+          "<0x771b6b81ac6c>"
+        ]
+      }
+    },
+    "sched_process_wait": {
+      "count": 38,
+      "with_kernel_stack": 38,
+      "with_user_stack": 38,
+      "kernel_frames": 266,
+      "kernel_depth": {
+        "min": 7,
+        "max": 7,
+        "mean": 7.0
+      },
+      "first_ts": 7.42029,
+      "last_ts": 26.641025,
+      "start_frames_top": [
+        [
+          "do_wait",
+          38
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          38
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "/bin/busybox",
+          33
+        ],
+        [
+          "<0x4623b7>",
+          5
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "/bin/busybox",
+          33
+        ],
+        [
+          "<0x54b7c6>",
+          5
+        ]
+      ],
+      "sample": {
+        "ts": "7.420290",
+        "cpu": "002",
+        "comm": "init",
+        "pid": "1",
+        "flags": ".....",
+        "event": "sched_process_wait",
+        "args": "comm=init pid=0 prio=120",
+        "kernel": [
+          "do_wait+0xf1/0x110",
+          "kernel_wait4+0xbd/0x170",
+          "__do_sys_wait4+0xad/0xc0",
+          "__x64_sys_wait4+0x1c/0x30",
+          "x64_sys_call+0x141a/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "/bin/busybox[+0x613b7]",
+          "/bin/busybox[+0x146d31]",
+          "/bin/busybox[+0x14af42]",
+          "/bin/busybox[+0x14ba8c]",
+          "/bin/busybox[+0x14f8b3]",
+          "/bin/busybox[+0x14a7c6]",
+          "/bin/busybox[+0x14a74f]",
+          "/bin/busybox[+0x14a74f]"
+        ]
+      }
+    },
+    "sched_process_fork": {
+      "count": 25,
+      "with_kernel_stack": 24,
+      "with_user_stack": 24,
+      "kernel_frames": 144,
+      "kernel_depth": {
+        "min": 6,
+        "max": 6,
+        "mean": 6.0
+      },
+      "first_ts": 7.412626,
+      "last_ts": 26.635262,
+      "start_frames_top": [
+        [
+          "kernel_clone",
+          24
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          24
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "/bin/busybox",
+          15
+        ],
+        [
+          "<0x4e59a7>",
+          3
+        ],
+        [
+          "/lib/libc.so.6",
+          2
+        ],
+        [
+          "<0x7869dbae4c5d>",
+          2
+        ],
+        [
+          "<0x771b6b81ac5d>",
+          2
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "/bin/busybox",
+          15
+        ],
+        [
+          "<0x54b7c6>",
+          3
+        ],
+        [
+          "<0x7869db9e528b>",
+          2
+        ],
+        [
+          "<0x771b6b71b28b>",
+          2
+        ],
+        [
+          "/lib/libc.so.6",
+          1
+        ],
+        [
+          "/opt/perf.bin",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.412626",
+        "cpu": "002",
+        "comm": "init",
+        "pid": "1",
+        "flags": ".....",
+        "event": "sched_process_fork",
+        "args": "comm=init pid=1 child_comm=init child_pid=365",
+        "kernel": [
+          "kernel_clone+0x1ae/0x450",
+          "__do_sys_clone+0x66/0xa0",
+          "__x64_sys_clone+0x25/0x40",
+          "x64_sys_call+0x1abc/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "/bin/busybox[+0xe49a7]",
+          "/bin/busybox[+0x149dfc]",
+          "/bin/busybox[+0x14adc9]",
+          "/bin/busybox[+0x14ba8c]",
+          "/bin/busybox[+0x14f8b3]",
+          "/bin/busybox[+0x14a7c6]",
+          "/bin/busybox[+0x14a74f]",
+          "/bin/busybox[+0x14a74f]"
+        ]
+      }
+    },
+    "sched_wakeup_new": {
+      "count": 25,
+      "with_kernel_stack": 25,
+      "with_user_stack": 25,
+      "kernel_frames": 200,
+      "kernel_depth": {
+        "min": 8,
+        "max": 8,
+        "mean": 8.0
+      },
+      "first_ts": 7.412766,
+      "last_ts": 26.635346,
+      "start_frames_top": [
+        [
+          "__traceiter_sched_wakeup_new",
+          25
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          25
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "/bin/busybox",
+          16
+        ],
+        [
+          "<0x4e59a7>",
+          3
+        ],
+        [
+          "/lib/libc.so.6",
+          2
+        ],
+        [
+          "<0x7869dbae4c5d>",
+          2
+        ],
+        [
+          "<0x771b6b81ac5d>",
+          2
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "/bin/busybox",
+          16
+        ],
+        [
+          "<0x54b7c6>",
+          3
+        ],
+        [
+          "<0x7869db9e528b>",
+          2
+        ],
+        [
+          "<0x771b6b71b28b>",
+          2
+        ],
+        [
+          "/lib/libc.so.6",
+          1
+        ],
+        [
+          "/opt/perf.bin",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.412766",
+        "cpu": "002",
+        "comm": "init",
+        "pid": "1",
+        "flags": "d..2.",
+        "event": "sched_wakeup_new",
+        "args": "comm=init pid=365 prio=120 target_cpu=001",
+        "kernel": [
+          "__traceiter_sched_wakeup_new+0x2e/0x50",
+          "wake_up_new_task+0x294/0x340",
+          "kernel_clone+0x25d/0x450",
+          "__do_sys_clone+0x66/0xa0",
+          "__x64_sys_clone+0x25/0x40",
+          "x64_sys_call+0x1abc/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "/bin/busybox[+0xe49a7]",
+          "/bin/busybox[+0x149dfc]",
+          "/bin/busybox[+0x14adc9]",
+          "/bin/busybox[+0x14ba8c]",
+          "/bin/busybox[+0x14f8b3]",
+          "/bin/busybox[+0x14a7c6]",
+          "/bin/busybox[+0x14a74f]",
+          "/bin/busybox[+0x14a74f]"
+        ]
+      }
+    },
+    "sched_process_free": {
+      "count": 24,
+      "with_kernel_stack": 24,
+      "with_user_stack": 4,
+      "kernel_frames": 424,
+      "kernel_depth": {
+        "min": 9,
+        "max": 22,
+        "mean": 17.67
+      },
+      "first_ts": 7.325566,
+      "last_ts": 26.644497,
+      "start_frames_top": [
+        [
+          "delayed_put_task_struct",
+          24
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "secondary_startup_64_no_verify",
+          19
+        ],
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          2
+        ],
+        [
+          "asm_exc_page_fault",
+          1
+        ],
+        [
+          "asm_sysvec_apic_timer_interrupt",
+          1
+        ],
+        [
+          "ret_from_fork_asm",
+          1
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "/bin/busybox",
+          2
+        ],
+        [
+          "<0x7869dbc1090c>",
+          1
+        ],
+        [
+          "<0x7869dbbe1a05>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "/bin/busybox",
+          2
+        ],
+        [
+          "<0x7869dbc20548>",
+          1
+        ],
+        [
+          "<0x5fa742ed7455>",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.325566",
+        "cpu": "002",
+        "comm": "<idle>",
+        "pid": "0",
+        "flags": "..s1.",
+        "event": "sched_process_free",
+        "args": "comm=cat pid=364 prio=120",
+        "kernel": [
+          "delayed_put_task_struct+0x86/0xd0",
+          "rcu_do_batch+0x1ca/0x5a0",
+          "rcu_core+0x195/0x390",
+          "rcu_core_si+0xe/0x20",
+          "__do_softirq+0xe1/0x363",
+          "__irq_exit_rcu+0xd7/0x100",
+          "irq_exit_rcu+0xe/0x20",
+          "sysvec_apic_timer_interrupt+0x92/0xd0",
+          "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+          "pv_native_safe_halt+0xb/0x10",
+          "amd_e400_idle+0x39/0x50",
+          "arch_cpu_idle+0x9/0x10",
+          "default_idle_call+0x2c/0xf0",
+          "cpuidle_idle_call+0x153/0x190",
+          "do_idle+0x87/0xf0",
+          "cpu_startup_entry+0x2a/0x30",
+          "start_secondary+0x129/0x160",
+          "secondary_startup_64_no_verify+0x184/0x18b"
+        ],
+        "user": []
+      }
+    },
+    "sched_process_exit": {
+      "count": 23,
+      "with_kernel_stack": 23,
+      "with_user_stack": 23,
+      "kernel_frames": 134,
+      "kernel_depth": {
+        "min": 5,
+        "max": 6,
+        "mean": 5.83
+      },
+      "first_ts": 7.419965,
+      "last_ts": 26.638837,
+      "start_frames_top": [
+        [
+          "do_exit",
+          23
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          23
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x4474cd>",
+          17
+        ],
+        [
+          "<0x7869dba57a36>",
+          2
+        ],
+        [
+          "<0x771b6b78da36>",
+          2
+        ],
+        [
+          "<0x7869dbaa921d>",
+          1
+        ],
+        [
+          "<0x771b6b7df21d>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x4474cd>",
+          17
+        ],
+        [
+          "<0x7869dbae4c6c>",
+          2
+        ],
+        [
+          "<0x771b6b81ac6c>",
+          2
+        ],
+        [
+          "<0x7869dbaa921d>",
+          1
+        ],
+        [
+          "<0x771b6b7df21d>",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.419965",
+        "cpu": "001",
+        "comm": "cat",
+        "pid": "365",
+        "flags": ".....",
+        "event": "sched_process_exit",
+        "args": "comm=cat pid=365 prio=120",
+        "kernel": [
+          "do_exit+0x3c3/0x530",
+          "do_group_exit+0x35/0x90",
+          "__x64_sys_exit_group+0x18/0x20",
+          "x64_sys_call+0x21e2/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "<0x4474cd>"
+        ]
+      }
+    },
+    "sched_process_exec": {
+      "count": 7,
+      "with_kernel_stack": 7,
+      "with_user_stack": 7,
+      "kernel_frames": 56,
+      "kernel_depth": {
+        "min": 8,
+        "max": 8,
+        "mean": 8.0
+      },
+      "first_ts": 7.416301,
+      "last_ts": 26.596224,
+      "start_frames_top": [
+        [
+          "exec_binprm",
+          7
+        ]
+      ],
+      "end_frames_top": [
+        [
+          "entry_SYSCALL_64_after_hwframe",
+          7
+        ]
+      ],
+      "user_start_frames_top": [
+        [
+          "<0x410870>",
+          4
+        ],
+        [
+          "<0x7869dbc20540>",
+          1
+        ],
+        [
+          "/bin/busybox",
+          1
+        ],
+        [
+          "<0x771b6b956540>",
+          1
+        ]
+      ],
+      "user_end_frames_top": [
+        [
+          "<0x410870>",
+          4
+        ],
+        [
+          "<0x7869dbc20540>",
+          1
+        ],
+        [
+          "/bin/busybox",
+          1
+        ],
+        [
+          "<0x771b6b956540>",
+          1
+        ]
+      ],
+      "sample": {
+        "ts": "7.416301",
+        "cpu": "001",
+        "comm": "cat",
+        "pid": "365",
+        "flags": ".....",
+        "event": "sched_process_exec",
+        "args": "filename=/proc/self/exe pid=365 old_pid=365",
+        "kernel": [
+          "exec_binprm+0x167/0x1c0",
+          "bprm_execve.part.0+0x190/0x240",
+          "bprm_execve+0x46/0x80",
+          "do_execveat_common.isra.0+0x198/0x250",
+          "__x64_sys_execve+0x37/0x60",
+          "x64_sys_call+0x1a26/0x25c0",
+          "do_syscall_64+0x7f/0x180",
+          "entry_SYSCALL_64_after_hwframe+0x73/0x7b"
+        ],
+        "user": [
+          "<0x410870>"
+        ]
+      }
+    }
+  },
+  "per_event_examples": [
+    {
+      "ts": "7.321005",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=1 [action=TIMER]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 19,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.321000",
+      "cpu": "001",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 21,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323287",
+      "cpu": "001",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 21,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.321487",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 21,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323313",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=1 [action=TIMER]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 19,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323321",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 21,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323305",
+      "cpu": "001",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_entry",
+      "args": "vec=9 [action=RCU]",
+      "start": "__do_softirq+0x27c/0x363",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 14,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323336",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_entry",
+      "args": "vec=1 [action=TIMER]",
+      "start": "__do_softirq+0x27c/0x363",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 14,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323349",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_exit",
+      "args": "vec=1 [action=TIMER]",
+      "start": "__do_softirq+0x22f/0x363",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 14,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.323355",
+      "cpu": "002",
+      "comm": "<idle>",
+      "pid": "0",
+      "event": "softirq_entry",
+      "args": "vec=9 [action=RCU]",
+      "start": "__do_softirq+0x27c/0x363",
+      "end": "secondary_startup_64_no_verify+0x184/0x18b",
+      "kernel_depth": 14,
+      "user_start": "",
+      "user_end": "",
+      "user_depth": 0
+    },
+    {
+      "ts": "7.320485",
+      "cpu": "003",
+      "comm": "perf.bin",
+      "pid": "133",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 12,
+      "user_start": "/opt/perf.bin[+0x20e8ef]",
+      "user_end": "/opt/perf.bin[+0xc2391]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.320481",
+      "cpu": "000",
+      "comm": "sh",
+      "pid": "125",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 12,
+      "user_start": "/bin/busybox[+0xb22e0]",
+      "user_end": "/bin/busybox[+0x14a74f]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.323935",
+      "cpu": "003",
+      "comm": "perf.bin",
+      "pid": "133",
+      "event": "sched_stat_runtime",
+      "args": "comm=perf.bin pid=133 runtime=4445140 [ns]",
+      "start": "update_curr+0x1e3/0x210",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 11,
+      "user_start": "/opt/perf.bin[+0x20e8ef]",
+      "user_end": "/opt/perf.bin[+0xc2391]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324009",
+      "cpu": "003",
+      "comm": "perf.bin",
+      "pid": "133",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 12,
+      "user_start": "/opt/perf.bin[+0x20e8ef]",
+      "user_end": "/opt/perf.bin[+0xc2391]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.323939",
+      "cpu": "000",
+      "comm": "sh",
+      "pid": "125",
+      "event": "sched_stat_runtime",
+      "args": "comm=sh pid=125 runtime=4444739 [ns]",
+      "start": "update_curr+0x1e3/0x210",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 11,
+      "user_start": "/bin/busybox[+0xb22e0]",
+      "user_end": "/bin/busybox[+0x14a74f]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324027",
+      "cpu": "003",
+      "comm": "perf.bin",
+      "pid": "133",
+      "event": "sched_stat_runtime",
+      "args": "comm=perf.bin pid=133 runtime=93840 [ns]",
+      "start": "update_curr+0x1e3/0x210",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 11,
+      "user_start": "/opt/perf.bin[+0x20e8ef]",
+      "user_end": "/opt/perf.bin[+0xc2391]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324043",
+      "cpu": "000",
+      "comm": "sh",
+      "pid": "125",
+      "event": "softirq_raise",
+      "args": "vec=9 [action=RCU]",
+      "start": "__raise_softirq_irqoff+0x6e/0x80",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 12,
+      "user_start": "/bin/busybox[+0xb22e0]",
+      "user_end": "/bin/busybox[+0x14a74f]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324053",
+      "cpu": "003",
+      "comm": "perf.bin",
+      "pid": "133",
+      "event": "softirq_entry",
+      "args": "vec=9 [action=RCU]",
+      "start": "__do_softirq+0x27c/0x363",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 5,
+      "user_start": "/opt/perf.bin[+0x20e8ef]",
+      "user_end": "/opt/perf.bin[+0xc2391]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324055",
+      "cpu": "000",
+      "comm": "sh",
+      "pid": "125",
+      "event": "sched_stat_runtime",
+      "args": "comm=sh pid=125 runtime=127211 [ns]",
+      "start": "update_curr+0x1e3/0x210",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 11,
+      "user_start": "/bin/busybox[+0xb22e0]",
+      "user_end": "/bin/busybox[+0x14a74f]",
+      "user_depth": 8
+    },
+    {
+      "ts": "7.324076",
+      "cpu": "000",
+      "comm": "sh",
+      "pid": "125",
+      "event": "softirq_entry",
+      "args": "vec=9 [action=RCU]",
+      "start": "__do_softirq+0x27c/0x363",
+      "end": "asm_sysvec_apic_timer_interrupt+0x1b/0x20",
+      "kernel_depth": 5,
+      "user_start": "/bin/busybox[+0xb22e0]",
+      "user_end": "/bin/busybox[+0x14a74f]",
+      "user_depth": 8
+    }
+  ]
+}

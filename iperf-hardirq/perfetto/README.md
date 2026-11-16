@@ -83,3 +83,11 @@ NET_RX raise 15,184 次、`napi_poll` 18,522 次（与硬中断 1:1）、
   把 pftrace 端点改成带 `dur` 的 slice 是后续待修项，不影响本次数据完整性。
 - TCG 是软件模拟，时间戳/延迟/带宽**没有真实性能意义**，只能验证链路与代码路径，
   不能用来分析真实延迟或性能回归。
+
+## 实验 6：带调用栈标注的版本 → [`stacks/`](stacks/README.md)
+
+同一份 `ftrace.log` 又生成了一套**带堆栈**的 trace，放在 `stacks/`：
+每个 tracepoint 的 slice / instant / flow 的 args 里带 `stack_start` / `stack_end` /
+`stack_depth`（栈顶触发点、栈底入口、帧数），并**隐藏 S 可中断睡眠段**。
+单链原件直传，全量以 gzip 压缩（97 MB→3.6 MB），另附 315,293 条事件的逐条堆栈索引。
+四份同样通过官方校验、零告警。该目录只含 Perfetto 文件与数据索引，无 HTML/PNG。

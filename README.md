@@ -114,6 +114,17 @@ iperf-lifecycle/             完整 iperf 进程生命周期采集（实验 4）
 [`iperf-hardirq/perfetto/`](iperf-hardirq/perfetto/)（3 ms 单链 + 26 s 全量，
 四份均通过官方校验、零告警）。**先看** `hardirq-result.html`（自包含结果页）。
 
+### 带调用栈标注的 trace（实验 6）
+
+用 `tracepoint_stacks.py` 解析 `ftrace.log` 里每个 tracepoint 紧跟的内核/用户栈，
+再通过 `ftrace2perfetto.py --stacks` 把 `stack_start`（栈顶触发点）、`stack_end`（栈底入口）、
+`stack_depth` 挂到 slice / instant / flow 的 args；同时**默认隐藏 S 可中断睡眠段**。
+399 MB 日志里 315,293 个事件行 100% 带内核栈、99.8% 带用户栈。
+
+归档在 [`iperf-hardirq/perfetto/stacks/`](iperf-hardirq/perfetto/stacks/)：
+3 ms 单链原件 + 26 s 全量 gzip（97 MB→3.6 MB）+ 315,293 条逐条索引 + 校验报告，
+四份零 health 告警；该目录只含 Perfetto 文件与数据索引，无 HTML/PNG 展示物。
+
 ## 环境
 
 | 项目 | 值 |

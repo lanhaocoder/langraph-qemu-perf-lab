@@ -1,0 +1,82 @@
+[
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-chain.pftrace",
+    "size": 45903,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 183,
+      "flow": 46,
+      "track": 23,
+      "args": 1034
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 10,
+      "mean": 69.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-chain.json",
+    "size": 60161,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 119,
+      "flow": 42,
+      "track": 20,
+      "args": 635
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 5,
+      "mean": 69.0
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-full.pftrace",
+    "size": 84278065,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 347638,
+      "flow": 96064,
+      "track": 66,
+      "args": 248601
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 25,
+      "sched_process_free": 24,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 23066,
+      "mean": 412.6
+    }
+  },
+  {
+    "file": "/workspace/ftrace2perfetto/out/iperf-hardirq-stack-full.json",
+    "size": 100959642,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 211218,
+      "flow": 96061,
+      "track": 87,
+      "args": 220937
+    },
+    "lifecycle": {
+      "sched_process_wait": 38,
+      "sched_process_fork": 25,
+      "sched_process_free": 24,
+      "sched_process_exit": 23,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 20221,
+      "mean": 262.0
+    }
+  }
+]
