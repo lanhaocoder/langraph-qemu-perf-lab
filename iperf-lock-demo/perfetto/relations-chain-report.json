@@ -1,0 +1,24 @@
+[
+  {
+    "file": "/workspace/iperf-lock-demo/lock-rel-chain.pftrace",
+    "size": 376713,
+    "queries": {
+      "predecessor_edges": 1572,
+      "events_with_parent": 1163,
+      "causal_chains": 87,
+      "causal_chain_max_size": 6,
+      "events_with_causal": 274,
+      "waker_wakee_edges": 83,
+      "lock_holder_annotations": 26,
+      "irq_nested_events": 3,
+      "slice_total": 1213,
+      "args_total": 11075
+    },
+    "chain_sample": "\"event\",\"ts\",\"cid\",\"parent\"\n\"软中断 raise vec=9 [RCU]\",14806705000,6,\"rcu_utilization\"\n\"中断/软中断 → 唤醒 rcu_preempt\",14806892000,6,\"rcu_utilization\"\n\"sched_wakeup\",14806947000,6,\"sched_waking\"\n\"上CPU运行（中断→唤醒→运行）\",14806977000,6,\"rcu_utilization\"\n\"lock 竞争开始\",14813903000,6,\"softirq_exit\"\n\"等锁：lockbench\",14813903000,6,\"sched_switch\"\n\nTrace loaded: 0.38 MB in 0.02s (15.3 MB/s)\nQuery executed in 0 ms",
+    "verdict": {
+      "parent_join_ok": true,
+      "parent_join_ratio": 1.3517,
+      "causal_id_ok": true
+    }
+  }
+]

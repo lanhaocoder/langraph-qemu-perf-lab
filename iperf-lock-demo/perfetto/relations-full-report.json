@@ -1,0 +1,24 @@
+[
+  {
+    "file": "/workspace/iperf-lock-demo/lock-rel-full.pftrace",
+    "size": 215165249,
+    "queries": {
+      "predecessor_edges": 1883590,
+      "events_with_parent": 696555,
+      "causal_chains": 44757,
+      "causal_chain_max_size": 13,
+      "events_with_causal": 140504,
+      "waker_wakee_edges": 46639,
+      "lock_holder_annotations": 5499,
+      "irq_nested_events": 2855,
+      "slice_total": 697766,
+      "args_total": 6302075
+    },
+    "chain_sample": "\"event\",\"ts\",\"cid\",\"parent\"\n\"软中断 raise vec=9 [RCU]\",11439686000,395,\"rcu_utilization\"\n\"软中断 raise vec=9 [RCU]\",11440667000,395,\"rcu_utilization\"\n\"软中断 raise vec=9 [RCU]\",11441685000,395,\"rcu_utilization\"\n\"软中断 raise vec=7 [SCHED]\",11441720000,395,\"rcu_utilization\"\n\"软中断 raise vec=9 [RCU]\",11442673000,395,\"rcu_utilization\"\n\"软中断 raise vec=7 [SCHED]\",11442710000,395,\"rcu_utilization\"\n\"软中断 raise vec=9 [RCU]\",11443672000,395,\"rcu_utilization\"\n\"软中断 raise vec=7 [SCHED]\",11443707000,395,\"rcu_utilization\"\n\"中断/软中断 → 唤醒 nc\",11444426000,395,\"hrtimer_expire_exit\"\n\"sched_wakeup\",11444475000,395,\"hrtimer_expire_exit\"\n\"上CPU运行（中断→唤醒→运行）\",11444548000,395,\"rcu_utilization\"\n\"lock 竞争开始\",15938456000,395,\"hrtimer_expire_exit\"\n\"等锁：lockbench\",15938456000,395,\"sched_switch\"\n\nTrace loaded: 215.17 MB in 1.69s (127.1 MB/s)\nTip: parsing took 1.7s and `query TRACE` re-parses on every call. To run many queries, load once and reuse the session:\n  trace_processor server unix --name S --daemonize /workspace/iperf-lock-demo/lock-rel-full.pftrace\n  trace_processor query --remote S \"SELECT ...\"\n  trace_processor server kill S\nScripts and AI agents: `trace_processor help agent` covers this, schema discovery and PerfettoSQL tips.\nQuery executed in 49 ms",
+    "verdict": {
+      "parent_join_ok": true,
+      "parent_join_ratio": 2.7042,
+      "causal_id_ok": true
+    }
+  }
+]
