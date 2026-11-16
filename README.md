@@ -125,6 +125,21 @@ iperf-lifecycle/             完整 iperf 进程生命周期采集（实验 4）
 3 ms 单链原件 + 26 s 全量 gzip（97 MB→3.6 MB）+ 315,293 条逐条索引 + 校验报告，
 四份零 health 告警；该目录只含 Perfetto 文件与数据索引，无 HTML/PNG 展示物。
 
+### 同步 / 锁事件关联 demo（实验 7 / 7b）
+
+在 x86_64 6.8 TCG Guest 里开 `lock:contention_begin/end` + `rcu:*` + `workqueue:*` +
+`timer:*` + `signal:*`（去 napi），做「锁竞争 → 唤醒 → 上 CPU」的事件关联 demo。
+注意：**TCG 下延迟/带宽无性能意义，架构/版本与目标 v6.18 arm64 不同**，
+只保证同步原语（rwsem/mutex/futex）代码路径一致。
+
+- 实验 7（`iperf-lock-demo/`）：自然低速 iperf 场景只有 **2 组** contention，样本太少。
+- 实验 7b（`iperf-lock-demo/lockbench/`）：新增 `lockbench.c` 压力源（16 线程
+  mmap_lock rwsem + pthread_mutex/futex + inode i_rwsem），把 contention 放大到
+  **2,822 组**、起始帧 100% 是 `rwsem_down_{read,write}_slowpath`。13 ms 展示窗口能看
+  到 7 组配对成功的等锁 slice（wait_us 18 µs~6.5 ms）+ 唤醒链。
+  两份 pftrace 零 health 告警；全量 pftrace gzip 165 MB→11.2 MB。详见
+  [`iperf-lock-demo/lockbench/README.md`](iperf-lock-demo/lockbench/README.md)。
+
 ## 环境
 
 | 项目 | 值 |

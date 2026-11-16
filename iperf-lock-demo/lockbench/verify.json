@@ -1,0 +1,86 @@
+[
+  {
+    "file": "/workspace/iperf-lock-demo/lock2-chain.pftrace",
+    "size": 303922,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 1213,
+      "flow": 167,
+      "track": 36,
+      "args": 5839
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 62,
+      "mean": 892.2
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock2-chain.json",
+    "size": 380819,
+    "ok": true,
+    "health": [
+      "slice_spill_overlapping_complete_event: 7 | A complete slice (typically a JSON 'X' event) partially overlaps another slice on the same thread track, so it cannot nest there. Instead of dropping it, Perfetto moved it onto a separate overflow track that is merged back onto the thread at display time. No data is lost, but because overlapping duration events are inherently ambiguous (nothing in the trace says how they should nest), the resulting layout might not match what you intended when you emitted these events. See https://github.com/google/perf"
+    ],
+    "counts": {
+      "slice": 959,
+      "flow": 158,
+      "track": 35,
+      "args": 4665
+    },
+    "lifecycle": {},
+    "wake2run_us": {
+      "args_entries": 31,
+      "mean": 892.2
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock2-full.pftrace",
+    "size": 172012339,
+    "ok": true,
+    "health": [],
+    "counts": {
+      "slice": 697766,
+      "flow": 90108,
+      "track": 210,
+      "args": 557720
+    },
+    "lifecycle": {
+      "sched_process_fork": 37,
+      "sched_process_wait": 26,
+      "sched_process_free": 15,
+      "sched_process_exit": 15,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 32955,
+      "mean": 2815.9
+    }
+  },
+  {
+    "file": "/workspace/iperf-lock-demo/lock2-full.json",
+    "size": 208683633,
+    "ok": true,
+    "health": [
+      "slice_spill_overlapping_complete_event: 1384 | A complete slice (typically a JSON 'X' event) partially overlaps another slice on the same thread track, so it cannot nest there. Instead of dropping it, Perfetto moved it onto a separate overflow track that is merged back onto the thread at display time. No data is lost, but because overlapping duration events are inherently ambiguous (nothing in the trace says how they should nest), the resulting layout might not match what you intended when you emitted these events. See https://github.com/google/perf"
+    ],
+    "counts": {
+      "slice": 562901,
+      "flow": 90097,
+      "track": 261,
+      "args": 450297
+    },
+    "lifecycle": {
+      "sched_process_fork": 37,
+      "sched_process_wait": 26,
+      "sched_process_free": 15,
+      "sched_process_exit": 15,
+      "sched_process_exec": 7
+    },
+    "wake2run_us": {
+      "args_entries": 18507,
+      "mean": 2536.8
+    }
+  }
+]

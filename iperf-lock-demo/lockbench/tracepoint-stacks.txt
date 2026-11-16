@@ -1,0 +1,2110 @@
+==============================================================================
+ftrace tracepoint 调用栈报告
+==============================================================================
+源: /workspace/iperf-lock-demo/langraph/ftrace.log
+
+事件行               854,511
+内核栈块             854,511  (100.0%)
+用户栈块             845,258  (98.9%)
+内核栈帧          13,464,197
+用户栈帧           3,260,222
+未符号化用户帧     3,177,073
+无内核栈事件           1,627
+孤立帧/未识别行            0 / 0
+
+栈帧顺序: 栈顶(最内层/触发点) → 栈底(最外层/入口)
+起始堆栈 = 第一帧(栈顶)    末尾堆栈 = 最后一帧(栈底)
+
+数据说明（读栈前必看）：
+1. trace 文件按时间戳合并 4 个 CPU 的 per-CPU buffer，事件行之间会插入其它 CPU 的
+   事件行。`<stack trace>` 标记行自带 CPU，本报告按该 CPU 归属，避免栈错配。
+2. ftrace 的 stacktrace 抓的是「事件提交那一刻 CPU 上的完整内核栈」，因此栈里会
+   包含 **ftrace 采集器自身的帧**（stack_trace_save_user / ftrace_trace_userstack /
+   trace_event_buffer_commit / trace_event_raw_event_* 等），甚至嵌套上一次 tracepoint
+   的采集路径。这不是脏数据，但读调用链时要把这些帧跳过。
+3. 栈很深（均值 15~29 帧，最深 125 帧），因为 TCG 下中断/软中断经常嵌套，
+   且栈底一直回溯到 CPU 启动路径。末尾帧常见 secondary_startup_64_no_verify
+   （CPU 启动栈底）或 entry_SYSCALL_64_after_hwframe（系统调用入口）。
+4. 用户栈多为未符号化地址（Guest 内 busybox/perf.bin 无符号表），显示成 <0x...>。
+
+------------------------------------------------------------------------------
+目录（按事件数降序）
+------------------------------------------------------------------------------
+  rcu_utilization                   206,971  栈深  6~74 (均 13.5)
+  sched_stat_runtime                 90,919  栈深  8~76 (均 17.33)
+  hrtimer_start                      80,180  栈深  6~104 (均 15.4)
+  hrtimer_cancel                     80,173  栈深  5~70 (均 14.25)
+  hrtimer_expire_entry               71,020  栈深  5~70 (均 14.89)
+  hrtimer_expire_exit                71,020  栈深  5~70 (均 14.89)
+  softirq_raise                      36,339  栈深  7~77 (均 23.47)
+  softirq_entry                      35,941  栈深  5~32 (均 15.86)
+  softirq_exit                       35,941  栈深  5~36 (均 15.88)
+  sched_switch                       32,187  栈深  6~17 (均 10.11)
+  sched_waking                       20,646  栈深  7~54 (均 19.04)
+  sched_wakeup                       20,645  栈深  8~56 (均 18.82)
+  irq_handler_entry                  14,580  栈深  6~45 (均 27.41)
+  irq_handler_exit                   14,580  栈深  6~75 (均 27.67)
+  timer_start                         8,474  栈深  7~52 (均 26.71)
+  timer_cancel                        8,472  栈深  7~52 (均 27.56)
+  hrtimer_init                        7,510  栈深  6~45 (均 10.03)
+  timer_base_idle                     4,194  栈深  7~12 (均 7.56)
+  contention_begin                    2,822  栈深  6~11 (均 8.06)
+  contention_end                      2,817  栈深  6~11 (均 8.05)
+  tick_stop                           2,092  栈深  7~11 (均 7.05)
+  timer_init                          1,929  栈深  5~46 (均 6.29)
+  timer_expire_entry                  1,209  栈深  8~33 (均 17.45)
+  timer_expire_exit                   1,209  栈深  8~33 (均 17.44)
+  tasklet_entry                         737  栈深  7~34 (均 17.42)
+  tasklet_exit                          737  栈深  7~34 (均 17.34)
+  sched_migrate_task                    429  栈深  8~55 (均 16.83)
+  workqueue_execute_start               136  栈深  5~ 5 (均 5.0)
+  workqueue_execute_end                 136  栈深  5~ 5 (均 5.0)
+  workqueue_queue_work                  135  栈深 10~31 (均 18.32)
+  workqueue_activate_work               135  栈深 10~31 (均 18.32)
+  sched_process_fork                     37  栈深  6~ 6 (均 6.0)
+  sched_wakeup_new                       37  栈深  8~ 8 (均 8.0)
+  sched_wake_idle_without_ipi            33  栈深 11~44 (均 16.39)
+  sched_process_wait                     26  栈深  7~ 7 (均 7.0)
+  sched_process_exit                     15  栈深  5~ 6 (均 5.87)
+  sched_process_free                     15  栈深 17~22 (均 18.4)
+  signal_generate                        13  栈深  9~ 9 (均 9.0)
+  signal_deliver                         13  栈深  5~ 5 (均 5.0)
+  sched_process_exec                      7  栈深  8~ 8 (均 8.0)
+
+==============================================================================
+## rcu_utilization
+==============================================================================
+次数             206,971
+带内核栈         206,473
+带用户栈         187,829
+内核栈深      min 6 / mean 13.5 / max 74
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+    105,521  rcu_note_context_switch
+     62,452  rcu_sched_clock_irq
+     38,500  rcu_core
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+    154,509  entry_SYSCALL_64_after_hwframe
+     26,129  asm_sysvec_apic_timer_interrupt
+     11,459  ret_from_fork_asm
+      7,384  asm_exc_page_fault
+      6,437  secondary_startup_64_no_verify
+        317  asm_sysvec_reschedule_ipi
+        213  asm_common_interrupt
+         13  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     36,140  <0x7e88ae6e4a91>
+     20,121  <0x401bf8>
+     15,522  <0x416dfd>
+     15,024  <0x4170bb>
+     14,709  <0x7ffd69090bb2>
+
+### 用户栈 末尾帧 Top 5
+     41,218  <0x735f68636e65626b>
+     36,989  <0x417aec>
+     36,160  <0x7e88ae5f31ca>
+     23,435  <0x727e67a23c6c>
+     16,118  <0x7e88ae6f2c6c>
+
+### 完整样例  t=7.347643  cpu=001  sh:126  flags=d.h..
+    rcu_utilization: Start scheduler-tick
+    -- 内核栈（9 帧，栈顶 → 栈底）--
+    [起始]  0  => rcu_sched_clock_irq+0x1de/0x3c0
+    [    ]  1  => update_process_times+0x76/0xb0
+    [    ]  2  => tick_sched_handle+0x28/0x70
+    [    ]  3  => tick_nohz_highres_handler+0x78/0xa0
+    [    ]  4  => __hrtimer_run_queues+0x112/0x2a0
+    [    ]  5  => hrtimer_interrupt+0xf6/0x250
+    [    ]  6  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  7  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾]  8  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## sched_stat_runtime
+==============================================================================
+次数              90,919
+带内核栈          90,919
+带用户栈          86,814
+内核栈深      min 8 / mean 17.33 / max 76
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     90,895  update_curr
+         24  update_curr_common
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     74,136  entry_SYSCALL_64_after_hwframe
+      9,880  asm_sysvec_apic_timer_interrupt
+      3,755  ret_from_fork_asm
+      2,942  asm_exc_page_fault
+        165  asm_common_interrupt
+         24  asm_sysvec_reschedule_ipi
+         10  secondary_startup_64_no_verify
+          4  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     18,066  <0x7e88ae6e4a91>
+      7,510  <0x401bf8>
+      6,809  <0x416dfd>
+      6,401  <0x4170bb>
+      6,360  <0x405f30>
+
+### 用户栈 末尾帧 Top 5
+     18,540  <0x417aec>
+     18,073  <0x7e88ae5f31ca>
+     17,020  <0x735f68636e65626b>
+     10,136  <0x727e67a23c6c>
+      7,456  <0x7e88ae6f2c6c>
+
+### 完整样例  t=7.350963  cpu=001  sh:126  flags=d.h1.
+    sched_stat_runtime: comm=sh pid=126 runtime=4312980 [ns]
+    -- 内核栈（11 帧，栈顶 → 栈底）--
+    [起始]  0  => update_curr+0x1e3/0x210
+    [    ]  1  => task_tick_fair+0x5b/0x4f0
+    [    ]  2  => scheduler_tick+0xd1/0x390
+    [    ]  3  => update_process_times+0x89/0xb0
+    [    ]  4  => tick_sched_handle+0x28/0x70
+    [    ]  5  => tick_nohz_highres_handler+0x78/0xa0
+    [    ]  6  => __hrtimer_run_queues+0x112/0x2a0
+    [    ]  7  => hrtimer_interrupt+0xf6/0x250
+    [    ]  8  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  9  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾] 10  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## hrtimer_start
+==============================================================================
+次数              80,180
+带内核栈          80,180
+带用户栈          64,701
+内核栈深      min 6 / mean 15.4 / max 104
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     80,180  enqueue_hrtimer
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     49,111  entry_SYSCALL_64_after_hwframe
+     13,513  asm_sysvec_apic_timer_interrupt
+     13,332  secondary_startup_64_no_verify
+      3,259  asm_exc_page_fault
+        810  ret_from_fork_asm
+        115  asm_common_interrupt
+         31  asm_sysvec_reschedule_ipi
+          5  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     10,103  <0x401bf8>
+      7,055  <0x7ffd69090bb2>
+      6,603  <0x7e88ae6efd07>
+      6,190  <0x4170bb>
+      6,111  <0x416dfd>
+
+### 用户栈 末尾帧 Top 5
+     16,954  <0x735f68636e65626b>
+     11,804  <0x417aec>
+     11,702  <0x727e67a23c6c>
+      8,867  <0x7e88ae6f2c6c>
+      4,466  <0x5d2a0d665455>
+
+### 完整样例  t=7.351017  cpu=001  sh:126  flags=d.h1.
+    hrtimer_start: hrtimer=0000000072442540 function=tick_nohz_highres_handler expires=7312000000 softexpires=7312000000 mode=ABS
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => enqueue_hrtimer+0x97/0xc0
+    [    ]  1  => __hrtimer_run_queues+0x142/0x2a0
+    [    ]  2  => hrtimer_interrupt+0xf6/0x250
+    [    ]  3  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  4  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾]  5  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## hrtimer_cancel
+==============================================================================
+次数              80,173
+带内核栈          80,173
+带用户栈          64,444
+内核栈深      min 5 / mean 14.25 / max 70
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     71,020  __hrtimer_run_queues
+      6,640  hrtimer_try_to_cancel.part.0
+      2,513  __hrtimer_start_range_ns
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     48,610  entry_SYSCALL_64_after_hwframe
+     13,760  asm_sysvec_apic_timer_interrupt
+     13,420  secondary_startup_64_no_verify
+      3,380  asm_exc_page_fault
+        843  ret_from_fork_asm
+        116  asm_common_interrupt
+         35  asm_sysvec_reschedule_ipi
+          5  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     10,197  <0x401bf8>
+      7,236  <0x7ffd69090bb2>
+      6,728  <0x4170bb>
+      6,665  <0x7e88ae6efd07>
+      6,640  <0x416dfd>
+
+### 用户栈 末尾帧 Top 5
+     18,421  <0x735f68636e65626b>
+     12,087  <0x417aec>
+     11,987  <0x727e67a23c6c>
+      9,013  <0x7e88ae6f2c6c>
+      3,707  <0x41789b>
+
+### 完整样例  t=7.347643  cpu=001  sh:126  flags=d.h1.
+    hrtimer_cancel: hrtimer=0000000072442540
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => __hrtimer_run_queues+0x193/0x2a0
+    [    ]  1  => hrtimer_interrupt+0xf6/0x250
+    [    ]  2  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  3  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾]  4  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## hrtimer_expire_entry
+==============================================================================
+次数              71,020
+带内核栈          71,020
+带用户栈          59,826
+内核栈深      min 5 / mean 14.89 / max 70
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     71,020  __hrtimer_run_queues
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     43,992  entry_SYSCALL_64_after_hwframe
+     13,760  asm_sysvec_apic_timer_interrupt
+      8,885  secondary_startup_64_no_verify
+      3,380  asm_exc_page_fault
+        843  ret_from_fork_asm
+        116  asm_common_interrupt
+         35  asm_sysvec_reschedule_ipi
+          5  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     10,197  <0x401bf8>
+      7,236  <0x7ffd69090bb2>
+      6,728  <0x4170bb>
+      6,640  <0x416dfd>
+      4,320  <0x727e67a165dd>
+
+### 用户栈 末尾帧 Top 5
+     18,421  <0x735f68636e65626b>
+     12,087  <0x417aec>
+     11,987  <0x727e67a23c6c>
+      4,396  <0x7e88ae6f2c6c>
+      3,707  <0x41789b>
+
+### 完整样例  t=7.347643  cpu=001  sh:126  flags=d.h..
+    hrtimer_expire_entry: hrtimer=0000000072442540 function=tick_nohz_highres_handler now=7308028593
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => __hrtimer_run_queues+0x231/0x2a0
+    [    ]  1  => hrtimer_interrupt+0xf6/0x250
+    [    ]  2  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  3  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾]  4  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## hrtimer_expire_exit
+==============================================================================
+次数              71,020
+带内核栈          71,020
+带用户栈          59,827
+内核栈深      min 5 / mean 14.89 / max 70
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     71,020  __hrtimer_run_queues
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     43,992  entry_SYSCALL_64_after_hwframe
+     13,760  asm_sysvec_apic_timer_interrupt
+      8,885  secondary_startup_64_no_verify
+      3,380  asm_exc_page_fault
+        843  ret_from_fork_asm
+        116  asm_common_interrupt
+         35  asm_sysvec_reschedule_ipi
+          5  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+     10,197  <0x401bf8>
+      7,236  <0x7ffd69090bb2>
+      6,729  <0x4170bb>
+      6,640  <0x416dfd>
+      4,320  <0x727e67a165dd>
+
+### 用户栈 末尾帧 Top 5
+     18,422  <0x735f68636e65626b>
+     12,087  <0x417aec>
+     11,987  <0x727e67a23c6c>
+      4,396  <0x7e88ae6f2c6c>
+      3,707  <0x41789b>
+
+### 完整样例  t=7.351009  cpu=001  sh:126  flags=d.h..
+    hrtimer_expire_exit: hrtimer=0000000072442540
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => __hrtimer_run_queues+0x1e0/0x2a0
+    [    ]  1  => hrtimer_interrupt+0xf6/0x250
+    [    ]  2  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  3  => sysvec_apic_timer_interrupt+0x3b/0xd0
+    [末尾]  4  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x1a27cd]
+    [    ]  1  => /bin/busybox[+0x150364]
+    [    ]  2  => /bin/busybox[+0x14e976]
+    [    ]  3  => /bin/busybox[+0x14fcd7]
+    [    ]  4  => /bin/busybox[+0x14a7c6]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## softirq_raise
+==============================================================================
+次数              36,339
+带内核栈          36,339
+带用户栈          30,878
+内核栈深      min 7 / mean 23.47 / max 77
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     36,339  __raise_softirq_irqoff
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     25,597  entry_SYSCALL_64_after_hwframe
+      4,152  asm_sysvec_apic_timer_interrupt
+      2,754  secondary_startup_64_no_verify
+      2,053  ret_from_fork_asm
+      1,538  asm_exc_page_fault
+        225  asm_common_interrupt
+         14  asm_sysvec_reschedule_ipi
+          4  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+      5,482  <0x727e67a165dd>
+      4,206  <0x7e88ae6e4aca>
+      3,036  <0x401bf8>
+      2,976  <0x7ffd69090bb2>
+      2,876  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+      8,624  <0x727e67a23c6c>
+      8,064  <0x735f68636e65626b>
+      5,517  <0x7e88ae6f2c6c>
+      3,504  <0x417aec>
+      1,622  <0x41789b>
+
+### 完整样例  t=7.351263  cpu=000  <idle>:0  flags=d.h1.
+    softirq_raise: vec=7 [action=SCHED]
+    -- 内核栈（21 帧，栈顶 → 栈底）--
+    [起始]  0  => __raise_softirq_irqoff+0x6e/0x80
+    [    ]  1  => raise_softirq_irqoff+0x9/0x40
+    [    ]  2  => nohz_csd_func+0xd6/0x120
+    [    ]  3  => __flush_smp_call_function_queue+0x10a/0x440
+    [    ]  4  => generic_smp_call_function_single_interrupt+0x13/0x20
+    [    ]  5  => __sysvec_call_function_single+0x1c/0xd0
+    [    ]  6  => sysvec_call_function_single+0x8d/0xd0
+    [    ]  7  => asm_sysvec_call_function_single+0x1b/0x20
+    [    ]  8  => pv_native_safe_halt+0xb/0x10
+    [    ]  9  => amd_e400_idle+0x39/0x50
+    [    ] 10  => arch_cpu_idle+0x9/0x10
+    [    ] 11  => default_idle_call+0x2c/0xf0
+    [    ] 12  => cpuidle_idle_call+0x153/0x190
+    [    ] 13  => do_idle+0x87/0xf0
+    [    ] 14  => cpu_startup_entry+0x2a/0x30
+    [    ] 15  => rest_init+0xde/0x100
+    [    ] 16  => arch_call_rest_init+0xe/0x30
+    [    ] 17  => start_kernel+0x354/0x450
+    [    ] 18  => x86_64_start_reservations+0x18/0x30
+    [    ] 19  => x86_64_start_kernel+0xbf/0x110
+    [末尾] 20  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## softirq_entry
+==============================================================================
+次数              35,941
+带内核栈          35,481
+带用户栈          29,836
+内核栈深      min 5 / mean 15.86 / max 32
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     35,481  __do_softirq
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     24,405  entry_SYSCALL_64_after_hwframe
+      3,967  asm_sysvec_apic_timer_interrupt
+      2,718  secondary_startup_64_no_verify
+      2,717  ret_from_fork_asm
+      1,448  asm_exc_page_fault
+        205  asm_common_interrupt
+         12  asm_sysvec_reschedule_ipi
+          7  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+      5,476  <0x727e67a165dd>
+      4,268  <0x7e88ae6e4aca>
+      2,890  <0x401bf8>
+      2,868  <0x7ffd69090bb2>
+      2,687  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+      8,493  <0x727e67a23c6c>
+      7,547  <0x735f68636e65626b>
+      5,569  <0x7e88ae6f2c6c>
+      3,333  <0x417aec>
+      1,504  <0x41789b>
+
+### 完整样例  t=7.352023  cpu=000  <idle>:0  flags=..s1.
+    softirq_entry: vec=7 [action=SCHED]
+    -- 内核栈（18 帧，栈顶 → 栈底）--
+    [起始]  0  => __do_softirq+0x27c/0x363
+    [    ]  1  => __irq_exit_rcu+0xd7/0x100
+    [    ]  2  => irq_exit_rcu+0xe/0x20
+    [    ]  3  => sysvec_call_function_single+0x92/0xd0
+    [    ]  4  => asm_sysvec_call_function_single+0x1b/0x20
+    [    ]  5  => pv_native_safe_halt+0xb/0x10
+    [    ]  6  => amd_e400_idle+0x39/0x50
+    [    ]  7  => arch_cpu_idle+0x9/0x10
+    [    ]  8  => default_idle_call+0x2c/0xf0
+    [    ]  9  => cpuidle_idle_call+0x153/0x190
+    [    ] 10  => do_idle+0x87/0xf0
+    [    ] 11  => cpu_startup_entry+0x2a/0x30
+    [    ] 12  => rest_init+0xde/0x100
+    [    ] 13  => arch_call_rest_init+0xe/0x30
+    [    ] 14  => start_kernel+0x354/0x450
+    [    ] 15  => x86_64_start_reservations+0x18/0x30
+    [    ] 16  => x86_64_start_kernel+0xbf/0x110
+    [末尾] 17  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## softirq_exit
+==============================================================================
+次数              35,941
+带内核栈          35,482
+带用户栈          29,882
+内核栈深      min 5 / mean 15.88 / max 36
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     35,482  __do_softirq
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     24,458  entry_SYSCALL_64_after_hwframe
+      3,967  asm_sysvec_apic_timer_interrupt
+      2,718  ret_from_fork_asm
+      2,672  secondary_startup_64_no_verify
+      1,442  asm_exc_page_fault
+        203  asm_common_interrupt
+         13  asm_sysvec_reschedule_ipi
+          7  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+      5,466  <0x727e67a165dd>
+      4,278  <0x7e88ae6e4aca>
+      2,889  <0x401bf8>
+      2,872  <0x7ffd69090bb2>
+      2,703  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+      8,486  <0x727e67a23c6c>
+      7,566  <0x735f68636e65626b>
+      5,580  <0x7e88ae6f2c6c>
+      3,335  <0x417aec>
+      1,519  <0x41789b>
+
+### 完整样例  t=7.352023  cpu=000  <idle>:0  flags=..s1.
+    softirq_exit: vec=7 [action=SCHED]
+    -- 内核栈（18 帧，栈顶 → 栈底）--
+    [起始]  0  => __do_softirq+0x22f/0x363
+    [    ]  1  => __irq_exit_rcu+0xd7/0x100
+    [    ]  2  => irq_exit_rcu+0xe/0x20
+    [    ]  3  => sysvec_call_function_single+0x92/0xd0
+    [    ]  4  => asm_sysvec_call_function_single+0x1b/0x20
+    [    ]  5  => pv_native_safe_halt+0xb/0x10
+    [    ]  6  => amd_e400_idle+0x39/0x50
+    [    ]  7  => arch_cpu_idle+0x9/0x10
+    [    ]  8  => default_idle_call+0x2c/0xf0
+    [    ]  9  => cpuidle_idle_call+0x153/0x190
+    [    ] 10  => do_idle+0x87/0xf0
+    [    ] 11  => cpu_startup_entry+0x2a/0x30
+    [    ] 12  => rest_init+0xde/0x100
+    [    ] 13  => arch_call_rest_init+0xe/0x30
+    [    ] 14  => start_kernel+0x354/0x450
+    [    ] 15  => x86_64_start_reservations+0x18/0x30
+    [    ] 16  => x86_64_start_kernel+0xbf/0x110
+    [末尾] 17  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## sched_switch
+==============================================================================
+次数              32,187
+带内核栈          32,187
+带用户栈          26,956
+内核栈深      min 6 / mean 10.11 / max 17
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     32,187  __traceiter_sched_switch
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     23,813  entry_SYSCALL_64_after_hwframe
+      3,218  ret_from_fork_asm
+      2,119  asm_sysvec_apic_timer_interrupt
+      2,013  secondary_startup_64_no_verify
+        853  asm_exc_page_fault
+        134  asm_sysvec_reschedule_ipi
+         34  asm_common_interrupt
+          2  asm_sysvec_call_function_single
+
+### 用户栈 起始帧 Top 5
+      4,698  <0x7e88ae6efd07>
+      4,381  <0x405f30>
+      2,764  <0x727e67a20d07>
+      2,374  <0x416dfd>
+      1,996  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+      7,677  <0x417aec>
+      5,372  <0x735f68636e65626b>
+      4,856  <0x7e88ae6f2c6c>
+      2,788  <0x5d2a0d665455>
+      2,518  <0x727e67a23c6c>
+
+### 完整样例  t=7.353422  cpu=001  sh:126  flags=d..2.
+    sched_switch: prev_comm=sh prev_pid=126 prev_prio=120 prev_state=S ==> next_comm=swapper/1 next_pid=0 next_prio=120
+    -- 内核栈（10 帧，栈顶 → 栈底）--
+    [起始]  0  => __traceiter_sched_switch+0x47/0x70
+    [    ]  1  => __schedule+0x32c/0x6b0
+    [    ]  2  => schedule+0x33/0x110
+    [    ]  3  => do_nanosleep+0x5d/0x150
+    [    ]  4  => hrtimer_nanosleep+0xbf/0x1a0
+    [    ]  5  => common_nsleep+0x43/0x60
+    [    ]  6  => __x64_sys_clock_nanosleep+0xf4/0x180
+    [    ]  7  => x64_sys_call+0x77a/0x25c0
+    [    ]  8  => do_syscall_64+0x7f/0x180
+    [末尾]  9  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0xbc09a]
+    [    ]  1  => /bin/busybox[+0x4bf57]
+    [    ]  2  => /bin/busybox[+0x19c14a]
+    [    ]  3  => /bin/busybox[+0x1810d2]
+    [    ]  4  => /bin/busybox[+0x14e976]
+    [    ]  5  => /bin/busybox[+0x14fcd7]
+    [    ]  6  => /bin/busybox[+0x14a7c6]
+    [末尾]  7  => /bin/busybox[+0x14a7c6]
+
+==============================================================================
+## sched_waking
+==============================================================================
+次数              20,646
+带内核栈          20,646
+带用户栈          18,479
+内核栈深      min 7 / mean 19.04 / max 54
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     20,646  try_to_wake_up
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     16,973  entry_SYSCALL_64_after_hwframe
+      1,847  secondary_startup_64_no_verify
+        739  asm_exc_page_fault
+        706  asm_sysvec_apic_timer_interrupt
+        255  ret_from_fork_asm
+        116  asm_common_interrupt
+          8  asm_sysvec_reschedule_ipi
+          1  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+      6,071  <0x405f97>
+      2,092  <0x416dfd>
+      2,016  <0x4170bb>
+      1,632  <0x727e67a165dd>
+      1,508  <0x41789b>
+
+### 用户栈 末尾帧 Top 5
+      6,612  <0x417aec>
+      4,912  <0x735f68636e65626b>
+      2,659  <0x727e67a23c6c>
+      1,508  <0x41789b>
+        810  <0x401c9d>
+
+### 完整样例  t=7.361539  cpu=002  <idle>:0  flags=d.h3.
+    sched_waking: comm=init pid=1 prio=120 target_cpu=002
+    -- 内核栈（17 帧，栈顶 → 栈底）--
+    [起始]  0  => try_to_wake_up+0x2c5/0x700
+    [    ]  1  => wake_up_process+0x15/0x30
+    [    ]  2  => hrtimer_wakeup+0x22/0x40
+    [    ]  3  => __hrtimer_run_queues+0x112/0x2a0
+    [    ]  4  => hrtimer_interrupt+0xf6/0x250
+    [    ]  5  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  6  => sysvec_apic_timer_interrupt+0x8d/0xd0
+    [    ]  7  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ]  8  => pv_native_safe_halt+0xb/0x10
+    [    ]  9  => amd_e400_idle+0x39/0x50
+    [    ] 10  => arch_cpu_idle+0x9/0x10
+    [    ] 11  => default_idle_call+0x2c/0xf0
+    [    ] 12  => cpuidle_idle_call+0x153/0x190
+    [    ] 13  => do_idle+0x87/0xf0
+    [    ] 14  => cpu_startup_entry+0x2a/0x30
+    [    ] 15  => start_secondary+0x129/0x160
+    [末尾] 16  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## sched_wakeup
+==============================================================================
+次数              20,645
+带内核栈          20,645
+带用户栈          18,344
+内核栈深      min 8 / mean 18.82 / max 56
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     20,645  __traceiter_sched_wakeup
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     16,874  entry_SYSCALL_64_after_hwframe
+      1,994  secondary_startup_64_no_verify
+        731  asm_exc_page_fault
+        696  asm_sysvec_apic_timer_interrupt
+        243  ret_from_fork_asm
+         98  asm_common_interrupt
+          8  asm_sysvec_reschedule_ipi
+          1  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+      6,048  <0x405f97>
+      2,083  <0x416dfd>
+      2,008  <0x4170bb>
+      1,632  <0x727e67a165dd>
+      1,505  <0x41789b>
+
+### 用户栈 末尾帧 Top 5
+      6,590  <0x417aec>
+      4,895  <0x735f68636e65626b>
+      2,659  <0x727e67a23c6c>
+      1,505  <0x41789b>
+        807  <0x401c9d>
+
+### 完整样例  t=7.361705  cpu=002  <idle>:0  flags=dNh4.
+    sched_wakeup: comm=init pid=1 prio=120 target_cpu=002
+    -- 内核栈（19 帧，栈顶 → 栈底）--
+    [起始]  0  => __traceiter_sched_wakeup+0x2e/0x50
+    [    ]  1  => ttwu_do_activate+0x131/0x260
+    [    ]  2  => try_to_wake_up+0x20e/0x700
+    [    ]  3  => wake_up_process+0x15/0x30
+    [    ]  4  => hrtimer_wakeup+0x22/0x40
+    [    ]  5  => __hrtimer_run_queues+0x112/0x2a0
+    [    ]  6  => hrtimer_interrupt+0xf6/0x250
+    [    ]  7  => __sysvec_apic_timer_interrupt+0x51/0x150
+    [    ]  8  => sysvec_apic_timer_interrupt+0x8d/0xd0
+    [    ]  9  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ] 10  => pv_native_safe_halt+0xb/0x10
+    [    ] 11  => amd_e400_idle+0x39/0x50
+    [    ] 12  => arch_cpu_idle+0x9/0x10
+    [    ] 13  => default_idle_call+0x2c/0xf0
+    [    ] 14  => cpuidle_idle_call+0x153/0x190
+    [    ] 15  => do_idle+0x87/0xf0
+    [    ] 16  => cpu_startup_entry+0x2a/0x30
+    [    ] 17  => start_secondary+0x129/0x160
+    [末尾] 18  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## irq_handler_entry
+==============================================================================
+次数              14,580
+带内核栈          14,580
+带用户栈          11,634
+内核栈深      min 6 / mean 27.41 / max 45
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     14,580  __handle_irq_event_percpu
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     11,686  entry_SYSCALL_64_after_hwframe
+      2,168  secondary_startup_64_no_verify
+        264  ret_from_fork_asm
+        232  asm_common_interrupt
+        119  asm_exc_page_fault
+        107  asm_sysvec_apic_timer_interrupt
+          3  asm_sysvec_call_function
+          1  asm_sysvec_reschedule_ipi
+
+### 用户栈 起始帧 Top 5
+      4,973  <0x727e67a165dd>
+      3,698  <0x7e88ae6e4aca>
+        754  <0x7ffd69090bb2>
+        646  <0x7e88ae6efd07>
+        337  <0x416dfd>
+
+### 用户栈 末尾帧 Top 5
+      5,792  <0x727e67a23c6c>
+      4,362  <0x7e88ae6f2c6c>
+        834  <0x735f68636e65626b>
+        188  <0x5d2a0d665455>
+        119  <0x41789b>
+
+### 完整样例  t=7.391698  cpu=003  perf.bin:134  flags=d.h..
+    irq_handler_entry: irq=4 name=ttyS0
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => __handle_irq_event_percpu+0x131/0x1b0
+    [    ]  1  => handle_irq_event+0x39/0x80
+    [    ]  2  => handle_edge_irq+0x8c/0x250
+    [    ]  3  => __common_interrupt+0x51/0xf0
+    [    ]  4  => common_interrupt+0x44/0xb0
+    [末尾]  5  => asm_common_interrupt+0x27/0x40
+    -- 用户栈（8 帧）--
+    [起始]  0  => /opt/perf.bin[+0x20e7ed]
+    [    ]  1  => /opt/perf.bin[+0x20e94a]
+    [    ]  2  => /opt/perf.bin[+0x20eb79]
+    [    ]  3  => /opt/perf.bin[+0x1d9716]
+    [    ]  4  => /opt/perf.bin[+0x123436]
+    [    ]  5  => /opt/perf.bin[+0x12daf7]
+    [    ]  6  => /opt/perf.bin[+0x17d64]
+    [末尾]  7  => /opt/perf.bin[+0x1bcb5]
+
+==============================================================================
+## irq_handler_exit
+==============================================================================
+次数              14,580
+带内核栈          14,580
+带用户栈          11,642
+内核栈深      min 6 / mean 27.67 / max 75
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+     14,580  __handle_irq_event_percpu
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+     11,686  entry_SYSCALL_64_after_hwframe
+      2,168  secondary_startup_64_no_verify
+        264  ret_from_fork_asm
+        232  asm_common_interrupt
+        119  asm_exc_page_fault
+        107  asm_sysvec_apic_timer_interrupt
+          3  asm_sysvec_call_function
+          1  asm_sysvec_reschedule_ipi
+
+### 用户栈 起始帧 Top 5
+      4,977  <0x727e67a165dd>
+      3,698  <0x7e88ae6e4aca>
+        755  <0x7ffd69090bb2>
+        649  <0x7e88ae6efd07>
+        337  <0x416dfd>
+
+### 用户栈 末尾帧 Top 5
+      5,797  <0x727e67a23c6c>
+      4,365  <0x7e88ae6f2c6c>
+        834  <0x735f68636e65626b>
+        188  <0x5d2a0d665455>
+        119  <0x41789b>
+
+### 完整样例  t=7.391698  cpu=003  perf.bin:134  flags=d.h..
+    irq_handler_exit: irq=4 ret=handled
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => __handle_irq_event_percpu+0xe1/0x1b0
+    [    ]  1  => handle_irq_event+0x39/0x80
+    [    ]  2  => handle_edge_irq+0x8c/0x250
+    [    ]  3  => __common_interrupt+0x51/0xf0
+    [    ]  4  => common_interrupt+0x44/0xb0
+    [末尾]  5  => asm_common_interrupt+0x27/0x40
+    -- 用户栈（8 帧）--
+    [起始]  0  => /opt/perf.bin[+0x20e7ed]
+    [    ]  1  => /opt/perf.bin[+0x20e94a]
+    [    ]  2  => /opt/perf.bin[+0x20eb79]
+    [    ]  3  => /opt/perf.bin[+0x1d9716]
+    [    ]  4  => /opt/perf.bin[+0x123436]
+    [    ]  5  => /opt/perf.bin[+0x12daf7]
+    [    ]  6  => /opt/perf.bin[+0x17d64]
+    [末尾]  7  => /opt/perf.bin[+0x1bcb5]
+
+==============================================================================
+## timer_start
+==============================================================================
+次数               8,474
+带内核栈           8,474
+带用户栈           5,101
+内核栈深      min 7 / mean 26.71 / max 52
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      8,474  enqueue_timer
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      4,866  entry_SYSCALL_64_after_hwframe
+      2,178  ret_from_fork_asm
+      1,154  secondary_startup_64_no_verify
+        112  asm_common_interrupt
+         96  asm_sysvec_apic_timer_interrupt
+         66  asm_exc_page_fault
+          2  asm_sysvec_reschedule_ipi
+
+### 用户栈 起始帧 Top 5
+      2,589  <0x727e67a165dd>
+        512  <0x7ffd69090bb2>
+        507  <0x7e88ae6e4aca>
+        245  <0x7e88ae6efd07>
+        239  <0x7e88ae6e4a91>
+
+### 用户栈 末尾帧 Top 5
+      3,126  <0x727e67a23c6c>
+        751  <0x7e88ae6f2c6c>
+        513  <0x735f68636e65626b>
+        243  <0x7e88ae5f31ca>
+        136  <0x5d2a0d665455>
+
+### 完整样例  t=7.369838  cpu=001  rcu_preempt:17  flags=d..1.
+    timer_start: timer=000000002fa6442b function=process_timeout expires=4294674273 [timeout=3] bucket_expiry=4294674274 cpu=1 idx=34 flags=
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => enqueue_timer+0x9d/0x110
+    [    ]  1  => __mod_timer+0x293/0x3b0
+    [    ]  2  => schedule_timeout+0x90/0x170
+    [    ]  3  => rcu_gp_fqs_loop+0x105/0x580
+    [    ]  4  => rcu_gp_kthread+0xea/0x180
+    [    ]  5  => kthread+0xf2/0x120
+    [    ]  6  => ret_from_fork+0x47/0x70
+    [末尾]  7  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## timer_cancel
+==============================================================================
+次数               8,472
+带内核栈           8,472
+带用户栈           5,496
+内核栈深      min 7 / mean 27.56 / max 52
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      7,263  detach_if_pending
+      1,209  __run_timers
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      5,132  entry_SYSCALL_64_after_hwframe
+      1,495  secondary_startup_64_no_verify
+      1,442  ret_from_fork_asm
+        167  asm_sysvec_apic_timer_interrupt
+        122  asm_exc_page_fault
+        112  asm_common_interrupt
+          2  asm_sysvec_reschedule_ipi
+
+### 用户栈 起始帧 Top 5
+      2,659  <0x727e67a165dd>
+        619  <0x7ffd69090bb2>
+        555  <0x7e88ae6e4aca>
+        278  <0x7e88ae6efd07>
+        264  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+      3,314  <0x727e67a23c6c>
+        833  <0x7e88ae6f2c6c>
+        698  <0x735f68636e65626b>
+        152  <0x5d2a0d665455>
+        117  <0x41789b>
+
+### 完整样例  t=7.373844  cpu=001  <idle>:0  flags=d.s2.
+    timer_cancel: timer=000000002fa6442b
+    -- 内核栈（16 帧，栈顶 → 栈底）--
+    [起始]  0  => __run_timers+0x2cf/0x300
+    [    ]  1  => run_timer_softirq+0x1d/0x40
+    [    ]  2  => __do_softirq+0xe1/0x363
+    [    ]  3  => __irq_exit_rcu+0xd7/0x100
+    [    ]  4  => irq_exit_rcu+0xe/0x20
+    [    ]  5  => sysvec_apic_timer_interrupt+0x92/0xd0
+    [    ]  6  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ]  7  => pv_native_safe_halt+0xb/0x10
+    [    ]  8  => amd_e400_idle+0x39/0x50
+    [    ]  9  => arch_cpu_idle+0x9/0x10
+    [    ] 10  => default_idle_call+0x2c/0xf0
+    [    ] 11  => cpuidle_idle_call+0x153/0x190
+    [    ] 12  => do_idle+0x87/0xf0
+    [    ] 13  => cpu_startup_entry+0x2a/0x30
+    [    ] 14  => start_secondary+0x129/0x160
+    [末尾] 15  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## hrtimer_init
+==============================================================================
+次数               7,510
+带内核栈           7,440
+带用户栈           7,434
+内核栈深      min 6 / mean 10.03 / max 45
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      7,324  hrtimer_init_sleeper
+        110  hrtimer_init
+          6  hrtimer_nanosleep
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      7,438  entry_SYSCALL_64_after_hwframe
+          2  secondary_startup_64_no_verify
+
+### 用户栈 起始帧 Top 5
+      4,580  <0x7e88ae6efd07>
+      2,723  <0x727e67a20d07>
+         46  /bin/busybox
+         32  <0x417add>
+         14  /lib/libc.so.6
+
+### 用户栈 末尾帧 Top 5
+      4,567  <0x7e88ae6f2c6c>
+      2,723  <0x5d2a0d665455>
+         46  /bin/busybox
+         15  <0x56a76f01b455>
+         13  <0x76de9180bc6c>
+
+### 完整样例  t=7.351856  cpu=001  sh:126  flags=.....
+    hrtimer_init: hrtimer=000000000b4a4cae clockid=CLOCK_REALTIME mode=REL
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => hrtimer_nanosleep+0x178/0x1a0
+    [    ]  1  => common_nsleep+0x43/0x60
+    [    ]  2  => __x64_sys_clock_nanosleep+0xf4/0x180
+    [    ]  3  => x64_sys_call+0x77a/0x25c0
+    [    ]  4  => do_syscall_64+0x7f/0x180
+    [末尾]  5  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+
+==============================================================================
+## timer_base_idle
+==============================================================================
+次数               4,194
+带内核栈           4,194
+带用户栈               0
+内核栈深      min 7 / mean 7.56 / max 12
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      2,138  get_next_timer_interrupt
+      2,056  timer_clear_idle
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      4,194  secondary_startup_64_no_verify
+
+### 完整样例  t=7.353511  cpu=001  <idle>:0  flags=d..2.
+    timer_base_idle: is_idle=1 cpu=1
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => get_next_timer_interrupt+0x1d6/0x230
+    [    ]  1  => tick_nohz_next_event+0x117/0x140
+    [    ]  2  => tick_nohz_idle_stop_tick+0xc1/0xd0
+    [    ]  3  => cpuidle_idle_call+0x14e/0x190
+    [    ]  4  => do_idle+0x87/0xf0
+    [    ]  5  => cpu_startup_entry+0x2a/0x30
+    [    ]  6  => start_secondary+0x129/0x160
+    [末尾]  7  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## contention_begin
+==============================================================================
+次数               2,822
+带内核栈           2,812
+带用户栈           2,810
+内核栈深      min 6 / mean 8.06 / max 11
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      2,562  rwsem_down_write_slowpath
+        250  rwsem_down_read_slowpath
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      2,562  entry_SYSCALL_64_after_hwframe
+        250  asm_exc_page_fault
+
+### 用户栈 起始帧 Top 5
+        813  <0x416dfd>
+        673  <0x41789b>
+        595  <0x4177cc>
+        476  <0x4170bb>
+        211  <0x415b40>
+
+### 用户栈 末尾帧 Top 5
+      1,294  <0x735f68636e65626b>
+        673  <0x41789b>
+        591  <0x401c9d>
+        211  <0x415b40>
+         36  <0x415b09>
+
+### 完整样例  t=14.496320  cpu=002  lockbench:391  flags=d..2.
+    contention_begin: 00000000d960ec8a (flags=WRITE)
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => rwsem_down_write_slowpath+0x33f/0x550
+    [    ]  1  => down_write_killable+0x63/0x90
+    [    ]  2  => vm_mmap_pgoff+0xc0/0x1a0
+    [    ]  3  => ksys_mmap_pgoff+0x4a/0x270
+    [    ]  4  => __x64_sys_mmap+0x33/0x70
+    [    ]  5  => x64_sys_call+0x22c3/0x25c0
+    [    ]  6  => do_syscall_64+0x7f/0x180
+    [末尾]  7  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（3 帧）--
+    [起始]  0  => <0x4177cc>
+    [    ]  1  => <0x407188>
+    [末尾]  2  => <0x4018e6>
+
+==============================================================================
+## contention_end
+==============================================================================
+次数               2,817
+带内核栈           2,775
+带用户栈           2,761
+内核栈深      min 6 / mean 8.05 / max 11
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      2,519  rwsem_down_write_slowpath
+        256  rwsem_down_read_slowpath
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      2,519  entry_SYSCALL_64_after_hwframe
+        256  asm_exc_page_fault
+
+### 用户栈 起始帧 Top 5
+        794  <0x416dfd>
+        661  <0x41789b>
+        585  <0x4177cc>
+        463  <0x4170bb>
+        213  <0x415b40>
+
+### 用户栈 末尾帧 Top 5
+      1,261  <0x735f68636e65626b>
+        661  <0x41789b>
+        581  <0x401c9d>
+        213  <0x415b40>
+         40  <0x415b09>
+
+### 完整样例  t=14.496458  cpu=002  lockbench:391  flags=...1.
+    contention_end: 00000000d960ec8a (ret=0)
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => rwsem_down_write_slowpath+0x398/0x550
+    [    ]  1  => down_write_killable+0x63/0x90
+    [    ]  2  => vm_mmap_pgoff+0xc0/0x1a0
+    [    ]  3  => ksys_mmap_pgoff+0x4a/0x270
+    [    ]  4  => __x64_sys_mmap+0x33/0x70
+    [    ]  5  => x64_sys_call+0x22c3/0x25c0
+    [    ]  6  => do_syscall_64+0x7f/0x180
+    [末尾]  7  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（3 帧）--
+    [起始]  0  => <0x4177cc>
+    [    ]  1  => <0x407188>
+    [末尾]  2  => <0x4018e6>
+
+==============================================================================
+## tick_stop
+==============================================================================
+次数               2,092
+带内核栈           2,092
+带用户栈               0
+内核栈深      min 7 / mean 7.05 / max 11
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      2,092  tick_nohz_stop_tick
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      2,092  secondary_startup_64_no_verify
+
+### 完整样例  t=7.353544  cpu=001  <idle>:0  flags=d..1.
+    tick_stop: success=1 dependency=NONE
+    -- 内核栈（7 帧，栈顶 → 栈底）--
+    [起始]  0  => tick_nohz_stop_tick+0x19a/0x210
+    [    ]  1  => tick_nohz_idle_stop_tick+0x72/0xd0
+    [    ]  2  => cpuidle_idle_call+0x14e/0x190
+    [    ]  3  => do_idle+0x87/0xf0
+    [    ]  4  => cpu_startup_entry+0x2a/0x30
+    [    ]  5  => start_secondary+0x129/0x160
+    [末尾]  6  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## timer_init
+==============================================================================
+次数               1,929
+带内核栈           1,911
+带用户栈              29
+内核栈深      min 5 / mean 6.29 / max 46
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      1,877  schedule_timeout
+         34  init_timer_key
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+      1,877  ret_from_fork_asm
+         29  entry_SYSCALL_64_after_hwframe
+          5  secondary_startup_64_no_verify
+
+### 用户栈 起始帧 Top 5
+         12  <0x727e67a2631b>
+          7  <0x7e88ae6e55a4>
+          4  <0x7e88ae6f531b>
+          4  <0x46a48b>
+          1  <0x469ea4>
+
+### 用户栈 末尾帧 Top 5
+          8  <0x7e88ae5f31ca>
+          8  <0x727e679241ca>
+          5  <0x4136e0>
+          4  <0x56a76f01b455>
+          4  <0x727e6792428b>
+
+### 完整样例  t=7.369798  cpu=001  rcu_preempt:17  flags=.....
+    timer_init: timer=000000002fa6442b
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => schedule_timeout+0x110/0x170
+    [    ]  1  => rcu_gp_fqs_loop+0x105/0x580
+    [    ]  2  => rcu_gp_kthread+0xea/0x180
+    [    ]  3  => kthread+0xf2/0x120
+    [    ]  4  => ret_from_fork+0x47/0x70
+    [末尾]  5  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## timer_expire_entry
+==============================================================================
+次数               1,209
+带内核栈           1,198
+带用户栈             796
+内核栈深      min 8 / mean 17.45 / max 33
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      1,198  call_timer_fn
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        655  entry_SYSCALL_64_after_hwframe
+        367  secondary_startup_64_no_verify
+         79  asm_sysvec_apic_timer_interrupt
+         61  asm_exc_page_fault
+         35  ret_from_fork_asm
+          1  asm_common_interrupt
+
+### 用户栈 起始帧 Top 5
+        131  <0x7ffd69090bb2>
+         95  <0x4170bb>
+         93  <0x727e67a165dd>
+         72  <0x416dfd>
+         63  <0x7e88ae6e4aca>
+
+### 用户栈 末尾帧 Top 5
+        240  <0x735f68636e65626b>
+        236  <0x727e67a23c6c>
+        102  <0x7e88ae6f2c6c>
+         56  <0x415b40>
+         55  <0x41789b>
+
+### 完整样例  t=7.373856  cpu=001  <idle>:0  flags=..s1.
+    timer_expire_entry: timer=000000002fa6442b function=process_timeout now=4294674274 baseclk=4294674274
+    -- 内核栈（17 帧，栈顶 → 栈底）--
+    [起始]  0  => call_timer_fn+0x10d/0x160
+    [    ]  1  => __run_timers+0x262/0x300
+    [    ]  2  => run_timer_softirq+0x1d/0x40
+    [    ]  3  => __do_softirq+0xe1/0x363
+    [    ]  4  => __irq_exit_rcu+0xd7/0x100
+    [    ]  5  => irq_exit_rcu+0xe/0x20
+    [    ]  6  => sysvec_apic_timer_interrupt+0x92/0xd0
+    [    ]  7  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ]  8  => pv_native_safe_halt+0xb/0x10
+    [    ]  9  => amd_e400_idle+0x39/0x50
+    [    ] 10  => arch_cpu_idle+0x9/0x10
+    [    ] 11  => default_idle_call+0x2c/0xf0
+    [    ] 12  => cpuidle_idle_call+0x153/0x190
+    [    ] 13  => do_idle+0x87/0xf0
+    [    ] 14  => cpu_startup_entry+0x2a/0x30
+    [    ] 15  => start_secondary+0x129/0x160
+    [末尾] 16  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## timer_expire_exit
+==============================================================================
+次数               1,209
+带内核栈           1,190
+带用户栈             791
+内核栈深      min 8 / mean 17.44 / max 33
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+      1,190  call_timer_fn
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        651  entry_SYSCALL_64_after_hwframe
+        361  secondary_startup_64_no_verify
+         80  asm_sysvec_apic_timer_interrupt
+         61  asm_exc_page_fault
+         36  ret_from_fork_asm
+          1  asm_common_interrupt
+
+### 用户栈 起始帧 Top 5
+        132  <0x7ffd69090bb2>
+         93  <0x4170bb>
+         93  <0x727e67a165dd>
+         72  <0x416dfd>
+         63  <0x7e88ae6e4aca>
+
+### 用户栈 末尾帧 Top 5
+        237  <0x727e67a23c6c>
+        235  <0x735f68636e65626b>
+        102  <0x7e88ae6f2c6c>
+         56  <0x415b40>
+         54  <0x41789b>
+
+### 完整样例  t=7.373934  cpu=002  init:1  flags=..s..
+    timer_expire_exit: timer=00000000f72170a8
+    -- 内核栈（17 帧，栈顶 → 栈底）--
+    [起始]  0  => call_timer_fn+0xc0/0x160
+    [    ]  1  => __run_timers+0x262/0x300
+    [    ]  2  => run_timer_softirq+0x31/0x40
+    [    ]  3  => __do_softirq+0xe1/0x363
+    [    ]  4  => __irq_exit_rcu+0xd7/0x100
+    [    ]  5  => irq_exit_rcu+0xe/0x20
+    [    ]  6  => sysvec_apic_timer_interrupt+0x92/0xd0
+    [    ]  7  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ]  8  => mem_cgroup_from_task+0x0/0x30
+    [    ]  9  => do_user_addr_fault+0x1f4/0x6b0
+    [    ] 10  => exc_page_fault+0x83/0x1b0
+    [    ] 11  => asm_exc_page_fault+0x27/0x30
+    [    ] 12  => __put_user_8+0xd/0x20
+    [    ] 13  => __rseq_handle_notify_resume+0x2b/0x70
+    [    ] 14  => syscall_exit_to_user_mode+0x1f9/0x260
+    [    ] 15  => do_syscall_64+0x8c/0x180
+    [末尾] 16  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x62aa1]
+    [    ]  1  => /bin/busybox[+0x1a2473]
+    [    ]  2  => /bin/busybox[+0x14af1b]
+    [    ]  3  => /bin/busybox[+0x14ba8c]
+    [    ]  4  => /bin/busybox[+0x14f8b3]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## tasklet_entry
+==============================================================================
+次数                 737
+带内核栈             719
+带用户栈             585
+内核栈深      min 7 / mean 17.42 / max 34
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        719  tasklet_action_common.isra.0
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        570  entry_SYSCALL_64_after_hwframe
+        109  ret_from_fork_asm
+         25  asm_common_interrupt
+         10  asm_exc_page_fault
+          4  asm_sysvec_apic_timer_interrupt
+          1  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+        193  <0x727e67a165dd>
+         94  <0x7e88ae6efd07>
+         93  <0x7e88ae6e4aca>
+         60  <0x7ffd69090bb2>
+         32  <0x4170bb>
+
+### 用户栈 末尾帧 Top 5
+        258  <0x727e67a23c6c>
+        190  <0x7e88ae6f2c6c>
+         82  <0x735f68636e65626b>
+         28  <0x5d2a0d665455>
+         10  <0x415b40>
+
+### 完整样例  t=14.824478  cpu=000  ksoftirqd/0:16  flags=..s..
+    tasklet_entry: tasklet=0xffff8880bb033ea0 function=tcp_tasklet_func
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => tasklet_action_common.isra.0+0x1bd/0x1e0
+    [    ]  1  => tasklet_action+0x22/0x30
+    [    ]  2  => __do_softirq+0xe1/0x363
+    [    ]  3  => run_ksoftirqd+0x37/0x60
+    [    ]  4  => smpboot_thread_fn+0xe3/0x1e0
+    [    ]  5  => kthread+0xf2/0x120
+    [    ]  6  => ret_from_fork+0x47/0x70
+    [末尾]  7  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## tasklet_exit
+==============================================================================
+次数                 737
+带内核栈             721
+带用户栈             590
+内核栈深      min 7 / mean 17.34 / max 34
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        721  tasklet_action_common.isra.0
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        572  entry_SYSCALL_64_after_hwframe
+        108  ret_from_fork_asm
+         25  asm_common_interrupt
+         10  asm_exc_page_fault
+          5  asm_sysvec_apic_timer_interrupt
+          1  asm_sysvec_call_function
+
+### 用户栈 起始帧 Top 5
+        190  <0x727e67a165dd>
+         96  <0x7e88ae6efd07>
+         95  <0x7e88ae6e4aca>
+         63  <0x7ffd69090bb2>
+         31  <0x416dfd>
+
+### 用户栈 末尾帧 Top 5
+        258  <0x727e67a23c6c>
+        195  <0x7e88ae6f2c6c>
+         81  <0x735f68636e65626b>
+         28  <0x5d2a0d665455>
+         10  <0x415b40>
+
+### 完整样例  t=14.824823  cpu=000  ksoftirqd/0:16  flags=..s..
+    tasklet_exit: tasklet=0xffff8880bb033ea0 function=tcp_tasklet_func
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => tasklet_action_common.isra.0+0x137/0x1e0
+    [    ]  1  => tasklet_action+0x22/0x30
+    [    ]  2  => __do_softirq+0xe1/0x363
+    [    ]  3  => run_ksoftirqd+0x37/0x60
+    [    ]  4  => smpboot_thread_fn+0xe3/0x1e0
+    [    ]  5  => kthread+0xf2/0x120
+    [    ]  6  => ret_from_fork+0x47/0x70
+    [末尾]  7  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## sched_migrate_task
+==============================================================================
+次数                 429
+带内核栈             429
+带用户栈             394
+内核栈深      min 8 / mean 16.83 / max 55
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        429  set_task_cpu
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        338  entry_SYSCALL_64_after_hwframe
+         27  asm_exc_page_fault
+         26  asm_sysvec_apic_timer_interrupt
+         17  ret_from_fork_asm
+         14  secondary_startup_64_no_verify
+          7  asm_common_interrupt
+
+### 用户栈 起始帧 Top 5
+         75  <0x41789b>
+         42  <0x4177cc>
+         39  <0x405f97>
+         32  <0x416dfd>
+         29  <0x7e88ae6efd07>
+
+### 用户栈 末尾帧 Top 5
+         75  <0x41789b>
+         70  <0x735f68636e65626b>
+         66  <0x417aec>
+         48  <0x7e88ae6f2c6c>
+         42  <0x401c9d>
+
+### 完整样例  t=7.369473  cpu=000  init:374  flags=d.s4.
+    sched_migrate_task: comm=rcu_preempt pid=17 prio=120 orig_cpu=0 dest_cpu=1
+    -- 内核栈（23 帧，栈顶 → 栈底）--
+    [起始]  0  => set_task_cpu+0x163/0x1e0
+    [    ]  1  => try_to_wake_up+0x168/0x700
+    [    ]  2  => swake_up_one+0x3b/0x80
+    [    ]  3  => swake_up_one_online+0x38/0xa0
+    [    ]  4  => rcu_gp_kthread_wake+0x57/0x90
+    [    ]  5  => rcu_accelerate_cbs_unlocked+0x86/0xc0
+    [    ]  6  => rcu_core+0x132/0x390
+    [    ]  7  => rcu_core_si+0xe/0x20
+    [    ]  8  => __do_softirq+0xe1/0x363
+    [    ]  9  => __irq_exit_rcu+0xd7/0x100
+    [    ] 10  => irq_exit_rcu+0xe/0x20
+    [    ] 11  => sysvec_apic_timer_interrupt+0x92/0xd0
+    [    ] 12  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ] 13  => next_uptodate_folio+0x7c/0x320
+    [    ] 14  => filemap_map_pages+0x19c/0x4c0
+    [    ] 15  => do_read_fault+0x10a/0x1d0
+    [    ] 16  => do_fault+0x109/0x350
+    [    ] 17  => handle_pte_fault+0x114/0x1d0
+    [    ] 18  => __handle_mm_fault+0x653/0x790
+    [    ] 19  => handle_mm_fault+0x18a/0x380
+    [    ] 20  => do_user_addr_fault+0x169/0x6b0
+    [    ] 21  => exc_page_fault+0x83/0x1b0
+    [末尾] 22  => asm_exc_page_fault+0x27/0x30
+    -- 用户栈（1 帧）--
+    [起始]  0  => <0x410870>
+
+==============================================================================
+## workqueue_execute_start
+==============================================================================
+次数                 136
+带内核栈             134
+带用户栈               0
+内核栈深      min 5 / mean 5.0 / max 5
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        134  process_one_work
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        134  ret_from_fork_asm
+
+### 完整样例  t=7.391242  cpu=002  kworker/2:0:31  flags=.....
+    workqueue_execute_start: work struct 0000000063704035: function pm_runtime_work
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => process_one_work+0x2b7/0x350
+    [    ]  1  => worker_thread+0x306/0x440
+    [    ]  2  => kthread+0xf2/0x120
+    [    ]  3  => ret_from_fork+0x47/0x70
+    [末尾]  4  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## workqueue_execute_end
+==============================================================================
+次数                 136
+带内核栈             133
+带用户栈               0
+内核栈深      min 5 / mean 5.0 / max 5
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        133  process_one_work
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+        133  ret_from_fork_asm
+
+### 完整样例  t=7.391344  cpu=002  kworker/2:0:31  flags=.....
+    workqueue_execute_end: work struct 0000000063704035: function pm_runtime_work
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => process_one_work+0x26a/0x350
+    [    ]  1  => worker_thread+0x306/0x440
+    [    ]  2  => kthread+0xf2/0x120
+    [    ]  3  => ret_from_fork+0x47/0x70
+    [末尾]  4  => ret_from_fork_asm+0x1b/0x30
+
+==============================================================================
+## workqueue_queue_work
+==============================================================================
+次数                 135
+带内核栈             135
+带用户栈              84
+内核栈深      min 10 / mean 18.32 / max 31
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        135  __queue_work.part.0
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         62  entry_SYSCALL_64_after_hwframe
+         37  secondary_startup_64_no_verify
+         17  asm_sysvec_apic_timer_interrupt
+         14  ret_from_fork_asm
+          5  asm_exc_page_fault
+
+### 用户栈 起始帧 Top 5
+         16  <0x7ffd69090bb2>
+         16  <0x401bf8>
+          8  <0x416dfd>
+          5  <0x469ea4>
+          5  <0x727e67a165dd>
+
+### 用户栈 末尾帧 Top 5
+         21  <0x727e67a23c6c>
+         17  <0x417aec>
+         14  <0x735f68636e65626b>
+          7  <0x7e88ae6f2c6c>
+          5  <0x4136e0>
+
+### 完整样例  t=7.390585  cpu=002  init:1  flags=d..3.
+    workqueue_queue_work: work struct=0000000063704035 function=pm_runtime_work workqueue=pm req_cpu=8192 cpu=2
+    -- 内核栈（18 帧，栈顶 → 栈底）--
+    [起始]  0  => __queue_work.part.0+0x25b/0x3e0
+    [    ]  1  => __queue_work+0x36/0xa0
+    [    ]  2  => queue_work_on+0x67/0x70
+    [    ]  3  => rpm_resume+0x6dd/0x7e0
+    [    ]  4  => __pm_runtime_resume+0x4e/0x80
+    [    ]  5  => __uart_start+0x89/0x120
+    [    ]  6  => uart_write+0xf3/0x200
+    [    ]  7  => process_output_block+0x90/0x1c0
+    [    ]  8  => n_tty_write+0x197/0x3a0
+    [    ]  9  => iterate_tty_write+0x11e/0x260
+    [    ] 10  => file_tty_write.isra.0+0x90/0x110
+    [    ] 11  => redirected_tty_write+0x7d/0xa0
+    [    ] 12  => vfs_write+0x2a8/0x480
+    [    ] 13  => ksys_write+0x73/0x100
+    [    ] 14  => __x64_sys_write+0x19/0x30
+    [    ] 15  => x64_sys_call+0x7e/0x25c0
+    [    ] 16  => do_syscall_64+0x7f/0x180
+    [末尾] 17  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x63314]
+    [    ]  1  => /bin/busybox[+0x10b32a]
+    [    ]  2  => /bin/busybox[+0x17aeac]
+    [    ]  3  => /bin/busybox[+0x14e976]
+    [    ]  4  => /bin/busybox[+0x14fcd7]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14ebb0]
+    [末尾]  7  => /bin/busybox[+0x1521d6]
+
+==============================================================================
+## workqueue_activate_work
+==============================================================================
+次数                 135
+带内核栈             135
+带用户栈              84
+内核栈深      min 10 / mean 18.32 / max 31
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+        135  __queue_work.part.0
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         62  entry_SYSCALL_64_after_hwframe
+         37  secondary_startup_64_no_verify
+         17  asm_sysvec_apic_timer_interrupt
+         14  ret_from_fork_asm
+          5  asm_exc_page_fault
+
+### 用户栈 起始帧 Top 5
+         16  <0x7ffd69090bb2>
+         16  <0x401bf8>
+          8  <0x416dfd>
+          5  <0x469ea4>
+          5  <0x727e67a165dd>
+
+### 用户栈 末尾帧 Top 5
+         21  <0x727e67a23c6c>
+         17  <0x417aec>
+         14  <0x735f68636e65626b>
+          7  <0x7e88ae6f2c6c>
+          5  <0x4136e0>
+
+### 完整样例  t=7.390688  cpu=002  init:1  flags=d..3.
+    workqueue_activate_work: work struct 0000000063704035
+    -- 内核栈（18 帧，栈顶 → 栈底）--
+    [起始]  0  => __queue_work.part.0+0x2ac/0x3e0
+    [    ]  1  => __queue_work+0x36/0xa0
+    [    ]  2  => queue_work_on+0x67/0x70
+    [    ]  3  => rpm_resume+0x6dd/0x7e0
+    [    ]  4  => __pm_runtime_resume+0x4e/0x80
+    [    ]  5  => __uart_start+0x89/0x120
+    [    ]  6  => uart_write+0xf3/0x200
+    [    ]  7  => process_output_block+0x90/0x1c0
+    [    ]  8  => n_tty_write+0x197/0x3a0
+    [    ]  9  => iterate_tty_write+0x11e/0x260
+    [    ] 10  => file_tty_write.isra.0+0x90/0x110
+    [    ] 11  => redirected_tty_write+0x7d/0xa0
+    [    ] 12  => vfs_write+0x2a8/0x480
+    [    ] 13  => ksys_write+0x73/0x100
+    [    ] 14  => __x64_sys_write+0x19/0x30
+    [    ] 15  => x64_sys_call+0x7e/0x25c0
+    [    ] 16  => do_syscall_64+0x7f/0x180
+    [末尾] 17  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x63314]
+    [    ]  1  => /bin/busybox[+0x10b32a]
+    [    ]  2  => /bin/busybox[+0x17aeac]
+    [    ]  3  => /bin/busybox[+0x14e976]
+    [    ]  4  => /bin/busybox[+0x14fcd7]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14ebb0]
+    [末尾]  7  => /bin/busybox[+0x1521d6]
+
+==============================================================================
+## sched_process_fork
+==============================================================================
+次数                  37
+带内核栈              36
+带用户栈              36
+内核栈深      min 6 / mean 6.0 / max 6
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         36  kernel_clone
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         36  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         15  <0x417add>
+         14  /bin/busybox
+          2  /lib/libc.so.6
+          2  <0x7e88ae6f2c5d>
+          2  <0x727e67a23c5d>
+
+### 用户栈 末尾帧 Top 5
+         14  /bin/busybox
+          6  <0x401929>
+          5  <0x4018e6>
+          4  <0x401960>
+          2  <0x7e88ae5f328b>
+
+### 完整样例  t=7.363530  cpu=002  init:1  flags=.....
+    sched_process_fork: comm=init pid=1 child_comm=init child_pid=374
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => kernel_clone+0x1ae/0x450
+    [    ]  1  => __do_sys_clone+0x66/0xa0
+    [    ]  2  => __x64_sys_clone+0x25/0x40
+    [    ]  3  => x64_sys_call+0x1abc/0x25c0
+    [    ]  4  => do_syscall_64+0x7f/0x180
+    [末尾]  5  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0xe49a7]
+    [    ]  1  => /bin/busybox[+0x149dfc]
+    [    ]  2  => /bin/busybox[+0x14adc9]
+    [    ]  3  => /bin/busybox[+0x14ba8c]
+    [    ]  4  => /bin/busybox[+0x14f8b3]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## sched_wakeup_new
+==============================================================================
+次数                  37
+带内核栈              37
+带用户栈              37
+内核栈深      min 8 / mean 8.0 / max 8
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         37  __traceiter_sched_wakeup_new
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         37  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         16  <0x417add>
+         14  /bin/busybox
+          2  /lib/libc.so.6
+          2  <0x7e88ae6f2c5d>
+          2  <0x727e67a23c5d>
+
+### 用户栈 末尾帧 Top 5
+         14  /bin/busybox
+          6  <0x401929>
+          5  <0x401960>
+          5  <0x4018e6>
+          2  <0x7e88ae5f328b>
+
+### 完整样例  t=7.363659  cpu=002  init:1  flags=d..2.
+    sched_wakeup_new: comm=init pid=374 prio=120 target_cpu=000
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => __traceiter_sched_wakeup_new+0x2e/0x50
+    [    ]  1  => wake_up_new_task+0x294/0x340
+    [    ]  2  => kernel_clone+0x25d/0x450
+    [    ]  3  => __do_sys_clone+0x66/0xa0
+    [    ]  4  => __x64_sys_clone+0x25/0x40
+    [    ]  5  => x64_sys_call+0x1abc/0x25c0
+    [    ]  6  => do_syscall_64+0x7f/0x180
+    [末尾]  7  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0xe49a7]
+    [    ]  1  => /bin/busybox[+0x149dfc]
+    [    ]  2  => /bin/busybox[+0x14adc9]
+    [    ]  3  => /bin/busybox[+0x14ba8c]
+    [    ]  4  => /bin/busybox[+0x14f8b3]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## sched_wake_idle_without_ipi
+==============================================================================
+次数                  33
+带内核栈              33
+带用户栈              28
+内核栈深      min 11 / mean 16.39 / max 44
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         21  call_function_single_prep_ipi
+          7  wake_up_nohz_cpu
+          5  resched_curr
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         27  entry_SYSCALL_64_after_hwframe
+          5  secondary_startup_64_no_verify
+          1  asm_sysvec_apic_timer_interrupt
+
+### 用户栈 起始帧 Top 5
+         16  <0x405f97>
+          5  <0x7e88ae6e4a91>
+          3  <0x4170bb>
+          2  <0x416dfd>
+          1  <0x464314>
+
+### 用户栈 末尾帧 Top 5
+         16  <0x417aec>
+          5  <0x7e88ae5f31ca>
+          5  <0x735f68636e65626b>
+          1  <0x54a248>
+          1  <0x401aa5>
+
+### 完整样例  t=12.329998  cpu=000  iperf3:380  flags=d..2.
+    sched_wake_idle_without_ipi: cpu=3
+    -- 内核栈（11 帧，栈顶 → 栈底）--
+    [起始]  0  => wake_up_nohz_cpu+0x12f/0x1c0
+    [    ]  1  => enqueue_timer+0x101/0x110
+    [    ]  2  => add_timer_on+0xf7/0x190
+    [    ]  3  => try_to_generate_entropy+0x285/0x2a0
+    [    ]  4  => urandom_read_iter+0x37/0xb0
+    [    ]  5  => vfs_read+0x258/0x390
+    [    ]  6  => ksys_read+0x73/0x100
+    [    ]  7  => __x64_sys_read+0x19/0x30
+    [    ]  8  => x64_sys_call+0x1ada/0x25c0
+    [    ]  9  => do_syscall_64+0x7f/0x180
+    [末尾] 10  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => <0x7e88ae6e4a91>
+    [    ]  1  => <0x7e88ae64f49b>
+    [    ]  2  => <0x7e88ae7f9e38>
+    [    ]  3  => <0x7e88ae7f32c5>
+    [    ]  4  => <0x7e88ae7fcce9>
+    [    ]  5  => <0x56a76f01b5f6>
+    [    ]  6  => <0x56a76f01b386>
+    [末尾]  7  => <0x7e88ae5f31ca>
+
+==============================================================================
+## sched_process_wait
+==============================================================================
+次数                  26
+带内核栈              26
+带用户栈              26
+内核栈深      min 7 / mean 7.0 / max 7
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         26  do_wait
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         26  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         24  /bin/busybox
+          2  <0x4623b7>
+
+### 用户栈 末尾帧 Top 5
+         24  /bin/busybox
+          2  <0x54b7c6>
+
+### 完整样例  t=7.375100  cpu=002  init:1  flags=.....
+    sched_process_wait: comm=init pid=0 prio=120
+    -- 内核栈（7 帧，栈顶 → 栈底）--
+    [起始]  0  => do_wait+0xf1/0x110
+    [    ]  1  => kernel_wait4+0xbd/0x170
+    [    ]  2  => __do_sys_wait4+0xad/0xc0
+    [    ]  3  => __x64_sys_wait4+0x1c/0x30
+    [    ]  4  => x64_sys_call+0x141a/0x25c0
+    [    ]  5  => do_syscall_64+0x7f/0x180
+    [末尾]  6  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x613b7]
+    [    ]  1  => /bin/busybox[+0x146d31]
+    [    ]  2  => /bin/busybox[+0x14af42]
+    [    ]  3  => /bin/busybox[+0x14ba8c]
+    [    ]  4  => /bin/busybox[+0x14f8b3]
+    [    ]  5  => /bin/busybox[+0x14a7c6]
+    [    ]  6  => /bin/busybox[+0x14a74f]
+    [末尾]  7  => /bin/busybox[+0x14a74f]
+
+==============================================================================
+## sched_process_exit
+==============================================================================
+次数                  15
+带内核栈              15
+带用户栈              15
+内核栈深      min 5 / mean 5.87 / max 6
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         15  do_exit
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         15  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         12  <0x4474cd>
+          2  <0x7e88ae665a36>
+          1  <0x7e88ae6b721d>
+
+### 用户栈 末尾帧 Top 5
+         12  <0x4474cd>
+          2  <0x7e88ae6f2c6c>
+          1  <0x7e88ae6b721d>
+
+### 完整样例  t=7.374241  cpu=000  init:374  flags=.....
+    sched_process_exit: comm=cat pid=374 prio=120
+    -- 内核栈（6 帧，栈顶 → 栈底）--
+    [起始]  0  => do_exit+0x3c3/0x530
+    [    ]  1  => do_group_exit+0x35/0x90
+    [    ]  2  => __x64_sys_exit_group+0x18/0x20
+    [    ]  3  => x64_sys_call+0x21e2/0x25c0
+    [    ]  4  => do_syscall_64+0x7f/0x180
+    [末尾]  5  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（1 帧）--
+    [起始]  0  => <0x4474cd>
+
+==============================================================================
+## sched_process_free
+==============================================================================
+次数                  15
+带内核栈              15
+带用户栈               3
+内核栈深      min 17 / mean 18.4 / max 22
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         15  delayed_put_task_struct
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         12  secondary_startup_64_no_verify
+          3  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+          2  <0x4170bb>
+          1  <0x41789b>
+
+### 用户栈 末尾帧 Top 5
+          2  <0x735f68636e65626b>
+          1  <0x41789b>
+
+### 完整样例  t=7.383786  cpu=002  <idle>:0  flags=..s1.
+    sched_process_free: comm=cat pid=374 prio=120
+    -- 内核栈（18 帧，栈顶 → 栈底）--
+    [起始]  0  => delayed_put_task_struct+0x86/0xd0
+    [    ]  1  => rcu_do_batch+0x1ca/0x5a0
+    [    ]  2  => rcu_core+0x195/0x390
+    [    ]  3  => rcu_core_si+0xe/0x20
+    [    ]  4  => __do_softirq+0xe1/0x363
+    [    ]  5  => __irq_exit_rcu+0xd7/0x100
+    [    ]  6  => irq_exit_rcu+0xe/0x20
+    [    ]  7  => sysvec_apic_timer_interrupt+0x92/0xd0
+    [    ]  8  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+    [    ]  9  => pv_native_safe_halt+0xb/0x10
+    [    ] 10  => amd_e400_idle+0x39/0x50
+    [    ] 11  => arch_cpu_idle+0x9/0x10
+    [    ] 12  => default_idle_call+0x2c/0xf0
+    [    ] 13  => cpuidle_idle_call+0x153/0x190
+    [    ] 14  => do_idle+0x87/0xf0
+    [    ] 15  => cpu_startup_entry+0x2a/0x30
+    [    ] 16  => start_secondary+0x129/0x160
+    [末尾] 17  => secondary_startup_64_no_verify+0x184/0x18b
+
+==============================================================================
+## signal_generate
+==============================================================================
+次数                  13
+带内核栈              13
+带用户栈              13
+内核栈深      min 9 / mean 9.0 / max 9
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         13  __send_signal_locked
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         13  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         12  <0x4474cd>
+          1  <0x7e88ae6b721d>
+
+### 用户栈 末尾帧 Top 5
+         12  <0x4474cd>
+          1  <0x7e88ae6b721d>
+
+### 完整样例  t=7.374584  cpu=000  init:374  flags=d..2.
+    signal_generate: sig=17 errno=0 code=1 comm=init pid=1 grp=1 res=0
+    -- 内核栈（9 帧，栈顶 → 栈底）--
+    [起始]  0  => __send_signal_locked+0x23d/0x500
+    [    ]  1  => do_notify_parent+0x293/0x2f0
+    [    ]  2  => exit_notify+0x15f/0x200
+    [    ]  3  => do_exit+0x2eb/0x530
+    [    ]  4  => do_group_exit+0x35/0x90
+    [    ]  5  => __x64_sys_exit_group+0x18/0x20
+    [    ]  6  => x64_sys_call+0x21e2/0x25c0
+    [    ]  7  => do_syscall_64+0x7f/0x180
+    [末尾]  8  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（1 帧）--
+    [起始]  0  => <0x4474cd>
+
+==============================================================================
+## signal_deliver
+==============================================================================
+次数                  13
+带内核栈              13
+带用户栈              13
+内核栈深      min 5 / mean 5.0 / max 5
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+         13  get_signal
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+         13  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+         12  /bin/busybox
+          1  <0x462524>
+
+### 用户栈 末尾帧 Top 5
+         12  /bin/busybox
+          1  <0x5531d6>
+
+### 完整样例  t=7.374977  cpu=002  init:1  flags=d..1.
+    signal_deliver: sig=17 errno=0 code=1 sa_handler=546d30 sa_flags=4000000
+    -- 内核栈（5 帧，栈顶 → 栈底）--
+    [起始]  0  => get_signal+0x2c9/0x990
+    [    ]  1  => arch_do_signal_or_restart+0x39/0x120
+    [    ]  2  => syscall_exit_to_user_mode+0x206/0x260
+    [    ]  3  => do_syscall_64+0x8c/0x180
+    [末尾]  4  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（8 帧）--
+    [起始]  0  => /bin/busybox[+0x61524]
+    [    ]  1  => /bin/busybox[+0x14ba8c]
+    [    ]  2  => /bin/busybox[+0x14f8b3]
+    [    ]  3  => /bin/busybox[+0x14a7c6]
+    [    ]  4  => /bin/busybox[+0x14a74f]
+    [    ]  5  => /bin/busybox[+0x14a74f]
+    [    ]  6  => /bin/busybox[+0x14e3d9]
+    [末尾]  7  => /bin/busybox[+0x14a7c6]
+
+==============================================================================
+## sched_process_exec
+==============================================================================
+次数                   7
+带内核栈               7
+带用户栈               7
+内核栈深      min 8 / mean 8.0 / max 8
+
+### 起始堆栈（栈顶 / 事件触发的直接调用点） Top 8
+          7  exec_binprm
+
+### 末尾堆栈（栈底 / 调用链入口） Top 8
+          7  entry_SYSCALL_64_after_hwframe
+
+### 用户栈 起始帧 Top 5
+          3  <0x410870>
+          1  /bin/busybox
+          1  <0x7e88ae82e540>
+          1  <0x727e67b5f540>
+          1  <0x401a80>
+
+### 用户栈 末尾帧 Top 5
+          3  <0x410870>
+          1  /bin/busybox
+          1  <0x7e88ae82e540>
+          1  <0x727e67b5f540>
+          1  <0x401a80>
+
+### 完整样例  t=7.368396  cpu=000  init:374  flags=.....
+    sched_process_exec: filename=/proc/self/exe pid=374 old_pid=374
+    -- 内核栈（8 帧，栈顶 → 栈底）--
+    [起始]  0  => exec_binprm+0x167/0x1c0
+    [    ]  1  => bprm_execve.part.0+0x190/0x240
+    [    ]  2  => bprm_execve+0x46/0x80
+    [    ]  3  => do_execveat_common.isra.0+0x198/0x250
+    [    ]  4  => __x64_sys_execve+0x37/0x60
+    [    ]  5  => x64_sys_call+0x1a26/0x25c0
+    [    ]  6  => do_syscall_64+0x7f/0x180
+    [末尾]  7  => entry_SYSCALL_64_after_hwframe+0x73/0x7b
+    -- 用户栈（1 帧）--
+    [起始]  0  => <0x410870>
+
+==============================================================================
+逐条示例：每条 tracepoint 的「起始帧 / 末尾帧」
+==============================================================================
+t=7.347643  cpu=001  sh:126  hrtimer_cancel
+  参数      hrtimer=0000000072442540
+  起始堆栈  => __hrtimer_run_queues+0x193/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.347643  cpu=001  sh:126  hrtimer_expire_entry
+  参数      hrtimer=0000000072442540 function=tick_nohz_highres_handler now=7308028593
+  起始堆栈  => __hrtimer_run_queues+0x231/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.347643  cpu=001  sh:126  rcu_utilization
+  参数      Start scheduler-tick
+  起始堆栈  => rcu_sched_clock_irq+0x1de/0x3c0   (内核栈 9 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.347643  cpu=003  perf.bin:134  hrtimer_cancel
+  参数      hrtimer=00000000d29e9ad9
+  起始堆栈  => __hrtimer_run_queues+0x193/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+
+t=7.347643  cpu=003  perf.bin:134  hrtimer_expire_entry
+  参数      hrtimer=00000000d29e9ad9 function=tick_nohz_highres_handler now=7308028593
+  起始堆栈  => __hrtimer_run_queues+0x231/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+
+t=7.347643  cpu=003  perf.bin:134  rcu_utilization
+  参数      Start scheduler-tick
+  起始堆栈  => rcu_sched_clock_irq+0x1de/0x3c0   (内核栈 9 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+
+t=7.347643  cpu=001  sh:126  rcu_utilization
+  参数      End scheduler-tick
+  起始堆栈  => rcu_sched_clock_irq+0x17c/0x3c0   (内核栈 9 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.347643  cpu=003  perf.bin:134  rcu_utilization
+  参数      End scheduler-tick
+  起始堆栈  => rcu_sched_clock_irq+0x17c/0x3c0   (内核栈 9 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+
+t=7.350963  cpu=001  sh:126  sched_stat_runtime
+  参数      comm=sh pid=126 runtime=4312980 [ns]
+  起始堆栈  => update_curr+0x1e3/0x210   (内核栈 11 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.350968  cpu=003  perf.bin:134  sched_stat_runtime
+  参数      comm=perf.bin pid=134 runtime=4321810 [ns]
+  起始堆栈  => update_curr+0x1e3/0x210   (内核栈 11 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+
+t=7.351009  cpu=001  sh:126  hrtimer_expire_exit
+  参数      hrtimer=0000000072442540
+  起始堆栈  => __hrtimer_run_queues+0x1e0/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /bin/busybox[+0x1a27cd]
+  用户栈末  => /bin/busybox[+0x14a74f]
+
+t=7.351013  cpu=003  perf.bin:134  hrtimer_expire_exit
+  参数      hrtimer=00000000d29e9ad9
+  起始堆栈  => __hrtimer_run_queues+0x1e0/0x2a0   (内核栈 5 帧)
+  末尾堆栈  => asm_sysvec_apic_timer_interrupt+0x1b/0x20
+  用户栈起  => /opt/perf.bin[+0x20e7b0]
+  用户栈末  => /opt/perf.bin[+0x3b17]
+

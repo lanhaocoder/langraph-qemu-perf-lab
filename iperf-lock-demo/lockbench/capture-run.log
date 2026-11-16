@@ -1,0 +1,27 @@
+[host] READY 信号接收端 :9998
+[host] 采集产物接收端 :9999
+[host] 构建 initramfs
+       initramfs: 26M
+[qemu] 启动 Guest (TCG, 4 vCPU / 3G, nokaslr, e1000 + SLIRP)
+[host] 等待 Guest READY（ftrace 已开 + guest server 已起）
+[host] READY=1  msg='READY ftrace_on=1 server_pid=380 uptime=11.38'
+[host] 起 host iperf3 server :5211 -1 (one-off)
+[host] 起 host iperf3 client -P 2 -t 12 -b 1M -l 256 -> 127.0.0.1:15201
+[host] host client rc=0
+[host] 等待 langraph/ 回传
+[qemu] 已退出
+[host] host server wait rc=0
+[host] host server 残留: 0
+[host] 解包 langraph/
+tar: Unexpected EOF in archive
+tar: rmtlseek not stopped at a record boundary
+tar: Error is not recoverable: exiting now
+    total 988M
+    -rw------- 1 root root 977M Nov 16 21:10 ftrace.log
+    -rw------- 1 root root  12M Nov 16 21:06 perf.data
+[host] 压缩归档 (pigz -9)
+[host] iperf-lockdemo.tar.gz: 45M
+[host] 归档内容:
+    langraph/
+    langraph/perf.data
+    langraph/ftrace.log
